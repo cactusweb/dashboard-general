@@ -1,0 +1,47 @@
+$tab-size: 780px;
+
+.owner{
+    display: grid;
+    row-gap: 8px;
+
+    justify-content: center;
+    justify-items: center;
+
+    &__logo{
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+
+        @media screen and ( max-width: $tab-size ) {
+            width: 80px;
+            height: 80px;
+        }
+
+        img{
+            width: inherit;
+            height: inherit;
+            border-radius: inherit;
+        }
+    }
+
+    &--loading &__logo{
+        background-color: var(--color--loading-data);
+    }
+
+    &__name{
+        @media screen and ( max-width: $tab-size ) {
+            font-size: 18px;
+        }
+    }
+
+    &--loading &__name{
+        background-color: var(--color--loading-data);
+        height: 27px;
+        width: 170px;
+        border-radius: 4px;
+        @media screen and ( max-width: $tab-size ) {
+            height: 24px;
+            width: 130px;
+        }
+    } 
+}

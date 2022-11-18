@@ -10,6 +10,7 @@ import { PurchaseFormComponent } from './components/purchase-form/purchase-form.
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StatusSuccessComponent } from './components/status-success/status-success.component';
 import { StatusFailedComponent } from './components/status-failed/status-failed.component';
+import { OwnerComponent } from './components/owner/owner.component';
 
 const routes: Routes = [
   { path: '', component: PurchaseComponent }
@@ -22,7 +23,8 @@ const routes: Routes = [
     PurchaseFormTitleComponent,
     PurchaseFormComponent,
     StatusSuccessComponent,
-    StatusFailedComponent
+    StatusFailedComponent,
+    OwnerComponent
   ],
   imports: [
     CommonModule,
