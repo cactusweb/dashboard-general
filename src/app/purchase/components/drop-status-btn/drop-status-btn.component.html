@@ -7,3 +7,7 @@
 >
     <btn-loader [isSpinner]="loading" [text]="isActive ? 'Purchase' : 'Sold out'"></btn-loader>
 </button>
+
+<span class="container">
+    <a *ngIf="!isActive && !loading" routerLink="/licenses" class="link">Go to main</a>
+</span>

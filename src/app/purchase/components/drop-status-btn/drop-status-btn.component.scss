@@ -11,3 +11,16 @@ button{
     max-width: 320px;
     width: 100%;
 }
+
+
+.container{
+    justify-self: center;
+    height: 19.2px;
+}
+
+.link{
+    color: #5F8CA0;
+    &:hover{
+        color: var(--primary-color)
+    }
+}
