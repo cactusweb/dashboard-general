@@ -1,6 +1,8 @@
 <form class="window" [formGroup]="form" (ngSubmit)="onSubmit()">
 
-    <purchase-form-title></purchase-form-title>
+    <purchase-form-title *ngIf="(inviter|async)"></purchase-form-title>
+
+    <app-owner></app-owner>
 
     <fieldset class="window__body">
         <input type="text" id="email" class="form-control" formControlName="email" placeholder="Email">

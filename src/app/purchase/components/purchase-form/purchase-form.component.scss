@@ -1,6 +1,11 @@
 .window{
+    row-gap: 24px;
     @media screen and ( max-width: 780px ) {
         padding-top: 20px;
         padding-bottom: 20px;
+    }
+
+    &__body{
+        row-gap: 10px;
     }
 }

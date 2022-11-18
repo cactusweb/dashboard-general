@@ -2,6 +2,7 @@ import { CurrencyPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { finalize, map, Observable, take } from 'rxjs';
+import { User } from 'src/app/tools/interfaces/user';
 import { PurchaseService } from '../../services/purchase.service';
 
 @Component({
@@ -15,11 +16,13 @@ export class PurchaseFormComponent implements OnInit {
   loading: boolean = false;
 
   payment: Observable<{ way: string, currency: string, price: number }>
+  inviter: Observable<User|null>
 
   constructor(
     private drop: PurchaseService,
     private currency: CurrencyPipe
   ) { 
+    this.inviter = this.drop.getDrop().pipe(map(d => d.inviter))
     this.payment = drop.getDrop()
       .pipe(
         map(d => {
