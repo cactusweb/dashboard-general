@@ -8,6 +8,7 @@ const routes: Routes = [
     { path: 'licenses', loadChildren: () => import('./license-list/license-list.module').then(m => m.LicenseListModule) },
     { path: ':ownerName/dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) },
     { path: ':ownerName/purchase', loadChildren: () => import('./purchase/purchase.module').then(m => m.PurchaseModule) },
+    { path: 'main', redirectTo: '/licenses' },
     { path: '**', loadChildren: () => import('./not-found/not-found.module').then(m => m.NotFoundModule) }
 ]
 
