@@ -12,7 +12,7 @@ import { Drop } from '../interfaces/drop';
 @Injectable()
 export class PurchaseService {
   private drop: Drop|undefined;
-  private owner: LicenseOwner|undefined;
+  public owner: LicenseOwner|undefined;
 
   private loading: boolean = false;
   
