@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, take } from 'rxjs';
+import { Observable, take, tap } from 'rxjs';
 import { LicenseOwner } from '../license-list/interfaces/license-owner';
 import { HttpService } from '../tools/services/http.service';
+import { SeoService } from '../tools/services/seo.service';
 import { PurchaseService } from './services/purchase.service';
 
 @Component({
@@ -15,12 +16,13 @@ import { PurchaseService } from './services/purchase.service';
     '[style.--primary-color--hover]': 'ownerData?.primary_color+"99" || ""',
   }
 })
-export class PurchaseComponent implements OnInit {
+export class PurchaseComponent implements OnInit, OnDestroy {
   purchaseState: Observable<'btn'|'form'|'payment'|'status-failed'|'status-success'|'status-payment-failed'>
   ownerData!: LicenseOwner
 
   constructor(
     private purchase: PurchaseService,
+    private seo: SeoService,
   ) {
     this.purchaseState = purchase.$purchaseState.asObservable();
   }
@@ -29,6 +31,9 @@ export class PurchaseComponent implements OnInit {
     this.getOwner();
   }
 
+  ngOnDestroy(): void {
+    this.seo.changeIcon();
+  }
 
   getOwner(){
     this.purchase.getOwner()

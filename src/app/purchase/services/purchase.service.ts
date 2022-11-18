@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, catchError, finalize, map, Observable, take, tap, throwError } from 'rxjs';
 import { Requests } from 'src/app/const';
@@ -6,6 +7,7 @@ import { License } from 'src/app/license-list/interfaces/license';
 import { LicenseOwner } from 'src/app/license-list/interfaces/license-owner';
 import { Req } from 'src/app/tools/interfaces/req-map';
 import { HttpService } from 'src/app/tools/services/http.service';
+import { SeoService } from 'src/app/tools/services/seo.service';
 import { ToolsService } from 'src/app/tools/services/tools.service';
 import { Drop } from '../interfaces/drop';
 
@@ -24,7 +26,9 @@ export class PurchaseService {
     private http: HttpService,
     private activatedRoute: ActivatedRoute,
     private tools: ToolsService,
-    private router: Router
+    private router: Router,
+    private seo: SeoService,
+    private title: Title
   ) { }
 
   getDrop(): Observable<Drop>{
@@ -73,11 +77,15 @@ export class PurchaseService {
     return this.http.request( Requests['getOwner'], null, this.getOwnerName() )
       .pipe(
         tap(d => this.owner = d),
+        tap(d => {
+          this.seo.changeIcon(d.avatar)
+          this.title.setTitle(`${d.name} - Purchase`)
+        }),
         catchError(err => {
           if ( err?.error?.message && err.error.message == 'Owner not found' )
             this.router.navigate(['/licenses'])
           return throwError(err)
-        })
+        }),
       )
   }
 
@@ -103,4 +111,5 @@ export class PurchaseService {
         })
       )
   }
+
 }

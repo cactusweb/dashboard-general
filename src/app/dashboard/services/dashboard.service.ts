@@ -7,6 +7,7 @@ import { License } from 'src/app/license-list/interfaces/license';
 import { ReferralPrize, ReferralPrizes } from 'src/app/license-list/interfaces/referral-prize';
 import { LicensesService } from 'src/app/license-list/services/licenses.service';
 import { HttpService } from 'src/app/tools/services/http.service';
+import { SeoService } from 'src/app/tools/services/seo.service';
 import { ToolsService } from 'src/app/tools/services/tools.service';
 
 @Injectable()
@@ -33,7 +34,8 @@ export class DashboardService {
     private tools: ToolsService,
     private http: HttpService,
     private title: Title,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private seo: SeoService
   ) {
   }
 
@@ -83,7 +85,7 @@ export class DashboardService {
 
     setTimeout(() => {
       this.title.setTitle(`${this.ownerName} - Dashboard`)
-    }, 100);
+    }, 10);
   }
 
   private fetchLicense(){
@@ -96,6 +98,11 @@ export class DashboardService {
           this.redirected = true;
           this.tools.generateNotification(`License of ${this.ownerName} is not found`, 'err')
           this.router.navigate(['/licenses']);
+        }),
+        tap(l => {
+          this.seo.changeIcon(l?.owner.avatar)
+          if ( l )
+            this.title.setTitle(`${l.owner.name} - Dashboard`)
         }),
         take(1),
         finalize(() => this.licenseLoading = false)
@@ -114,6 +121,7 @@ export class DashboardService {
   resetData(){
     this.license = null;
     this.ownerName = '';
+    this.seo.changeIcon();
   }
 
   

@@ -13,7 +13,7 @@ import { StatusFailedComponent } from './components/status-failed/status-failed.
 import { OwnerComponent } from './components/owner/owner.component';
 
 const routes: Routes = [
-  { path: '', component: PurchaseComponent }
+  { path: '', component: PurchaseComponent, data: { title: 'Purchase' } }
 ]
 
 @NgModule({
