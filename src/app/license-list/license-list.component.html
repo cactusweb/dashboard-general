@@ -1,8 +1,12 @@
 <app-header></app-header>
 
 <div class="licenses" *ngVar="(licenses|async) as licenses">
-    <ng-template [ngIf]="licenses">
+    <ng-template [ngIf]="licenses && licenses[0]">
         <license-card *ngFor="let lic of licenses,trackBy:trackLicense" [license]="lic"></license-card>
+    </ng-template>
+    <ng-template [ngIf]="licenses && !licenses[0]">
+        <!-- <license-card *ngFor="let lic of licenses,trackBy:trackLicense" [license]="lic"></license-card> -->
+        <app-no-licenses></app-no-licenses>
     </ng-template>
     <ng-template [ngIf]="!licenses">
         <license-card></license-card>

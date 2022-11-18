@@ -6,6 +6,7 @@ import { LicenseCardComponent } from './components/license-card/license-card.com
 import { HeaderComponent } from './components/header/header.component';
 import { ToolsModule } from '../tools/tools.module';
 import { BindModule } from '../bind/bind.module';
+import { NoLicensesComponent } from './components/no-licenses/no-licenses.component';
 
 const routes: Routes = [
   { path: '', component: LicenseListComponent, data: { title: 'Licenses' } }
@@ -15,7 +16,8 @@ const routes: Routes = [
   declarations: [
     LicenseListComponent,
     LicenseCardComponent,
-    HeaderComponent
+    HeaderComponent,
+    NoLicensesComponent
   ],
   imports: [
     CommonModule,

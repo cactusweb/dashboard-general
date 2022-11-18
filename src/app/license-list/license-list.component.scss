@@ -14,7 +14,7 @@ $tab-size: 780px;
         padding: 0px 24px;
     }
 }
-license-card{
+license-card, app-no-licenses{
     height: 170px;
     @media screen and ( max-width: $tab-size ) {
         height: 120px;
