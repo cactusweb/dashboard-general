@@ -41,6 +41,11 @@ button{
     left: 50%;
     transform: translate(-50%, -50%);
 
+    img{
+        height: 40px;
+        width: 55px;
+    }
+
     @media screen and ( max-width: $tab-size ) {
         display: none;
     }
