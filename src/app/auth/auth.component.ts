@@ -32,6 +32,7 @@ export class AuthComponent {
     let queryParams = this.activatedRoute.snapshot.queryParams;
 
     if ( !queryParams['accessToken'] ) return;
+    this.loading = true;
 
     this.auth.setAccessToken(queryParams['accessToken']);
     
