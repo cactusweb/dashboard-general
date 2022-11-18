@@ -1,0 +1,17 @@
+<form class="window" [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <purchase-form-title></purchase-form-title>
+
+    <fieldset class="window__body">
+        <input type="text" id="email" class="form-control" formControlName="email" placeholder="Email">
+
+        <button class="btn btn--primary" [disabled]="loading" [class.btn--loading]="loading">
+            <btn-loader [isSpinner]="loading" 
+                [text]="
+                    'Purchase' + getDropPrice(payment|async)
+                "
+            ></btn-loader>
+        </button>
+    </fieldset>
+
+</form>

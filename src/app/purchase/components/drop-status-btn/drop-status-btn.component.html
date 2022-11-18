@@ -1,0 +1,7 @@
+<button class="btn btn--primary"
+    [disabled]="loading || !isActive"
+    [class.btn--loading]="loading"
+    (click)="purchase.$purchaseState.next('form')"
+>
+    <btn-loader [isSpinner]="loading" [text]="isActive ? 'Purchase' : 'Sold out'"></btn-loader>
+</button>

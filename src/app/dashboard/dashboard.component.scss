@@ -1,0 +1,108 @@
+$tab-size: 1200px;
+$phone-size: 780px;
+
+:host{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+    align-content: center;
+    gap: 24px;
+    
+    @media screen and ( max-width: $tab-size ) {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        row-gap: 16px;
+    }
+    
+    @media screen and ( min-width: ($tab-size+1) ) {
+        >:first-child, > :nth-child(2), > :nth-child(3){
+            justify-self: end;
+        }
+    
+        >:last-child{
+            justify-self: start;
+        }
+    }
+
+    @media screen and ( max-width: $phone-size ) {
+        padding: 30px 24px 16px;
+    }
+}
+
+
+.col{
+    display: grid;
+    row-gap: 24px;
+    align-content: start;
+}
+
+:host > *{
+        max-width: 530px;
+        width: 100%;
+        align-self: stretch;
+        display: grid;
+        @media screen and ( max-width: 780px ) {
+            max-width: 480px;
+        }
+}
+
+
+:host ::ng-deep{
+    .window{
+        max-width: 530px;
+    }
+
+    .window:not(.popup){
+        padding: 24px 32px;
+        @media screen and ( max-width: 780px ) {
+            padding: 16px 24px
+        }
+    }
+
+    .form-control{
+        height: 48px;
+    }
+    
+    .btn, .form-control{
+        @media screen and ( max-width: 780px ) {
+            height: 40px;
+            font-size: 14px;
+            line-height: 17px;
+        }
+    }
+    
+    .btn-icon{
+        @media screen and ( max-width: 780px ) {
+            width: 40px;
+        }
+    }
+    
+    .control-wrapper__label{
+        @media screen and ( max-width: $tab-size ) {
+            font-size: 14px;
+            line-height: 17px;
+        }
+    }
+    
+}
+
+#referral-loading{
+    height: 86px;
+    align-self: center;
+    @media screen and ( max-width: 780px ) {
+        height: 70px;
+    }
+    @media screen and ( max-width: 410px ) {
+        height: 126.5px;
+    }
+}
+
+app-license-info{
+    grid-column: 2/3;
+    grid-row: 1/4;
+
+    @media screen and ( max-width: $tab-size ) {
+        grid-row: 2/3;
+        grid-column: 1/2;
+    }
+}

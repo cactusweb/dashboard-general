@@ -1,0 +1,20 @@
+<a 
+    class="window license row" 
+    [class.license--loading]="!license"
+    [routerLink]="link" 
+>
+    <span class="license__logo">
+        <img *ngIf="license" [src]="'https://dashboard.cactusweb.io/' + license.owner.avatar" alt="">
+        <!-- <img *ngIf="license" [src]="license.owner.logo" alt=""> -->
+    </span>
+
+    <div class="col">
+        <h2 class="license__title window__title">{{ license?.owner?.name }}</h2>
+        <span class="license__price">
+            {{paymentPrice}}
+        </span>
+    </div>
+
+    <span class="circle circle-style"></span>
+</a>
+<span class="circle circle-shadow"></span>

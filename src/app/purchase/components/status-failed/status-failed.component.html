@@ -1,0 +1,20 @@
+<div class="window">
+
+    <div class="window__body">
+        <h1 class="window__title">
+            <ng-template [ngIf]="isPaymentFailed">Payment failed</ng-template>
+            <ng-template [ngIf]="!isPaymentFailed">Sold out</ng-template>
+        </h1>
+    
+        <p class="window__subtitle">
+            <ng-template [ngIf]="isPaymentFailed">
+                Your payment has been declined. Contact your bank or try another card.
+            </ng-template>
+            <ng-template [ngIf]="!isPaymentFailed">
+                Good luck next time!
+            </ng-template>
+        </p>
+    </div>
+
+    <a routerLink="/licenses" class="btn btn--primary window__body">Go to licenses</a>
+</div>

@@ -1,0 +1,8 @@
+<ng-container *ngVar="(license|async) as license">
+    <app-key-info [license]="license"></app-key-info>
+    <app-referral [referral]="license.referral" *ngIf="license?.referral"></app-referral>
+    <div class="window" *ngIf="!license" id="referral-loading"></div>
+    <app-action #action></app-action>
+
+    <app-license-info [license]="license"></app-license-info>
+</ng-container>

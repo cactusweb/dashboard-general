@@ -1,0 +1,14 @@
+:host{
+    display: grid;
+    align-content: center;
+}
+
+button{
+    max-width: 355px;
+    width: 100%;
+    justify-self: center;
+}
+
+button svg{
+    margin-left: 10px;
+}

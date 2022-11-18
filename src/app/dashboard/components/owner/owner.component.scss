@@ -1,0 +1,45 @@
+$tab-size: 780px;
+
+.owner{
+    column-gap: 16px;   
+    justify-content: start;
+
+    
+    &__avatar{
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        overflow: hidden;
+
+        // @media screen and ( max-width: $tab-size ) {
+        //     width: 55px;
+        //     height: 55px;
+        // }
+        
+        img{
+            width: inherit;
+            height: inherit;
+        }
+    }
+    
+    &--loading &__avatar{
+        background-color: var(--color--loading-data);    
+    }
+
+
+    &__name{
+        // font-size: 18px;
+        // font-weight: 500;
+        max-width: 400px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &--loading &__name{
+        height: 22px;
+        width: 200px;
+        background-color: var(--color--loading-data); 
+        border-radius: 4px;   
+    }
+}

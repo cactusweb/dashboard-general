@@ -1,0 +1,9 @@
+<nav class="row" *ngVar="(authState|async) as authState">
+    <app-user *ngIf="authState"></app-user>
+    
+    <a routerLink="/licenses" class="logo">
+        <img src="/assets/logo.svg" alt="Go to licenses">
+    </a>
+
+    <button class="btn btn--outline-secondary" *ngIf="authState" (click)="auth.logout()">Logout</button>
+</nav>

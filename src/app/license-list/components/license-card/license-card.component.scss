@@ -1,0 +1,127 @@
+$tab-size: 780px;
+
+:host{
+    position: relative;
+    overflow: hidden;
+    display: block;
+}
+
+.license{
+    column-gap: 24px;
+    padding: 0px 32px;
+    height: 100%;
+
+    justify-content: start;
+    position: relative;
+    overflow: hidden;
+
+    background: rgba(248, 248, 248, 0.6);
+    border: 1.5px solid #FFFFFF;
+    backdrop-filter: blur(23px);
+    transition: .3s;
+
+    @media screen and ( max-width: $tab-size ) {
+        column-gap: 12px;
+        padding: 0px 24px;
+    }
+
+    &__logo{
+        width: 100px;
+        height: 100px;
+        border-radius: 100%;
+
+        @media screen and ( max-width: $tab-size ) {
+            height: 56px;
+            width: 56px;
+        }
+
+        img{
+            height: inherit;
+            width: inherit;
+            border-radius: inherit;
+        }
+    }
+
+    &--loading &__logo{
+        background-color: var(--color--loading-data);
+    }
+
+    &__title{
+        letter-spacing: 0.0025em;
+        @media screen and ( max-width: $tab-size ) {
+            font-size: 18px;
+        }
+    }
+
+    &--loading &__title{
+        height: 27px;
+        width: 200px;
+        background-color: var(--color--loading-data);
+        border-radius: 4px;
+        @media screen and ( max-width: $tab-size ) {
+            height: 24px;
+        }
+    }
+
+    &__price{
+        line-height: 19.5px;
+        text-transform: capitalize;
+    }
+
+    &--loading &__price{
+        width: 80px;
+        height: 19.5px;
+        background-color: var(--color--loading-data);
+        border-radius: 4px;
+    }
+}
+
+.col{
+    display: grid;
+    row-gap: 8px;
+    align-content: center;
+}
+
+.circle{
+    position: absolute;
+    top: 50%;
+    right: 0px;
+    transform: translate(50%, -50%);
+    border-radius: 50%;
+    transition: .3s;
+    background-color: var(--primary-color);
+    &-style{
+        width: 48px;
+        height: 48px;
+        @media screen and ( max-width: $tab-size ) {
+            display: none;
+        }
+    }
+    &-shadow{
+        z-index: -2;
+        width: 260px;
+        height: 140px;
+        @media screen and ( max-width: $tab-size ) {
+            height: 80px;
+            width: 160px;
+        }
+    }
+}
+
+.license:hover{
+    // background: rgba(248, 248, 248, 0.6);
+    .circle-style{
+        height: 80px;
+        width: 80px;
+    }
+
+    + .circle-shadow{
+        width: 310px;
+        height: 140px;
+        @media screen and ( max-width: $tab-size ) {
+            width: 240px;
+            height: 90px;
+        }
+    }
+}
+

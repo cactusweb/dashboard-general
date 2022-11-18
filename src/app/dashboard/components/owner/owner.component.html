@@ -1,0 +1,8 @@
+<div class="owner row" *ngVar="(owner|async) as owner" [class.owner--loading]="!owner">
+    <span class="owner__avatar" >
+        <img *ngIf="owner" [src]="owner.avatar" alt="">
+    </span>
+    <h1 class="owner__name window__title">
+        {{owner?.name||''}}
+    </h1>
+</div>

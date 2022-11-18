@@ -1,0 +1,14 @@
+<div class="" *ngIf="loading; then showSpinner else showText"></div>
+<ng-template #showSpinner>
+    <ngx-spinner
+        type="ball-clip-rotate"
+        [fullScreen]="false"
+        bdColor="rgba(51,51,51,0)"
+        color="#fff"
+    ></ngx-spinner>
+</ng-template>
+
+
+<ng-template #showText>
+    {{ text }}
+</ng-template>

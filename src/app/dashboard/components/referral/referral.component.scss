@@ -1,0 +1,64 @@
+.window{
+    justify-content: space-between;
+    row-gap: 18.5px;
+}
+
+.btn{
+    padding: 0px;
+    height: 100%;
+    color: var(--text-color--label);
+    line-height: 20px;
+    height: 38px;
+    font-weight: 500;
+
+    svg path{
+        fill: var(--text-color--label)
+    }
+
+    &:hover svg path{
+        fill: var(--primary-color)
+    }
+
+    svg{
+        @media screen and ( max-width: 780px ) {
+            width: 20px;
+            height: 20px;
+        }
+    }
+}
+
+.window > *{
+    font-weight: 500;
+}
+
+.score{
+    column-gap: 8px;
+
+    &__label{
+        @media screen and ( max-width: 780px ) {
+            font-size: 14px;
+        }
+    }
+
+    &__number{
+        display: grid;
+        align-items: center;
+        text-align: center;
+
+        height: 38px;
+        width: 38px;
+        background-color: var(--primary-color);
+        border-radius: 50%;
+        color: var(--color);
+        font-weight: 600;
+    }
+}
+
+.gifts-wrapper{
+    position: relative;
+    @media screen and ( max-width: 410px ) {
+        grid-row: 2/3;
+        width: auto;
+        justify-self: start;
+    }
+}

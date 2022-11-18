@@ -1,0 +1,32 @@
+$tab-size: 780px;
+
+:host{
+    display: grid;
+    row-gap: 16px;
+    align-content: start;
+    // max-width: 1448px;
+    padding: 0px 80px;
+    box-sizing: border-box;
+    width: 100%;
+    justify-self: center;
+    
+    @media screen and ( max-width: 980px ) {
+        padding: 0px 24px;
+    }
+}
+license-card{
+    height: 170px;
+    @media screen and ( max-width: $tab-size ) {
+        height: 120px;
+    }
+}
+
+.licenses{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    @media screen and ( max-width: $tab-size ) {
+        gap: 12px;
+        grid-template-columns: auto;
+    }
+}

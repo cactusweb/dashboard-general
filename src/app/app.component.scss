@@ -1,0 +1,8 @@
+:host{
+    grid-template-rows: auto 1fr auto;
+    row-gap: 24px;
+}
+
+main{
+    display: grid;
+}

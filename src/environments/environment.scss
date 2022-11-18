@@ -1,0 +1,115 @@
+$phone-size: 780px;
+
+:root{
+    --primary-color: #3880EC; 
+    --primary-color--hover: #1C73F5;
+    
+    --text-color--label: #000;
+
+    --input-color: #000;
+    
+    
+    --err-color: #D11E1E;
+    --err-color--hover: #EA2121;
+
+
+    --success-color: #20C726;
+    --success-color--hover: #19D720;
+
+
+    --color--secondary: #486270;
+    --color--secondary-hover: #000000;
+
+    
+    --color--loading-data: #EBEBEB;
+}
+
+
+body, span.hr, referral-gifts li{
+    --bg-color: #BED0D9;
+}
+
+.window{
+    --radius: 18px;
+    --bg-color: #F8F8F8;
+}
+
+
+.btn, .score__number{
+    --color: #F8F8F8;
+    &--success, &--err{
+        --color: #F8F8F8;
+    }
+
+    &--outline-err:hover, &--outline-primary:hover, &--outline-success:hover{
+        --color: #F8F8F8;
+    }
+}
+
+.form-control, .btn-icon{
+    --bg-color: #EDEDED;
+    --placeholder: #A0A0A0;
+    --radius: 8px;
+    --border: #00000000;
+}
+
+.btn-icon{
+    --bg-color: #EDEDED;
+}
+
+
+nav img{
+    --heigth: 65px;
+    @media screen and ( max-width: 780px ) {
+        --heigth: 65px;
+    }
+}
+
+
+.btn, .user, .notification{
+    --radius: 8px;
+}
+
+
+
+.checkbox-wrapper{
+    --bg-color: #3880EC;
+    --radius: 4px;
+    --svg-color: #F8F8F8;
+}
+
+app-router-loader .loading{
+    --bg-color: #EBEBEB;
+}
+
+#referral-gifts{
+    --radius: 12px;
+}
+
+
+.notification{
+    --err-color: #DA3A3A;
+    --success-color: #21BC31;
+}
+
+
+// custom styles
+// body{
+//     background-image: url('/assets/fp.png');
+//     background-size: cover;
+// }
+
+
+// .nft-link{
+//     height: 20px !important;
+//     width: auto !important;
+//     justify-self: center;
+//     color: #A0A0A0;
+//     &:hover{
+//         text-decoration: underline;
+//     }
+// }
+
+// app-bind .window{
+//     padding-bottom: 30px;
+// }

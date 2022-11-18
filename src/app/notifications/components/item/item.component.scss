@@ -1,0 +1,51 @@
+:host{
+    display: grid;
+    transition: .3s;
+    overflow: hidden;
+    max-height: 0px;
+    transform-origin: bottom;
+    box-sizing: border-box;
+
+    &.show{
+        margin-top: 8px;
+    }
+}
+
+.notification{
+    grid-template-columns: auto 1fr auto;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+    padding: 12px 16px;
+    max-width: 320px;
+    justify-self: end;
+    width: auto;
+
+    column-gap: 8px;
+    transition: .2s;
+    
+
+    &__text{
+        font-size: 14px;
+        font-weight: 300;
+        overflow: hidden;
+        color: #000;
+    }
+
+    &__btn{
+        height: 21px;
+        width: 21px;
+    }
+
+    &--success &__icon path{
+        fill: var(--success-color)
+    }
+    &--err &__icon path{
+        fill: var(--err-color)
+    }
+    &--info &__icon path{
+        fill: var(--primary-color)
+    }
+}
+
+button{
+    margin-left: 8px;
+}

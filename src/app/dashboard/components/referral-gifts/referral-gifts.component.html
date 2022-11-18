@@ -1,0 +1,9 @@
+<ng-container *ngVar="(prizes|async) as prizes">
+    <ul class="window" id="referral-gifts" *ngIf="prizes && prizes[0]">
+        <li *ngFor="let prize of prizes" class="gift">
+            <span class="gift__score">{{prize.score}} {{getValidLabel(prize.score)}}</span>
+            <span class="hyphen"></span>
+            <span class="gift__prize">{{prize.prize}}</span>
+        </li>
+    </ul>
+</ng-container>

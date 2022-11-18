@@ -1,0 +1,11 @@
+<ng-container  *ngVar="(inviter|async) as user">
+
+    <h1 class="window__title" *ngIf="!user">Restock is live!</h1>
+    
+    <h1 class="referral" *ngIf="user">
+        Purchase by the
+        <span class="referral__user">{{user.full_name}} <span>'s</span> </span>
+        referral link
+    </h1>
+
+</ng-container>

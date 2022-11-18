@@ -1,0 +1,27 @@
+:host{
+    position: absolute;
+    top: -16px;
+    left: 0px;
+    transform: translate(0, -100%);
+    @media screen and ( max-width: 780px ) {
+        top: -12px
+    }
+}
+
+.link{
+    justify-self: start;
+    column-gap: 4px;
+    color: #5F8CA0;
+
+    @media screen and ( max-width: 780px ) {
+        font-size: 14px;
+    }
+
+    svg{
+        transition: .3s;
+    }
+
+    &:hover svg{
+        transform: translate(-5px, 0);
+    }
+}

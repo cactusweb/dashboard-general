@@ -1,0 +1,14 @@
+<div class="overlay overlay--full-screen">
+    <div class="artboard" (click)="onClose.emit()"></div>
+
+    <div class="window popup">
+        <div class="window__body">
+            <h1 class="window__title">Are you sure?</h1>
+            <p class="window__subtitle">After the unbind you will be excluded from the server</p>
+        </div>
+        <div class="row">
+            <button class="btn btn--primary" (click)="onClose.emit()">Cancel</button>
+            <button class="btn btn--outline-err" (click)="onApprove.emit(); onClose.emit()">Unbind</button>
+        </div>
+    </div>
+</div>

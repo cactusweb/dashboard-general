@@ -1,0 +1,15 @@
+:host{
+    display: grid;
+}
+
+*{
+    display: grid;
+}
+
+:host ::ng-deep{
+    .window{
+        max-width: 530px;
+        width: 100%;
+        justify-self: center;
+    }
+}

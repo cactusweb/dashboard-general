@@ -1,0 +1,29 @@
+<div class="window row">
+
+    <button 
+        class="btn btn--outline-primary" 
+        id="join-ds"
+        [class.btn--loading]="loadingJoinDs" 
+        [disabled]="loadingJoinDs || loading" 
+        (click)="onJoin()" 
+    >
+        <btn-loader [isSpinner]="loadingJoinDs" text="Join Discord"></btn-loader>
+        <svg class="btn__svg" *ngIf="!loadingJoinDs" xmlns="http://www.w3.org/2000/svg" width="20" height="16" viewBox="0 0 20 16" fill="none">
+            <path d="M16.9382 1.34C15.6439 0.714 14.2599 0.259052 12.813 0C12.6353 0.332095 12.4277 0.77877 12.2845 1.1341C10.7464 0.894993 9.22246 0.894993 7.71263 1.1341C7.56953 0.77877 7.35721 0.332095 7.17792 0C5.72944 0.259052 4.34386 0.715671 3.0495 1.34331C0.438774 5.42136 -0.268951 9.39811 0.0849122 13.3184C1.81648 14.655 3.49459 15.467 5.14437 15.9984C5.55171 15.4189 5.915 14.8028 6.22797 14.1536C5.63191 13.9195 5.06101 13.6306 4.52159 13.2952C4.66469 13.1856 4.80468 13.071 4.93992 12.9531C8.23005 14.5438 11.8049 14.5438 15.0557 12.9531C15.1925 13.071 15.3325 13.1856 15.474 13.2952C14.933 13.6322 14.3606 13.9211 13.7645 14.1553C14.0775 14.8028 14.4392 15.4205 14.8481 16C16.4995 15.4687 18.1791 14.6567 19.9107 13.3184C20.3259 8.77378 19.2014 4.83355 16.9382 1.34ZM6.67621 10.9075C5.68854 10.9075 4.87857 9.95435 4.87857 8.7937C4.87857 7.63306 5.67124 6.67831 6.67621 6.67831C7.68119 6.67831 8.49113 7.63138 8.47384 8.7937C8.4754 9.95435 7.68119 10.9075 6.67621 10.9075ZM13.3194 10.9075C12.3317 10.9075 11.5218 9.95435 11.5218 8.7937C11.5218 7.63306 12.3144 6.67831 13.3194 6.67831C14.3244 6.67831 15.1343 7.63138 15.117 8.7937C15.117 9.95435 14.3244 10.9075 13.3194 10.9075Z" fill="white"/>
+        </svg>
+    </button>
+
+    <button class="btn btn--outline-err" 
+        [class.btn--loading]="loadingUnbind" 
+        [disabled]="loadingUnbind || !(unbindable|async) || loading" 
+        (click)="showUnbindApprovement = true;"
+    >
+        <btn-loader [isSpinner]="loadingUnbind" text="Unbind"></btn-loader>
+    </button>
+</div>
+
+
+<unbind-approve *ngIf="showUnbindApprovement" 
+    (onClose)="showUnbindApprovement = false"
+    (onApprove)="onUnbind()"
+></unbind-approve>

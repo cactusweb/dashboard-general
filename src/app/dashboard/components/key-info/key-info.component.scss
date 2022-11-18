@@ -1,0 +1,71 @@
+:host{
+    position: relative;
+}
+
+.window{
+    row-gap: 24px;
+}
+
+.full-width{
+    gap: 16px;
+    grid-template-columns: 1fr 160px;
+    @media screen and ( max-width: 520px ) {
+        grid-template-columns: 1fr;
+        grid-auto-flow: row;
+    }
+}
+
+
+.form-control{
+    padding-left: 12px;
+    text-align: left;
+}
+
+.btn{
+    position: relative;
+    top: -1px;
+    right: -1px;
+
+    svg{
+        @media screen and ( max-width: 780px ) {
+            height: 17px;
+            width: 17px;
+        }
+    }
+
+    &--loading svg{
+        animation: rotate 1s linear 0s infinite normal ;
+        transform-origin: center center;
+    }
+}
+
+// #used{
+//     @media screen and ( min-width: (780px+1) ) {
+//         display: none;
+//     }
+// }
+
+
+@keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+  
+    to {
+      transform: rotate(360deg);
+    }
+}
+
+#infinity{
+    height: 16px; 
+    width: 18px; 
+    vertical-align: top;
+    @media screen and ( max-width: 780px ) {
+        height: 14px;
+        width: 16px;
+    }
+
+    path{
+        fill: var(--input-color)
+    }
+}

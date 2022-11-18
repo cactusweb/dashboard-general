@@ -1,0 +1,39 @@
+$tab-size: 780px;
+
+:host{
+    display: grid;
+}
+
+.window{
+    justify-content: space-between;
+    padding: 24px;
+    gap: 12px;
+    justify-items: center;
+
+    &__title{
+        font-weight: 600;
+        font-size: 18px;
+    }
+
+    @media screen and ( max-width: 780px ) {
+        grid-auto-flow: row;
+        padding: 16px 24px;
+        justify-content: stretch;
+        border-radius: 12px;
+    }
+}
+
+button{
+    width: 192px;
+    height: 46px;
+
+    @media screen and ( max-width: $tab-size ) {
+        max-width: 320px;
+        width: 100%;
+        height: 44px;
+    }
+}
+
+app-bind{
+    z-index: 2;
+}

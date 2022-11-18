@@ -1,0 +1,14 @@
+<ng-container *ngVar="(purchaseState|async) as state">
+    
+    <drop-status-btn *ngIf="state == 'btn'"></drop-status-btn>
+
+    <purchase-form *ngIf="state == 'form' || state == 'payment'"></purchase-form>
+
+    <status-success *ngIf="state == 'status-success'"></status-success>
+
+    <!-- <status-check *ngIf="state == 'status-check'"></status-check> -->
+
+    <status-failed *ngIf="state == 'status-failed' || state == 'status-payment-failed'"
+        [isPaymentFailed]="state.includes('payment')"
+    ></status-failed>
+</ng-container>

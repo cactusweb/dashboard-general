@@ -1,0 +1,11 @@
+<app-header></app-header>
+
+<div class="licenses" *ngVar="(licenses|async) as licenses">
+    <ng-template [ngIf]="licenses">
+        <license-card *ngFor="let lic of licenses,trackBy:trackLicense" [license]="lic"></license-card>
+    </ng-template>
+    <ng-template [ngIf]="!licenses">
+        <license-card></license-card>
+        <license-card></license-card>
+    </ng-template>
+</div>

@@ -1,0 +1,18 @@
+<form class="window" [formGroup]="form" (ngSubmit)="onBind()">
+    <h2 class="window__title">New license</h2>
+    
+    <input 
+        type="text" 
+        id="license-key" 
+        class="form-control form-control--text-center" 
+        autocomplete="off" 
+        placeholder="Enter your key"
+        formControlName="key"
+        mask="AAAA-AAAA-AAAA-AAAA" [dropSpecialCharacters]="false"
+        #input
+    >
+
+    <button class="btn btn--primary" [disabled]="loading" [class.btn--loading]="loading">
+        <btn-loader text="Bind" [isSpinner]="loading"></btn-loader>
+    </button>
+</form>

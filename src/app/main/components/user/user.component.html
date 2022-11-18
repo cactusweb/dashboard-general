@@ -1,0 +1,8 @@
+<a class="user row" routerLink="/licenses" *ngVar="(user|async) as user" [class.user--loading]="!user">
+    <span class="user__avatar" >
+        <img *ngIf="user" [src]="user.avatar" alt="">
+    </span>
+    <h3 class="user__name">
+        {{user?.full_name||''}}
+    </h3>
+</a>

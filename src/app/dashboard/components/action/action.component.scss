@@ -1,0 +1,16 @@
+.window{
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+
+    @media screen and ( max-width: 780px ) {
+        grid-auto-flow: row;
+        grid-template-columns: auto;
+    }
+}
+
+#join-ds svg{
+    @media screen and ( max-width: 780px ) {
+        height: 14px;
+        width: 17px;
+    }
+}

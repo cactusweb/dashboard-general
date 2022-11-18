@@ -1,0 +1,35 @@
+<div class="window">
+        <div class="control-wrapper">
+            <p class="control-wrapper__label">Plan type</p>
+            <div class="form-control" id="plan-type">{{license?.type}}</div>
+        </div>
+    
+        <div class="control-wrapper" 
+            [class.control-wrapper--disabled]="license && (license.type == 'trial' || license.type == 'lifetime')"
+        >
+            <p class="control-wrapper__label">Renewal</p>
+            <div class="form-control">{{getPaymentPrice()}}</div>
+        </div>
+        
+    
+        <div class="control-wrapper">
+            <p class="control-wrapper__label">Date of joining</p>
+            <div class="form-control">{{license? ((license.bought_at||license.created_at)|date:'dd.MM.YY') : ''}}</div>
+        </div>
+
+        
+    
+        <div class="control-wrapper" 
+            [class.control-wrapper--disabled]="license && license.type == 'lifetime'"
+        >
+            <p class="control-wrapper__label">
+                <ng-template [ngIf]="license && license.type == 'trial'">Expires date</ng-template>
+                <ng-template [ngIf]="!license || license.type != 'trial'">Next renewal</ng-template>
+            </p>
+            <div class="form-control">{{getNextRenewalDate()}}</div>
+        </div>
+
+        <span class="hr"></span>
+
+        <app-payment [payment]="license?.payment" [licenseType]="license?.type"></app-payment>
+</div>

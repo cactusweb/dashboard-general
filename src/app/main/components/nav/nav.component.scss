@@ -1,0 +1,47 @@
+$tab-size: 780px;
+
+:host{
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    box-sizing: border-box;
+    padding: initial;
+    padding: 30px 80px;
+    height: 110px;
+    // max-width: 1680px;
+    @media screen and ( max-width: $tab-size ) {
+        padding: 20px 24px;
+        height: auto;
+    }
+}
+
+nav{
+    // max-width: 1400px;
+    width: 100%;
+    justify-self: center;
+    column-gap: 24px;
+    position: relative;
+    box-sizing: border-box;
+}
+
+button{
+    width: 163px;
+    height: 100%;
+    justify-self: end;
+    height: 50px;
+    @media screen and ( max-width: $tab-size ) {
+        max-width: 140px;
+        width: 100%;
+        height: 44px;
+    }
+}
+
+.logo{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    @media screen and ( max-width: $tab-size ) {
+        display: none;
+    }
+}

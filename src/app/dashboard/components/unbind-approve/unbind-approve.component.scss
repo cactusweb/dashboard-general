@@ -1,0 +1,23 @@
+.overlay{
+    @media screen and ( max-width: 780px ) {
+        position: fixed;
+        padding: 0px 20px;
+    }
+}
+
+.window__body{
+    max-width: initial;
+    row-gap: 40px;
+    max-width: 350px;
+}
+
+.window__subtitle{
+    font-weight: 500;
+}
+
+.row{
+    column-gap: 16px;
+    @media screen and ( max-width: 780px ) {
+        column-gap: 8px;
+    }
+}

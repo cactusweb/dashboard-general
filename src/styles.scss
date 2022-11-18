@@ -1,0 +1,435 @@
+/* You can add global styles to this file, and also import other style files */
+@import '/src/environments/environment.scss';
+
+html,body, app-root{
+    min-height: 100vh;
+    padding: 0px;
+    margin: 0px;
+    display: grid;
+    // @extend .custom-scroll;
+
+    &::-webkit-scrollbar{ width: 7px !important; }
+}
+
+body, span.hr{
+    background-color: var(--bg-color);
+}
+
+body{
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+
+a{text-decoration: none;}
+a:focus{outline: auto;}
+button, select, a, input[type="checkbox"], input[type="radio"]{cursor: pointer; box-sizing: border-box; padding: 0;margin: 0;}
+button, input{background: none; border: none; padding: 0px; box-sizing: border-box;}
+input[type="date"]{cursor: text; text-align: start;}
+input[type="date"]::-webkit-inner-spin-button, input[type="date"]::-webkit-calendar-picker-indicator{display: none; -webkit-appearance: none;}
+a, a *, button{transition: .4s;}
+div, form, textarea, input, ul{box-sizing: border-box;}
+h1, h2, h3, h4, p{margin: 0px; padding: 0px;}
+ul{ padding: 0px; margin: 0px; }
+fieldset{
+    border: none;
+    padding: 0px;
+    margin: 0px;
+}
+label{cursor: pointer;}
+button:disabled, input:disabled{cursor: default;}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+router-outlet{position: absolute;}
+*{outline: none;}
+ngx-spinner{border-radius: inherit; }
+
+.bg-cover{
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50%;
+}
+
+
+.flex-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+*::selection{
+    color: #fff;
+    background-color: #78AFF8;
+}
+
+
+.custom-scroll{
+    
+    &::-webkit-scrollbar{
+        width:5px;
+        background-color: #EEEEEE;
+        border-radius: 2px;
+    }
+
+    &::-webkit-scrollbar-thumb{
+        border: none;
+        border-radius: 2px;
+        width: 3px;
+        background: #78AFF8;
+    }
+
+    &::-webkit-scrollbar-thumb:hover{
+        background: #5da3ff;
+    }
+
+    &::-webkit-scrollbar-track{
+        border-radius: 2px;
+        border-width:0;
+        background: #EEEEEE;
+    }
+
+}
+
+
+.row{
+    display: grid;
+    grid-auto-flow: column;
+    align-items: center;
+}
+
+
+
+
+
+.window{
+    display: grid;
+    row-gap: 32px;
+
+    padding: 40px 32px;
+    // max-width: 530px;
+    width: 100%;
+    
+    border-radius: var(--radius);
+    background: var(--bg-color);
+
+    justify-self: center;
+    align-self: center;
+
+    @media screen and ( max-width: $phone-size ) {
+        padding: 32px 24px;
+        // max-width: 480px;
+    }
+
+    *:not(button, input, .form-control, .btn){
+        color: var(--text-color--label)
+    }
+    
+    &__title{
+        text-align: center;
+        font-weight: 600;
+        font-size: 22px;
+        line-height: 27px;
+
+        @media screen and ( max-width: $phone-size ) {
+            font-size: 20px;
+            line-height: 24px;
+        }
+    }
+    
+    &__subtitle{
+        text-align: center;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 22px;
+
+        @media screen and ( max-width: $phone-size ) {
+            font-size: 16px;
+            line-height: 19.5px;
+        }
+    }
+
+    &__body{
+        display: grid;
+        row-gap: 24px;
+        justify-self: center;
+        max-width: 320px;
+        width: 100%;
+    }
+}
+
+
+
+
+.overlay{
+    display: grid;
+    place-items: center;
+
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+
+    z-index: 10;
+    &--full-screen{
+        position: fixed
+    }
+
+    .popup{
+        z-index: 1;
+    }
+}
+
+.artboard{
+    backdrop-filter: blur(10px);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+
+.btn{
+    @extend .flex-center;
+    padding: 0px 16px;
+    height: 48px;
+    width: 100%;
+
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 100%;
+
+    border-radius: var(--radius);
+
+    transition: .4s;
+    position: relative;
+
+    // @media screen and ( max-width: $phone-size) {
+    //     height: 40px;
+    // }
+
+    &:disabled:not(.btn--loading){
+        opacity: .5;
+    }
+
+    ngx-spinner .la-ball-clip-rotate div{
+        color: var(--color) !important;
+    }
+
+    &--primary{
+        background-color: var(--primary-color);
+        color: var(--color);
+        &:hover:not(:disabled){
+            background-color: var(--primary-color--hover);
+        }
+    }
+
+    &--success{
+        background-color: var(--success-color);
+        color: var(--color);
+        &:hover:not(:disabled){
+            background-color: var(--success-color--hover);
+        }
+
+        ngx-spinner .la-ball-clip-rotate div{
+            color: var(--color) !important;
+        }
+    }
+
+    
+    &--err{
+        background-color: var(--err-color);
+        color: var(--color);
+        &:hover:not(:disabled){
+            background-color: var(--err-color--hover);
+        }
+
+        ngx-spinner .la-ball-clip-rotate div{
+            color: var(--color) !important;
+        }
+    }
+
+    &--outline-err{
+        color: var(--err-color);
+        border: 1px solid var(--err-color);
+        &:hover:not(:disabled){
+            background-color: var(--err-color);
+            color: var(--color);
+        }
+        
+        ngx-spinner .la-ball-clip-rotate div{
+            color: var(--err-color) !important;
+        }
+    }
+
+    &--outline-primary{
+        color: var(--primary-color);
+        border: 1px solid var(--primary-color);
+        &:hover:not(:disabled){
+            background-color: var(--primary-color);
+            color: var(--color);
+        }
+        
+        ngx-spinner .la-ball-clip-rotate div{
+            color: var(--primary-color) !important;
+        }
+
+    }
+
+    &--outline-secondary{
+        color: var(--color--secondary);
+        border: 1px solid var(--color--secondary);
+        &:hover:not(:disabled){
+            border-color: var(--color--secondary-hover);
+            color: var(--color--secondary-hover);
+        }
+        
+        ngx-spinner .la-ball-clip-rotate div{
+            color: var(--color--secondary) !important;
+        }
+    }
+
+    &-icon{
+        width: 48px;
+        padding: 0px;
+        border: 2px solid;
+        background-color: var(--bg-color);
+
+        // @media screen and ( max-width: $phone-size) {
+        //     width: 40px;
+        // }
+
+        svg path{
+            transition: .4s;
+        }
+
+        &--primary{
+            border-color: var(--primary-color);
+            &:hover:not(:disabled){
+                background-color: var(--primary-color);
+
+                svg path{
+                    fill: var(--bg-color)
+                }
+            }
+
+            svg path{
+                fill: var(--primary-color)
+            }
+        }
+
+    }
+
+    &__svg{
+        margin-left: 8px;
+        transition: .4s;
+        path{
+            transition: .4s;
+        }
+    }
+
+    &--outline-primary &__svg path{
+        fill: var(--primary-color);
+    }
+    
+    &--outline-primary:hover:not(:disabled) &__svg path{
+        fill: var(--color);
+    }
+
+    
+    
+    ngx-spinner > div > div{
+        width: 25px !important;
+        height: 25px !important;
+        > div{
+            width: inherit !important;
+            height: inherit !important;
+            border-width: 3.5px !important;
+        }
+    }
+
+}
+
+
+.form-control{
+    @extend .btn;
+    background-color: var(--bg-color);
+    height: 44px;
+    box-sizing: border-box;
+    text-align: center;
+
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 20px;
+    border-radius: var(--radius);
+
+    color: var(--input-color);
+    *{
+        color: var(--input-color) !important;
+    }
+
+    border: 1px solid var(--border);
+
+    // @media screen and ( max-width: $phone-size ) {
+    //     height: 40px;
+    // }
+    &--btn{
+        @extend .row;
+        grid-template-columns: 1fr auto;
+        padding: 0px;
+        
+        .btn-icon{
+            position: relative;
+            top: -1px;
+            right: -1px;
+        }
+    }
+
+    &::placeholder{
+        color: var(--placeholder);
+    }
+
+    &.ng-touched.ng-invalid{
+        border-color: var(--err-color);
+    }
+}
+
+
+
+.control-wrapper{
+    display: grid;
+    row-gap: 10px;
+    align-content: start;
+    transition: .3s;
+
+    &--disabled{
+        opacity: .3;
+        pointer-events: none;
+        .btn:disabled{
+            opacity: 1;
+        }
+    }
+
+    &__label{
+        font-size: 16px;
+        line-height: 19.5px;
+        color: var(--text-color--label);
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
