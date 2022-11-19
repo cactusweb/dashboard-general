@@ -9,6 +9,7 @@ const routes: Routes = [
     { path: ':ownerName/dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) },
     { path: ':ownerName/purchase', loadChildren: () => import('./purchase/purchase.module').then(m => m.PurchaseModule) },
     { path: 'main', redirectTo: '/licenses' },
+    { path: '', pathMatch: 'full', redirectTo: '/licenses' },
     { path: '**', loadChildren: () => import('./not-found/not-found.module').then(m => m.NotFoundModule) }
 ]
 
