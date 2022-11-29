@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, map, tap, filter, BehaviorSubject, take, finalize } from 'rxjs';
+import { Observable, map, tap, filter, BehaviorSubject, take, finalize, of } from 'rxjs';
 import { Requests } from 'src/app/const';
 import { License } from 'src/app/license-list/interfaces/license';
 import { ReferralPrize, ReferralPrizes } from 'src/app/license-list/interfaces/referral-prize';
 import { LicensesService } from 'src/app/license-list/services/licenses.service';
+import { Order } from 'src/app/purchase/interfaces/order';
 import { HttpService } from 'src/app/tools/services/http.service';
 import { SeoService } from 'src/app/tools/services/seo.service';
 import { ToolsService } from 'src/app/tools/services/tools.service';
@@ -27,6 +28,8 @@ export class DashboardService {
   }
 
   private $license = new BehaviorSubject<License|null>(null)
+
+  private renewOrder: Order|undefined;
 
   constructor(
     private licenses: LicensesService,
@@ -121,7 +124,36 @@ export class DashboardService {
   resetData(){
     this.license = null;
     this.ownerName = '';
+    this.resetRenewOrder();
     this.seo.changeIcon();
+  }
+
+  getRenewOrder(): Observable<Order>{
+    if ( this.renewOrder ) return of(this.renewOrder)
+
+    return this.http.request( Requests['getRenewOrder'], this.ownerName )
+      .pipe(
+        tap(d => this.renewOrder = d)
+      )
+  }
+
+  private resetRenewOrder(){
+    this.renewOrder = undefined;
+  }
+
+  onRenewLicense(){
+    if ( !this.license ) return;
+
+    let lic: License = {
+      ...this.license,
+      expires_in: this.license.expires_in ? new Date(this.license.expires_in).setMonth(new Date(this.license.expires_in).getMonth()+1) : this.license.expires_in
+    }
+
+    this.licenses.putLicenses(licenses => licenses.map(lc => {
+        return lc.id == lic.id ? lic : lc;
+    }))
+    this.license = lic;
+    this.resetRenewOrder()
   }
 
   

@@ -1,0 +1,41 @@
+$phone-size: 780px;
+
+.overlay{
+    padding: 30px 24px;
+}
+
+.window{
+    max-width: 500px;
+    width: 100%;
+    align-content: center;
+    padding: 24px 24px 32px;
+    row-gap: 16px;
+
+    @media screen and ( max-width: $phone-size ) {
+        row-gap: 12px;
+    }
+
+    &__body{
+        row-gap: 8px;
+        max-width: initial;
+        justify-items: center;
+    }
+
+    &__subtitle{
+        font-weight: 500;
+    }
+}
+
+svg{
+    justify-self: center;
+    width: 80px;
+    height: 80px;
+    @media screen and ( max-width: $phone-size ) {
+        width: 64px;
+        height: 64px;
+    }
+
+    path{
+        fill: var(--primary-color)
+    }
+}

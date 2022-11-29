@@ -13,6 +13,9 @@ import { ToolsModule } from '../tools/tools.module';
 import { DashboardService } from './services/dashboard.service';
 import { OwnerComponent } from './components/owner/owner.component';
 import { LinkToMainComponent } from './components/link-to-main/link-to-main.component';
+import { CryptoRenewComponent } from './components/crypto-renew/crypto-renew.component';
+import { RenewSuccessComponent } from './components/renew-success/renew-success.component';
+import { CryptoPaymentModule } from '../crypto-payment/crypto-payment.module';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent, data: { title: 'Dashboard' } }
@@ -30,11 +33,14 @@ const routes: Routes = [
     UnbindApproveComponent,
     OwnerComponent,
     LinkToMainComponent,
+    CryptoRenewComponent,
+    RenewSuccessComponent
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     ToolsModule,
+    CryptoPaymentModule
   ],
   providers: [DashboardService]
 })

@@ -31,5 +31,7 @@
 
         <span class="hr"></span>
 
-        <app-payment [payment]="license?.payment" [licenseType]="license?.type"></app-payment>
+        <app-payment *ngIf="!license || license.payment.way !== 'Crypto'" [payment]="license?.payment" [licenseType]="license?.type"></app-payment>
+        <app-crypto-renew *ngIf="license && license.payment.way == 'Crypto'" ></app-crypto-renew>
+        
 </div>
