@@ -1,6 +1,7 @@
 import { User } from "src/app/tools/interfaces/user"
+import { CryptoPaymentMethod } from "./crypto-payment-method"
 
-export interface Drop {
+export interface Order {
     Receipt: Record<any,any>,
     description: string,
     
@@ -10,6 +11,7 @@ export interface Drop {
 
     payment_way: '' | 'Tinkoff' | 'Ameria'
     tinkoff: { terminal_key: string }
+    crypto: CryptoPaymentMethod[]
 
     id: string
     

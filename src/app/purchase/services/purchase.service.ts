@@ -9,11 +9,11 @@ import { Req } from 'src/app/tools/interfaces/req-map';
 import { HttpService } from 'src/app/tools/services/http.service';
 import { SeoService } from 'src/app/tools/services/seo.service';
 import { ToolsService } from 'src/app/tools/services/tools.service';
-import { Drop } from '../interfaces/drop';
+import { Order } from '../interfaces/order';
 
 @Injectable()
 export class PurchaseService {
-  private drop: Drop|undefined;
+  private drop: Order|undefined;
   public owner: LicenseOwner|undefined;
 
   private loading: boolean = false;
@@ -31,9 +31,9 @@ export class PurchaseService {
     private title: Title
   ) { }
 
-  getDrop(): Observable<Drop>{
+  getDrop(): Observable<Order>{
     if ( this.drop ) 
-      return new BehaviorSubject<Drop>(this.drop)
+      return new BehaviorSubject<Order>(this.drop)
 
     this.loading = true;
 
