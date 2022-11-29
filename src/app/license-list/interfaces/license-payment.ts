@@ -9,5 +9,5 @@ export interface LicensePayment {
     last_4: string
     exp_date: string
 
-    way: '' | 'Tinkoff' | 'Ameria'
+    way: '' | 'Tinkoff' | 'Ameria' | 'Crypto'
 }
