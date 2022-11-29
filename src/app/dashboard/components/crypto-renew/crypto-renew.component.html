@@ -1,8 +1,8 @@
-<div class="control-wrapper">
+<div class="control-wrapper" [class.control-wrapper--disabled]="disabled">
     <span class="control-wrapper__label">Payment info</span>
     <button class="btn btn--outline-primary"
             [class.btn--loading]="loading"
-            [disabled]="disabled || loading" 
+            [disabled]="loading" 
             (click)="getOrder()" 
     >
         <btn-loader text="Pay renewal with crypto" [isSpinner]="loading"></btn-loader>
