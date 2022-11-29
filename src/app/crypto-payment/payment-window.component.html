@@ -1,0 +1,22 @@
+
+<!-- <div class="overlay overlay--full-screen">
+    <div class="artboard" (click)="onClose.emit()"></div> -->
+
+    <form class="window" [formGroup]="form" (ngSubmit)="onConfirm()">
+
+        <fieldset>
+            <method-selector formControlName="typeId" [paymentMethods]="order.crypto"></method-selector>
+
+            <app-recevier [address]="recevierAddress"></app-recevier>
+        </fieldset>
+    
+        <input type="text" formControlName="tx" class="form-control" placeholder="Input transaction hash" autocomplete="OFF">
+    
+        <button class="btn btn--primary" [disabled]="loading" [class.btn--loading]="loading">
+            <btn-loader text="Confirm payment" [isSpinner]="loading"></btn-loader>
+        </button>
+    
+        <info-link></info-link>
+    </form>
+
+<!-- </div> -->

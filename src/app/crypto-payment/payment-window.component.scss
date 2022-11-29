@@ -1,0 +1,36 @@
+:host{
+    display: grid;
+    max-width: 600px;
+    width: 100%;
+}
+
+.window{
+    max-width: initial;
+    width: 100%;
+    row-gap: 24px;
+    padding-top: 40px;
+    padding-bottom: 24px;
+}
+
+fieldset{
+    display: grid;
+    row-gap: 12px;
+}
+
+info-link{
+    margin-top: 8px;
+}
+
+.btn{
+    @media screen and ( max-width: 780px ) {
+        height: 44px;
+    }
+}
+
+:host ::ng-deep .form-control{
+    height: 44px;
+}
+
+.form-control{
+    font-size: 14px;
+}

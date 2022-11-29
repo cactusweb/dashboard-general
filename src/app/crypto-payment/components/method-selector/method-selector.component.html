@@ -1,0 +1,44 @@
+<div id="phone-control">
+    
+    <div class="form-control" (click)="showDropDown = !showDropDown">
+        <span class="form-control__placeholder" *ngIf="!_val">Select payment method</span>
+    
+        <span class="form-control__value option" *ngIf="_val">
+            <img [src]="_val.coin.image" class="option__icon" alt="">
+            <span>
+                {{_val.coin.name}} - {{ _val.network }}
+            </span>
+        </span>
+    
+        <button class="btn form-control__icon" [class.btn--rotated]="showDropDown" type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M19.7072 8.29308C19.5197 8.10561 19.2654 8.00029 19.0002 8.00029C18.735 8.00029 18.4807 8.10561 18.2932 8.29308L12.0002 14.5861L5.70721 8.29308C5.61497 8.19757 5.50462 8.12139 5.38262 8.06898C5.26061 8.01657 5.12939 7.98898 4.99661 7.98783C4.86384 7.98668 4.73216 8.01198 4.60926 8.06226C4.48636 8.11254 4.37471 8.18679 4.28082 8.28069C4.18693 8.37458 4.11267 8.48623 4.06239 8.60913C4.01211 8.73202 3.98681 8.8637 3.98796 8.99648C3.98912 9.12926 4.0167 9.26048 4.06911 9.38248C4.12152 9.50449 4.1977 9.61483 4.29321 9.70708L11.2932 16.7071C11.4807 16.8946 11.735 16.9999 12.0002 16.9999C12.2654 16.9999 12.5197 16.8946 12.7072 16.7071L19.7072 9.70708C19.8947 9.51955 20 9.26525 20 9.00008C20 8.73492 19.8947 8.48061 19.7072 8.29308V8.29308Z" fill="#11BB7D"/>
+            </svg>
+        </button>
+    </div>
+    
+    <ul class="drop-down" [class.drop-down--active]="showDropDown">
+        <li *ngFor="let method of paymentMethods" class="option" (click)="val = method.id; showDropDown = false;">
+            <img [src]="method.coin.image" class="option__icon" alt="">
+            <span>
+                {{method.coin.name}} - {{ method.network }}
+            </span>
+        </li>
+    </ul>
+    
+
+</div>    
+
+
+
+
+<div class="control-wrapper" id="fp-control">
+    <span class="control-wrapper__label">Select the payment method</span>
+    <div class="form-control">
+        <method-card 
+            *ngFor="let method of paymentMethods" [method]="method"
+            [active]="!!_val && _val.id == method.id"
+            (click)="val = method.id"
+        ></method-card>
+    </div>
+</div>

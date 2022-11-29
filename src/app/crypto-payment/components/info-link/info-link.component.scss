@@ -1,0 +1,25 @@
+:host{
+    display: grid;
+    justify-content: center;
+}
+
+a{
+    font-size: 14px;
+    text-decoration: underline;
+    gap: 6px;
+
+    svg path{
+        transition: .3s;
+    }
+    svg path{
+        fill: var(--text-color--label)
+    }
+
+    &:hover{
+        color: var(--primary-color);
+        
+        svg path{
+            fill: var(--primary-color)
+        }
+    }
+}

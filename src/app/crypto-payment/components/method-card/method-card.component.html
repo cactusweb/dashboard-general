@@ -1,0 +1,9 @@
+<div class="method btn" [class.btn--primary]="active">
+    <span class="method__network">{{method.network}}</span>
+    <div class="method__amount row">
+        <span class="method__icon">
+            <img [src]="method.coin.image" alt="">
+        </span>
+        {{method.amount}} {{ method.coin.name }}
+    </div>
+</div>
