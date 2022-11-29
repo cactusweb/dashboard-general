@@ -1,4 +1,4 @@
-$phone-size: 550px;
+$phone-size: 650px;
 
 :host{
     position: relative;
@@ -14,8 +14,6 @@ $phone-size: 550px;
         position: relative;
         padding-left: 12px;
 
-        height: 40px;
-    
         &__placeholder{
             color: var(--placeholder) !important;
         }
