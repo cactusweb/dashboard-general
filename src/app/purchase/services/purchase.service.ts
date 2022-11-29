@@ -18,7 +18,7 @@ export class PurchaseService {
 
   private loading: boolean = false;
   
-  public $purchaseState = new BehaviorSubject<'btn' | 'form' | 'payment' | 'status-failed' | 'status-success' | 'status-payment-failed'>('btn')
+  public $purchaseState = new BehaviorSubject<'btn' | 'form' | 'payment' | 'status-failed' | 'status-success' | 'status-payment-failed' | 'status-check' | 'crypto-payment'>('btn')
 
   public purchasedLicense: License|undefined
 
@@ -109,6 +109,18 @@ export class PurchaseService {
           this.$purchaseState.next('status-failed')
           return throwError(err)
         })
+      )
+  }
+
+
+  getLicense(){
+    return this.http.request(Requests['getLicense'], null, this.getOwnerName())
+      .pipe(
+        tap(d => this.$purchaseState.next('status-success')),
+        map((l: License) => {
+          return { ...l, expires_in: l.expires_in*1000, bought_at: l.bought_at*1000, created_at: l.created_at*1000 }
+        }),
+        tap(d => this.purchasedLicense = d),
       )
   }
 

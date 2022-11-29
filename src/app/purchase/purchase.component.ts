@@ -17,7 +17,7 @@ import { PurchaseService } from './services/purchase.service';
   }
 })
 export class PurchaseComponent implements OnInit, OnDestroy {
-  purchaseState: Observable<'btn'|'form'|'payment'|'status-failed'|'status-success'|'status-payment-failed'>
+  purchaseState: Observable<'btn'|'form'|'payment'|'status-failed'|'status-success'|'status-payment-failed'|'status-check'|'crypto-payment'>
   ownerData!: LicenseOwner
 
   constructor(

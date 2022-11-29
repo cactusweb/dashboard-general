@@ -1,0 +1,6 @@
+<ng-container *ngVar="(drop|async) as order">
+    <payment-window *ngIf="order" 
+        [order]="order"
+        (onSuccess)="onSuccess()"
+    ></payment-window>
+</ng-container>

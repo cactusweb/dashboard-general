@@ -11,6 +11,8 @@ export class DropStatusBtnComponent implements OnInit {
   loading: boolean = true;
   isActive: boolean = false;
 
+  paymentWay: '' | 'Tinkoff' | 'Ameria' | 'Crypto' = '';
+
   constructor(
     public purchase: PurchaseService
   ) { }
@@ -26,7 +28,10 @@ export class DropStatusBtnComponent implements OnInit {
         finalize(() => this.loading = false),
       )
       .subscribe({
-        next: () => this.isActive = true,
+        next: w => {
+          this.isActive = true
+          this.paymentWay = w.payment_way
+        },
         error: () => this.isActive = false
       })
   }

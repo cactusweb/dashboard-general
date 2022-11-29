@@ -11,6 +11,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StatusSuccessComponent } from './components/status-success/status-success.component';
 import { StatusFailedComponent } from './components/status-failed/status-failed.component';
 import { OwnerComponent } from './components/owner/owner.component';
+import { StatusCheckComponent } from './components/status-check/status-check.component';
+import { CryptoPaymentComponent } from './components/crypto-payment/crypto-payment.component';
+import { CryptoPaymentModule } from '../crypto-payment/crypto-payment.module';
 
 const routes: Routes = [
   { path: '', component: PurchaseComponent, data: { title: 'Purchase' } }
@@ -24,7 +27,9 @@ const routes: Routes = [
     PurchaseFormComponent,
     StatusSuccessComponent,
     StatusFailedComponent,
-    OwnerComponent
+    OwnerComponent,
+    StatusCheckComponent,
+    CryptoPaymentComponent
   ],
   imports: [
     CommonModule,
@@ -32,6 +37,7 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     ToolsModule,
+    CryptoPaymentModule
   ],
   providers: [PurchaseService]
 })

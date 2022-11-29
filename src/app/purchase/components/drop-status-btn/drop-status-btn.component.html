@@ -3,7 +3,7 @@
 <button class="btn btn--primary"
     [disabled]="loading || !isActive"
     [class.btn--loading]="loading"
-    (click)="purchase.$purchaseState.next('form')"
+    (click)="purchase.$purchaseState.next(paymentWay == 'Crypto' ? 'crypto-payment' : 'form')"
 >
     <btn-loader [isSpinner]="loading" [text]="isActive ? 'Purchase' : 'Sold out'"></btn-loader>
 </button>

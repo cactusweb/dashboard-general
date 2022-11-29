@@ -1,0 +1,38 @@
+:host ::ng-deep .window{
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+    height: 290px;
+    row-gap: 12px;
+    @media screen and ( max-width: 780px ) {
+        row-gap: 8px;
+        height: 265px;
+    }
+
+    &__title{
+        text-align: center;
+    }
+}    
+
+
+:host ::ng-deep .loader-wrapper{
+    width: 40px;
+    height: 40px;
+    padding: 0px;
+    justify-self: center;
+    
+
+    ngx-spinner .la-ball-clip-rotate div{
+        color: var(--primary-color) !important;
+    }
+
+    ngx-spinner > div > div{
+        height: 40px !important;
+        width: 40px !important;
+        @media screen and ( max-width: 780px ) {
+            width: 32px !important;
+            height: 32px !important;
+        }
+    }
+    
+}

@@ -4,9 +4,11 @@
 
     <purchase-form *ngIf="state == 'form' || state == 'payment'"></purchase-form>
 
+    <crypto-payment *ngIf="state == 'crypto-payment'"></crypto-payment>
+
     <status-success *ngIf="state == 'status-success'"></status-success>
 
-    <!-- <status-check *ngIf="state == 'status-check'"></status-check> -->
+    <status-check *ngIf="state == 'status-check'"></status-check>
 
     <status-failed *ngIf="state == 'status-failed' || state == 'status-payment-failed'"
         [isPaymentFailed]="state.includes('payment')"
