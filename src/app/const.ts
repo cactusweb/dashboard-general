@@ -15,6 +15,7 @@ export const Requests: reqMap = {
     
     getDrop: { url: `/drop/authenticate`, method: 'POST' },
     purchaseFree: { url: `/drop/:param/free`, method: 'POST' },
+    postOrderEmail: { url: '/order/:param', method: 'PUT' },
 
     getReferral: { url: '/referral/authenticate', method: 'POST' },
     getReferralPrizes: { url: `/referral/:param`, method: 'GET' },
@@ -25,5 +26,7 @@ export const Requests: reqMap = {
     bindLicense: { url: `/license/bind`, method: 'POST' },
     unbindLicense: { url: `/license/:param/unbind`, method: 'GET' },
 
-    getOwner: { url: `/owner/:param`, method: 'GET' }
+    getOwner: { url: `/owner/:param`, method: 'GET' },
+
+    getRenewOrder: { url: `/license/:param/renew`, method: 'GET' }
 }
