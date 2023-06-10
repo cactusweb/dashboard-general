@@ -1,8 +1,12 @@
-<div class="owner" *ngVar="purchase.owner as owner" [class.owner--loading]="!owner">
-    <div class="owner__logo">
-        <img *ngIf="owner" src="https://dashboard.cactusweb.io/uploads/avatar/cactussoft.png" alt="">
-    </div>
-    <h1 class="owner__name window__title">
-        {{ owner?.name }}
-    </h1> 
+<div
+  class="owner"
+  *ngVar="purchase.owner as owner"
+  [class.owner--loading]="!owner"
+>
+  <div class="owner__logo">
+    <img *ngIf="owner" [src]="owner.avatar" alt="" />
+  </div>
+  <h1 class="owner__name window__title">
+    {{ owner?.name }}
+  </h1>
 </div>
