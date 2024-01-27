@@ -31,6 +31,17 @@ module.exports = {
           min: `${BREAKPOINTS.lg + 1}px`,
         },
       },
+      colors: {
+        primary: {
+          DEFAULT: "#3880EC",
+        },
+        error: {
+          DEFAULT: "#DA3A3A",
+        },
+        success: {
+          DEFAULT: "#21BC31",
+        },
+      },
     },
   },
   plugins: [],

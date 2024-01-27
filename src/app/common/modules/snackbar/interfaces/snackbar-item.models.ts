@@ -5,7 +5,7 @@ export interface CsdSnackbarItem {
   closeFn: () => void;
 }
 
-export const enum CsdSnackbarLevels {
+export enum CsdSnackbarLevels {
   ERROR = 'error',
   SUCCESS = 'success',
   INFO = 'info',

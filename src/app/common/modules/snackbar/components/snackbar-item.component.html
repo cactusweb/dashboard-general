@@ -1,8 +1,15 @@
 <div class="row tw-gap-2">
-  <mat-icon [fontIcon]="iconName" />
+  <mat-icon
+    [fontIcon]="iconName"
+    [ngClass]="{
+    'tw-text-primary': level === CsdSnackbarLevels.INFO,
+    'tw-text-error': level === CsdSnackbarLevels.ERROR,
+    'tw-text-success': level === CsdSnackbarLevels.SUCCESS,
+  }"
+  />
   <div class="msg">{{ text }}</div>
 </div>
 
 <button (click)="close.emit()">
-  <mat-icon fontIcon="icon-cross" />
+  <mat-icon fontIcon="icon-close" />
 </button>

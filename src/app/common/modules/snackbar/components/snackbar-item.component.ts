@@ -23,6 +23,8 @@ export class SnackbarItemComponent {
   @Input()
   level!: CsdSnackbarLevels;
 
+  readonly CsdSnackbarLevels = CsdSnackbarLevels;
+
   get iconName() {
     switch (this.level) {
       case CsdSnackbarLevels.ERROR:
