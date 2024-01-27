@@ -44,6 +44,9 @@ module.exports = {
           DEFAULT: "#21BC31",
           hover: "#19D720",
         },
+        secondary: {
+          DEFAULT: "#486270",
+        },
       },
     },
   },

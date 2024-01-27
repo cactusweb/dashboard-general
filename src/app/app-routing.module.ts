@@ -9,6 +9,11 @@ const routes: Routes = [
       import('./auth/auth.component').then((c) => c.AuthComponent),
   },
   {
+    path: RouterPaths.LOGIN,
+    loadComponent: () =>
+      import('./auth/auth.component').then((c) => c.AuthComponent),
+  },
+  {
     path: '**',
     redirectTo: '/' + RouterPaths.AUTH,
   },

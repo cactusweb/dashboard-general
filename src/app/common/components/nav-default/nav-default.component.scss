@@ -1,0 +1,26 @@
+.nav {
+  @apply tw-grid tw-grid-flow-col tw-gap-4 tw-items-center;
+
+  @apply tw-grid-cols-[1fr_auto_1fr] xs:tw-grid-cols-2 xs:tw-justify-between;
+
+  @apply tw-px-20 md:tw-px-10 xs:tw-px-5 tw-py-6 tw-bg-white tw-rounded-b-2xl;
+
+  &_empty {
+    grid-template-columns: 1fr;
+  }
+
+  &__logo {
+    @apply tw-justify-self-center;
+    img {
+      @apply tw-h-10;
+    }
+  }
+
+  &:not(&_empty) &__logo {
+    @apply tw-hidden;
+  }
+
+  &__logout {
+    @apply tw-justify-end;
+  }
+}

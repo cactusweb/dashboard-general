@@ -5,7 +5,9 @@
     "baseUrl": "src",
     "paths": {
       "@csd-store/*": ["app/common/store/*"],
-      "@csd-modules/*": ["app/common/modules/*"]
+      "@csd-modules/*": ["app/common/modules/*"],
+      "@csd-components/*": ["app/common/components/*"],
+      "@csd-directives/*": ["app/common/directives/*"]
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
@@ -24,7 +26,7 @@
     "module": "ES2022",
     "useDefineForClassFields": false,
     "lib": ["ES2022", "dom"],
-    "allowSyntheticDefaultImports": true,
+    "allowSyntheticDefaultImports": true
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

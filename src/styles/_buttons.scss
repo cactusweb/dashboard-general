@@ -5,7 +5,22 @@
   transition: 0.3s;
 }
 
+@mixin ButtonStroked() {
+  @include Button();
+  @apply tw-border tw-border-solid;
+}
+
 .csd-button_flat {
   @include Button();
   @apply tw-bg-primary tw-text-white hover:tw-bg-primary-hover;
+}
+
+.csd-button_stroked {
+  @include Button();
+  @apply tw-border tw-border-solid;
+
+  &[color="secondary"] {
+    @apply tw-border-secondary tw-text-secondary;
+    @apply hover:tw-border-black hover:tw-text-black;
+  }
 }

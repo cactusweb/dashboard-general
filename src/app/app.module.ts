@@ -14,6 +14,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { AuthEffects } from '@csd-store/auth/auth.effects';
 import { CsdSnackbarModule } from './common/modules/snackbar/snackbar.module';
 import { AppRoutingModule } from './app-routing.module';
+import { NavDefaultComponent } from '@csd-components/nav-default/nav-default.component';
 
 @NgModule({
   declarations: [AppComponent],
@@ -35,6 +36,7 @@ import { AppRoutingModule } from './app-routing.module';
     }),
 
     CsdSnackbarModule,
+    NavDefaultComponent,
   ],
   providers: [
     {
