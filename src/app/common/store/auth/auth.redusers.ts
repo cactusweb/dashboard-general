@@ -9,19 +9,16 @@ export const authRedusers = (
     case AuthActions.Auth:
       return {
         data: null,
-        pending: true,
       };
     case AuthActions.AuthSuccess:
       return {
         data: {
           authToken: action.authToken,
         },
-        pending: false,
       };
     case AuthActions.AuthLogout:
       return {
         data: null,
-        pending: false,
       };
     case AuthActions.SetAuthInitialState:
       return initialAuthState;

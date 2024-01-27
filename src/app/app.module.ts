@@ -11,9 +11,9 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthTokenInterceptor } from './common/interceptors/auth-token.interceptor';
 import { ErrorsHandlerInterceptor } from './common/interceptors/errors-handler.interceptor';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { RouterModule } from '@angular/router';
 import { AuthEffects } from '@csd-store/auth/auth.effects';
 import { CsdSnackbarModule } from './common/modules/snackbar/snackbar.module';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,7 +22,7 @@ import { CsdSnackbarModule } from './common/modules/snackbar/snackbar.module';
     BrowserAnimationsModule,
     HttpClientModule,
 
-    RouterModule,
+    AppRoutingModule,
 
     //@ts-ignore
     StoreModule.forRoot(reducers, { metaReducers: [storageMetaReducer] }),

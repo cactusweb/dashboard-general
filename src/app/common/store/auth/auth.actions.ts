@@ -1,4 +1,5 @@
 import { Action } from '@ngrx/store';
+import { AuthRedirectParam } from 'app/common/services/auth.service';
 
 export enum AuthActions {
   Auth = '[Auth] Auth',
@@ -9,7 +10,7 @@ export enum AuthActions {
 
 export class Auth implements Action {
   readonly type = AuthActions.Auth;
-  constructor(public redirectToParam?: Record<string, any>) {}
+  constructor(public redirectToParam?: AuthRedirectParam) {}
 }
 
 export class AuthSuccess implements Action {

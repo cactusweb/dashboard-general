@@ -1,3 +1,3 @@
 export enum RouterPaths {
-  LOGIN = 'login',
+  AUTH = 'auth',
 }

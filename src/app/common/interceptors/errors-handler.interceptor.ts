@@ -12,15 +12,16 @@ import { CsdSnackbarService } from '@csd-modules/snackbar/services/snackbar.serv
 import { Store } from '@ngrx/store';
 import { State } from '@csd-store/state';
 import { CsdSnackbarLevels } from '@csd-modules/snackbar/interfaces/snackbar-item.models';
-import { selectAuthIsPending } from '@csd-store/auth/auth.selectors';
 import { Auth } from '@csd-store/auth/auth.actions';
+import { AuthService } from '../services/auth.service';
 
 @Injectable()
 export class ErrorsHandlerInterceptor implements HttpInterceptor {
   constructor(
     private snackbarService: CsdSnackbarService,
     private utilsService: UtilsService,
-    private store: Store<State>
+    private store: Store<State>,
+    private authService: AuthService
   ) {}
 
   intercept(
@@ -68,8 +69,7 @@ export class ErrorsHandlerInterceptor implements HttpInterceptor {
   }
 
   private onAuthErr() {
-    this.store
-      .select(selectAuthIsPending)
+    this.authService.pending$
       .pipe(
         take(1),
         filter((d) => !d)

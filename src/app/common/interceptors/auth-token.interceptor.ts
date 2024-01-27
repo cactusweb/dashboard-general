@@ -8,33 +8,35 @@ import {
 import { EMPTY, Observable, combineLatest, switchMap, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { State } from '@csd-store/state';
-import {
-  selectAuthIsPending,
-  selectAuthState,
-  selectAuthToken,
-} from '@csd-store/auth/auth.selectors';
+import { selectAuthToken } from '@csd-store/auth/auth.selectors';
 import { Auth } from '@csd-store/auth/auth.actions';
 import { CsdSnackbarService } from '@csd-modules/snackbar/services/snackbar.service';
 import { CsdSnackbarLevels } from '@csd-modules/snackbar/interfaces/snackbar-item.models';
+import { AuthService } from '../services/auth.service';
 
 @Injectable()
 export class AuthTokenInterceptor implements HttpInterceptor {
   constructor(
     private store: Store<State>,
-    private snackbarService: CsdSnackbarService
+    private snackbarService: CsdSnackbarService,
+    private authService: AuthService
   ) {}
 
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    return this.store.select(selectAuthState).pipe(
+    return combineLatest([
+      this.store.select(selectAuthToken),
+      this.authService.pending$,
+    ]).pipe(
       take(1),
-      switchMap((state) => {
-        if (state.data?.authToken) {
-          return next.handle(this.setAuthHeader(req, state.data.authToken));
+      switchMap(([authToken, pending]) => {
+        if (authToken) {
+          return next.handle(this.setAuthHeader(req, authToken));
         }
-        if (!state.pending) {
+
+        if (!pending) {
           this.snackbarService.createItem(
             'Have no auth. Redirecting...',
             CsdSnackbarLevels.ERROR

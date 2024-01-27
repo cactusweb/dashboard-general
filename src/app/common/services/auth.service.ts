@@ -1,14 +1,33 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthLogout } from '@csd-store/auth/auth.actions';
+import { State } from '@csd-store/state';
+import { Store } from '@ngrx/store';
 import { environment } from 'environment/environment';
+import { RouterPaths } from '../consts/router-paths.conts';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, shareReplay } from 'rxjs';
+
+export interface AuthRedirectParam {
+  link: string;
+  queryParams: Record<string, any>;
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private router: Router) {}
+  private readonly _pending$ = new BehaviorSubject(false);
+  readonly pending$ = this._pending$.asObservable().pipe(shareReplay());
 
-  auth(redirectTo?: Record<string, any>) {
+  constructor(
+    private router: Router,
+    private store: Store<State>,
+    private http: HttpClient
+  ) {}
+
+  async auth(redirectTo?: AuthRedirectParam) {
+    this._pending$.next(true);
     window.location.href =
       environment.apiUrl +
       '/auth?redirect_to=' +
@@ -26,6 +45,10 @@ export class AuthService {
     return {
       queryParams: urlParams.queryParams,
       link: `/${currentLink}`,
-    };
+    } as AuthRedirectParam;
+  }
+
+  logout() {
+    this.store.dispatch(new AuthLogout(RouterPaths.AUTH));
   }
 }

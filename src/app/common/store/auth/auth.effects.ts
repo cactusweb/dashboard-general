@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { of, switchMap, tap } from 'rxjs';
+import { of, switchMap, take, tap } from 'rxjs';
 import {
   Auth,
   AuthActions,
@@ -8,7 +8,6 @@ import {
   SetAuthInitialState,
 } from './auth.actions';
 import { Router } from '@angular/router';
-import { RouterPaths } from 'app/common/consts/router-paths.conts';
 import { AuthService } from 'app/common/services/auth.service';
 
 @Injectable()
@@ -24,6 +23,7 @@ export class AuthEffects {
   auth$ = createEffect(() =>
     this.actions$.pipe(
       ofType<Auth>(AuthActions.Auth),
+      take(1),
       tap((data) => {
         this.authService.auth(data.redirectToParam);
       })
