@@ -5,6 +5,12 @@
 @import "./styles/reset";
 @import "./styles/material/theme";
 
+@import "./styles/buttons";
+
+body {
+  @apply tw-bg-[#CEDEE5];
+}
+
 html,
 body,
 app-root {
@@ -12,7 +18,7 @@ app-root {
 }
 
 * {
-  font-family: "Mitr", sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-style: normal;
 }
 
