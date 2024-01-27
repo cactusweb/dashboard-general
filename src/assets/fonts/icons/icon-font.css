@@ -1,0 +1,29 @@
+@font-face {
+  font-family: "Font Icons";
+  src: url("./icons.eot");
+  src: url("./icons.eot") format("embedded-opentype"),
+    url("./icons.woff") format("woff"), url("./icons.ttf") format("truetype"),
+    url("./icons.svg") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.fi {
+  font-family: "Font Icons";
+}
+
+.icon-info:before {
+  content: "\e800";
+}
+.icon-mark:before {
+  content: "\e801";
+}
+.icon-warn:before {
+  content: "\e802";
+}
+.icon-reseat:before {
+  content: "\e806";
+}
+.icon-copy:before {
+  content: "\e807";
+}

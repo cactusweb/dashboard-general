@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @import "./styles/reset";
+@import "./styles/material/theme";
 
 html,
 body,
@@ -10,9 +11,10 @@ app-root {
   @apply tw-min-h-screen tw-grid tw-p-0 tw-m-0;
 }
 
-// * {
-//   font-family: "Mulish", sans-serif;
-// }
+* {
+  font-family: "Mitr", sans-serif;
+  font-style: normal;
+}
 
 .row {
   @apply tw-grid tw-grid-flow-col tw-justify-between tw-items-center;
