@@ -10,7 +10,7 @@ import { BehaviorSubject, shareReplay } from 'rxjs';
 
 export interface AuthRedirectParam {
   link: string;
-  queryParams: Record<string, any>;
+  queryParams?: Record<string, any>;
 }
 
 @Injectable({

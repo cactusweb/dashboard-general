@@ -22,5 +22,7 @@ export const authRedusers = (
       };
     case AuthActions.SetAuthInitialState:
       return initialAuthState;
+    default:
+      return initialAuthState;
   }
 };

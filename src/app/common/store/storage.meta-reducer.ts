@@ -10,7 +10,7 @@ export function storageMetaReducer<S, A extends Action = Action>(
     const nextState = reducer(state, action);
     const savedState =
       JSON.parse(localStorage.getItem(localStorage_key)!) || {};
-    merge(nextState, savedState);
+    merge(savedState, nextState);
     localStorage.setItem(localStorage_key, JSON.stringify(nextState));
     return nextState;
   };
