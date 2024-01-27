@@ -4,7 +4,8 @@
   "compilerOptions": {
     "baseUrl": "src",
     "paths": {
-      "@csd-store/*": ["app/common/store/*"]
+      "@csd-store/*": ["app/common/store/*"],
+      "@csd-modules/*": ["app/common/modules/*"]
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,

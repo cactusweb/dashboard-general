@@ -1,0 +1,8 @@
+<div class="row tw-gap-2">
+  <mat-icon [fontIcon]="iconName" />
+  <div class="msg">{{ text }}</div>
+</div>
+
+<button (click)="close.emit()">
+  <mat-icon fontIcon="icon-cross" />
+</button>
