@@ -16,7 +16,10 @@ export const authRedusers = (
           authToken: action.authToken,
         },
       };
-    default:
+    case AuthActions.AuthLogout:
+    case AuthActions.SetAuthInitialState:
       return initialAuthState;
+    default:
+      return state;
   }
 };
