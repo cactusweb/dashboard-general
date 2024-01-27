@@ -15,6 +15,8 @@ export const initialAuthState: AuthState = {
 
 const authState = (state: State) => state.auth;
 
+export const selectAuthState = createSelector(authState, (state) => state);
+
 export const selectIsAuthed = createSelector(
   authState,
   (state) => !!state.data?.authToken
