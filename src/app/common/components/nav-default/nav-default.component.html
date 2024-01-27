@@ -4,10 +4,15 @@
   [class.nav_empty]="!isAuthed"
 >
   <div class="" *ngIf="isAuthed"></div>
-  <a aria-label="Go to main page" class="nav__logo" routerLink="">
+  <a aria-label="Go to main page" class="nav__logo" routerLink="/">
     <img src="/assets/cactusdash-logo.svg" alt="CactusDash" />
   </a>
-  <button class="csd-button_stroked" color="secondary" *ngIf="isAuthed">
+  <button
+    class="csd-button_stroked"
+    color="secondary"
+    *ngIf="isAuthed"
+    (click)="onLogout()"
+  >
     Log Out
   </button>
 </nav>

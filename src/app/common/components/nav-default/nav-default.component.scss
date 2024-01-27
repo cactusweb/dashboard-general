@@ -17,10 +17,14 @@
   }
 
   &:not(&_empty) &__logo {
-    @apply tw-hidden;
+    @apply xs:tw-hidden;
   }
 
   &__logout {
     @apply tw-justify-end;
   }
+}
+
+button {
+  @apply tw-w-40 tw-h-[50px] xs:tw-w-32 xs:tw-h-10 tw-justify-self-end;
 }

@@ -16,12 +16,6 @@ export const authRedusers = (
           authToken: action.authToken,
         },
       };
-    case AuthActions.AuthLogout:
-      return {
-        data: null,
-      };
-    case AuthActions.SetAuthInitialState:
-      return initialAuthState;
     default:
       return initialAuthState;
   }
