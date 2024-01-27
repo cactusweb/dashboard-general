@@ -1,6 +1,12 @@
-export interface State {}
+import { AuthState, initialAuthState } from './auth/auth.selectors';
 
-export const initialState: State = {};
+export interface State {
+  auth: AuthState;
+}
+
+export const initialState: State = {
+  auth: initialAuthState,
+};
 
 export function getInitialState(): State {
   return initialState;

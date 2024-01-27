@@ -11,6 +11,8 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthTokenInterceptor } from './common/interceptors/auth-token.interceptor';
 import { ErrorsHandlerInterceptor } from './common/interceptors/errors-handler.interceptor';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { RouterModule } from '@angular/router';
+import { AuthEffects } from '@csd-store/auth/auth.effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,11 +21,11 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     BrowserAnimationsModule,
     HttpClientModule,
 
-    StoreModule.forRoot(reducers, {
-      //@ts-ignore
-      metaReducers: [storageMetaReducer],
-    }),
-    EffectsModule.forRoot(),
+    RouterModule,
+
+    //@ts-ignore
+    StoreModule.forRoot(reducers, { metaReducers: [storageMetaReducer] }),
+    EffectsModule.forRoot([AuthEffects]),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable
