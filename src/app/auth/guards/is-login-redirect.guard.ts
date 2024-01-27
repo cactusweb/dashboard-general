@@ -14,17 +14,16 @@ export function isLoginRedirectGuard(): boolean {
   const path = window.location.pathname;
   const store = inject(Store<State>);
   const router = inject(Router);
-  console.log('here');
+
   if (queryParams.get(ACCESS_TOKEN_KEY) && path === `/${RouterPaths.LOGIN}`) {
     store.dispatch(new AuthSuccess(queryParams.get(ACCESS_TOKEN_KEY)!));
     const redirectParams = getRedirectData(queryParams.get(REDIRECT_PARAM_KEY));
 
-    console.log(redirectParams);
-    // router.navigate([redirectParams.link], {
-    //   queryParams: redirectParams.queryParams,
-    // });
+    router.navigate([redirectParams.link], {
+      queryParams: redirectParams.queryParams,
+    });
 
-    return true;
+    return false;
   }
 
   return true;

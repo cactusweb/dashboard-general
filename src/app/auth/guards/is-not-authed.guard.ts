@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { RouterPaths } from 'app/common/consts/router-paths.conts';
 import { Observable, map, tap } from 'rxjs';
 
-export function isAuthedGuard(): Observable<boolean> {
+export function isNotAuthedGuard(): Observable<boolean> {
   const router = inject(Router);
 
   return inject(Store<State>)
