@@ -27,3 +27,12 @@
 .icon-copy:before {
   content: "\e807";
 }
+.icon-close:before {
+  content: "\e808";
+}
+.icon-arrow:before {
+  content: "\e809";
+}
+.icon-plus:before {
+  content: "\e80a";
+}
