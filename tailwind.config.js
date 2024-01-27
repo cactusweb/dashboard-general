@@ -34,12 +34,15 @@ module.exports = {
       colors: {
         primary: {
           DEFAULT: "#3880EC",
+          hover: "#1C73F5",
         },
         error: {
           DEFAULT: "#DA3A3A",
+          hover: "#EA2121",
         },
         success: {
           DEFAULT: "#21BC31",
+          hover: "#19D720",
         },
       },
     },
