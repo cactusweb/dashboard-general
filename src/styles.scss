@@ -3,3 +3,17 @@
 @tailwind utilities;
 
 @import "./styles/reset";
+
+html,
+body,
+app-root {
+  @apply tw-min-h-screen tw-grid tw-p-0 tw-m-0;
+}
+
+// * {
+//   font-family: "Mulish", sans-serif;
+// }
+
+.row {
+  @apply tw-grid tw-grid-flow-col tw-justify-between tw-items-center;
+}
