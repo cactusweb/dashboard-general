@@ -8,10 +8,10 @@
 @import "./styles/global";
 
 // components
-@import "./styles/buttons";
-@import "./styles/skeleton-loading";
-@import "./styles/card";
-@import "./styles/input";
+@import "./styles/components/buttons";
+@import "./styles/components/skeleton-loading";
+@import "./styles/components/card";
+@import "./styles/components/input";
 
 body {
   @apply tw-bg-[#CEDEE5];
