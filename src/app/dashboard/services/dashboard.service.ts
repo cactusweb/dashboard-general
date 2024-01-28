@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, OnDestroy, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Requests } from '@csd-consts/requests.consts';
 import { RouterPaths } from '@csd-consts/router-paths.conts';
@@ -6,6 +6,7 @@ import { LicenseDTO } from '@csd-models/license.models';
 import { CsdSnackbarLevels } from '@csd-modules/snackbar/interfaces/snackbar-item.models';
 import { CsdSnackbarService } from '@csd-modules/snackbar/services/snackbar.service';
 import { HttpService } from '@csd-services/http/http.service';
+import { SeoService } from '@csd-services/seo.service';
 import {
   DeleteLicense,
   SetLicenseData,
@@ -17,7 +18,7 @@ import { Store } from '@ngrx/store';
 import { filter, map, shareReplay, tap } from 'rxjs';
 
 @Injectable()
-export class DashboardService {
+export class DashboardService implements OnDestroy {
   private readonly ownerName = this.getOwnerName();
 
   readonly license$ = this.store.select(selectLicenses).pipe(
@@ -35,6 +36,12 @@ export class DashboardService {
       }
     }),
     map((d) => d as LicenseDTO),
+    tap((lic) => {
+      this.seo.changeTitle(lic.owner.name + ' - Dashboard');
+      if (lic.owner.avatar) {
+        this.seo.changeIcon(lic.owner.avatar);
+      }
+    }),
     distinctUntilChangedJSON(),
     shareReplay()
   );
@@ -43,8 +50,13 @@ export class DashboardService {
     private store: Store<State>,
     private snackbar: CsdSnackbarService,
     private router: Router,
-    private http: HttpService
+    private http: HttpService,
+    private seo: SeoService
   ) {}
+
+  ngOnDestroy(): void {
+    this.seo.changeIcon();
+  }
 
   resetActivations() {
     return this.http
