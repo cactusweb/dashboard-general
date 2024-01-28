@@ -1,1 +1,37 @@
-<h2>list</h2>
+<csd-licenses-header />
+
+<div class="licenses">
+  <ng-container [ngSwitch]="state$ | async">
+    <ng-container *ngSwitchCase="PageStates.PENDING">
+      <ng-template *ngTemplateOutlet="loading" />
+    </ng-container>
+
+    <ng-container *ngSwitchCase="PageStates.EMPTY">
+      <csd-license-card-wrapper [disabled]="true">
+        <csd-license-empty />
+      </csd-license-card-wrapper>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="PageStates.VIEW">
+      <a
+        *ngFor="let license of licenses$ | async"
+        [routerLink]="[getPathToDash(license.owner.name)]"
+        [attr.aria-label]="'Link to Dashboard of ' + license.owner.name"
+      >
+        <csd-license-card-wrapper [color]="license.owner.primary_color">
+          <csd-license-data [license]="license" />
+        </csd-license-card-wrapper>
+      </a>
+    </ng-container>
+  </ng-container>
+</div>
+
+<ng-template #loading>
+  <csd-license-card-wrapper>
+    <csd-license-data [pending]="true" />
+  </csd-license-card-wrapper>
+
+  <csd-license-card-wrapper>
+    <csd-license-data [pending]="true" />
+  </csd-license-card-wrapper>
+</ng-template>

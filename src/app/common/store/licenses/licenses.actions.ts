@@ -39,7 +39,6 @@ export class AddLicense implements Action {
 
 export class SetLicensesInitialState implements Action {
   readonly type = LicensesActions.SetLicensesInitialState;
-  constructor(public license: LicenseDTO | null) {}
 }
 
 export type LicensesActionsTypes =

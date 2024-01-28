@@ -74,6 +74,8 @@ export class ErrorsHandlerInterceptor implements HttpInterceptor {
         take(1),
         filter((d) => !d)
       )
-      .subscribe(() => this.store.dispatch(new Auth()));
+      .subscribe(() => {
+        this.store.dispatch(new Auth());
+      });
   }
 }

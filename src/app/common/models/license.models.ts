@@ -7,7 +7,7 @@ export interface LicenseDTO {
   unbindable: boolean;
   activations: LicenseActivationsDTO;
   expires_in: number | null;
-  type: 'lifetime';
+  type: LicenseTypes;
   key: string;
   created_at: number;
   bought_at: number;

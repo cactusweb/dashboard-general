@@ -10,6 +10,7 @@ import {
 import { Router } from '@angular/router';
 import { AuthService } from '@csd-services/auth.service';
 import { SetUserInitialState } from '@csd-store/user/user.actions';
+import { SetLicensesInitialState } from '@csd-store/licenses/licenses.actions';
 
 @Injectable()
 export class AuthEffects {
@@ -17,7 +18,11 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType<AuthLogout>(AuthActions.AuthLogout),
       tap((data) => this.router.navigate([data.redirectTo])),
-      switchMap(() => [new SetAuthInitialState(), new SetUserInitialState()])
+      switchMap(() => [
+        new SetAuthInitialState(),
+        new SetUserInitialState(),
+        new SetLicensesInitialState(),
+      ])
     )
   );
 

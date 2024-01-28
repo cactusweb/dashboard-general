@@ -1,0 +1,38 @@
+:host {
+  @apply tw-relative tw-overflow-hidden tw-grid;
+}
+
+.card {
+  background: rgba(248, 248, 248, 0.6);
+  border: 1.5px solid #ffffff;
+  backdrop-filter: blur(23px);
+  @apply tw-h-[170px] xs:tw-h-[120px] tw-content-center tw-overflow-hidden;
+
+  &:hover {
+    .circle_over {
+      @apply tw-w-20 tw-h-20;
+    }
+    + .circle_under {
+      @apply tw-w-[310px] tw-h-36 xs:tw-w-60 xs:tw-h-[90px];
+    }
+  }
+}
+
+@mixin Circle() {
+  @apply tw-absolute tw-rounded-full;
+  @apply tw-top-1/2 -tw-translate-y-1/2 tw-right-0 tw-translate-x-1/2;
+  background-color: var(--primary-color);
+  transition: 0.3s;
+}
+
+.circle {
+  &_over {
+    @include Circle();
+    @apply tw-w-12 tw-h-12 xs:tw-hidden;
+  }
+  &_under {
+    @include Circle();
+    @apply tw-w-64 tw-h-[130px] xs:tw-h-20 xs:tw-w-40;
+    @apply -tw-z-10;
+  }
+}

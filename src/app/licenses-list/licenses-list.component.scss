@@ -1,0 +1,11 @@
+:host {
+  @apply tw-grid tw-content-start tw-gap-4;
+}
+
+.licenses {
+  @apply tw-grid tw-gap-4 xs:tw-gap-3 tw-grid-cols-[1fr_1fr] xs:tw-grid-cols-1;
+  // @media screen and ( max-width: $tab-size ) {
+  //     gap: 12px;
+  //     grid-template-columns: auto;
+  // }
+}

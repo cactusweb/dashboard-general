@@ -9,11 +9,11 @@
   }
 
   &__name {
-    @apply tw-text-lg tw-leading-[22px] tw-font-medium tw-h-[22px];
+    @apply tw-text-lg tw-leading-[22px] tw-font-medium;
     @apply tw-max-w-64 tw-overflow-hidden tw-text-ellipsis tw-whitespace-nowrap;
     @apply xs:tw-hidden;
     &[data-skeleton-load] {
-      @apply tw-w-36;
+      @apply tw-w-36  tw-h-[22px];
     }
   }
 }

@@ -1,0 +1,20 @@
+<div class="license row">
+  <div class="license__img" [attr.data-skeleton-load]="pending ? '' : null">
+    <img *ngIf="!pending" [src]="license!.owner.avatar" alt="" />
+  </div>
+  <div class="license__data">
+    <h2
+      class="license__title"
+      [attr.data-skeleton-load]="pending ? 'text' : null"
+    >
+      {{ license?.owner?.name }}
+    </h2>
+
+    <p
+      class="license__price"
+      [attr.data-skeleton-load]="pending ? 'text' : null"
+    >
+      {{ paymentPrice }}
+    </p>
+  </div>
+</div>

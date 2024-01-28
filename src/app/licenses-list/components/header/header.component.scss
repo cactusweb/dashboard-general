@@ -1,0 +1,10 @@
+.header {
+  @apply xs:tw-grid-flow-row tw-gap-3 tw-justify-items-center xs:tw-justify-stretch;
+  &__title {
+    @apply tw-text-lg tw-leading-[22px] tw-font-semibold;
+  }
+
+  &__button {
+    @apply tw-w-48 xs:tw-w-full tw-max-w-xs tw-h-[46px] xs:tw-h-10;
+  }
+}

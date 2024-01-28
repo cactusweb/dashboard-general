@@ -1,0 +1,29 @@
+.license {
+  @apply tw-justify-start tw-gap-6 xs:tw-gap-3;
+
+  &__img {
+    @apply tw-h-24 tw-w-24 tw-rounded-full xs:tw-h-14 xs:tw-w-14;
+    img {
+      @apply tw-w-full tw-h-full tw-object-cover;
+    }
+  }
+
+  &__data {
+    @apply tw-grid tw-gap-2;
+  }
+
+  &__title {
+    @apply tw-text-[22px] tw-leading-[27px] tw-font-semibold xs:tw-text-lg xs:tw-leading-[22px];
+
+    &[data-skeleton-load] {
+      @apply tw-h-[27px] xs:tw-leading-[22px] tw-w-48;
+    }
+  }
+
+  &__price {
+    @apply tw-text-base tw-leading-5 tw-font-medium first-letter:tw-capitalize;
+    &[data-skeleton-load] {
+      @apply tw-h-5 tw-w-36;
+    }
+  }
+}
