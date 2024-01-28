@@ -16,6 +16,7 @@ import { AuthTokenInterceptor } from '@csd-interceptors/auth-token.interceptor';
 import { ErrorsHandlerInterceptor } from '@csd-interceptors/errors-handler.interceptor';
 import { UserEffects } from '@csd-store/user/user.effects';
 import { CsdSnackbarModule } from '@csd-modules/snackbar/snackbar.module';
+import { LicensesEffects } from '@csd-store/licenses/licenses.effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,7 +29,7 @@ import { CsdSnackbarModule } from '@csd-modules/snackbar/snackbar.module';
 
     //@ts-ignore
     StoreModule.forRoot(reducers, { metaReducers: [storageMetaReducer] }),
-    EffectsModule.forRoot([AuthEffects, UserEffects]),
+    EffectsModule.forRoot([AuthEffects, UserEffects, LicensesEffects]),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable

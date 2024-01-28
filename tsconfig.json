@@ -13,7 +13,8 @@
       "@csd-interceptors/*": ["app/common/interceptors/*"],
       "@csd-consts/*": ["app/common/consts/*"],
       "@csd-utils/*": ["app/common/utils/*"],
-      "@csd-auth/*": ["app/auth/*"]
+      "@csd-auth/*": ["app/auth/*"],
+      "@csd-licenses-list/*": ["app/licenses-list/*"]
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
