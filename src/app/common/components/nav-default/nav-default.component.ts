@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { RouterPaths } from '@csd-consts/router-paths.conts';
 import { NgvarDirective } from '@csd-directives/ngvar.directive';
 import { AuthLogout } from '@csd-store/auth/auth.actions';
 import { selectIsAuthed } from '@csd-store/auth/auth.selectors';
 import { State } from '@csd-store/state';
 import { Store } from '@ngrx/store';
-import { RouterPaths } from 'app/common/consts/router-paths.conts';
 
 @Component({
   selector: 'csd-nav-default',

@@ -7,7 +7,12 @@
       "@csd-store/*": ["app/common/store/*"],
       "@csd-modules/*": ["app/common/modules/*"],
       "@csd-components/*": ["app/common/components/*"],
-      "@csd-directives/*": ["app/common/directives/*"]
+      "@csd-directives/*": ["app/common/directives/*"],
+      "@csd-services/*": ["app/common/services/*"],
+      "@csd-models/*": ["app/common/models/*"],
+      "@csd-interceptors/*": ["app/common/interceptors/*"],
+      "@csd-consts/*": ["app/common/consts/*"],
+      "@csd-auth/*": ["app/auth/*"]
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,

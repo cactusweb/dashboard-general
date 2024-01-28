@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { RouterPaths } from '@csd-consts/router-paths.conts';
 import { Auth } from '@csd-store/auth/auth.actions';
 import { State } from '@csd-store/state';
 import { Store } from '@ngrx/store';
-import { RouterPaths } from 'app/common/consts/router-paths.conts';
 
 @Component({
   selector: 'csd-auth',

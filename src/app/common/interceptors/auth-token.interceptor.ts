@@ -12,7 +12,7 @@ import { selectAuthToken } from '@csd-store/auth/auth.selectors';
 import { Auth } from '@csd-store/auth/auth.actions';
 import { CsdSnackbarService } from '@csd-modules/snackbar/services/snackbar.service';
 import { CsdSnackbarLevels } from '@csd-modules/snackbar/interfaces/snackbar-item.models';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '@csd-services/auth.service';
 
 @Injectable()
 export class AuthTokenInterceptor implements HttpInterceptor {

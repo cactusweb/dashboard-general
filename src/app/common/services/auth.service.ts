@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { RouterPaths } from '@csd-consts/router-paths.conts';
 import { AuthLogout } from '@csd-store/auth/auth.actions';
 import { State } from '@csd-store/state';
 import { Store } from '@ngrx/store';
 import { environment } from 'environment/environment';
-import { RouterPaths } from '../consts/router-paths.conts';
-import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, shareReplay } from 'rxjs';
 
 export interface AuthRedirectParam {
@@ -20,11 +19,7 @@ export class AuthService {
   private readonly _pending$ = new BehaviorSubject(false);
   readonly pending$ = this._pending$.asObservable().pipe(shareReplay());
 
-  constructor(
-    private router: Router,
-    private store: Store<State>,
-    private http: HttpClient
-  ) {}
+  constructor(private router: Router, private store: Store<State>) {}
 
   async auth(redirectTo?: AuthRedirectParam) {
     this._pending$.next(true);

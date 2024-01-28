@@ -7,13 +7,13 @@ import {
 } from '@angular/common/http';
 import { catchError, filter, Observable, take, throwError } from 'rxjs';
 import { ErrorEnum } from './error.enums';
-import { UtilsService } from '../services/utils.service';
 import { CsdSnackbarService } from '@csd-modules/snackbar/services/snackbar.service';
 import { Store } from '@ngrx/store';
 import { State } from '@csd-store/state';
 import { CsdSnackbarLevels } from '@csd-modules/snackbar/interfaces/snackbar-item.models';
 import { Auth } from '@csd-store/auth/auth.actions';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '@csd-services/auth.service';
+import { UtilsService } from '@csd-services/utils.service';
 
 @Injectable()
 export class ErrorsHandlerInterceptor implements HttpInterceptor {

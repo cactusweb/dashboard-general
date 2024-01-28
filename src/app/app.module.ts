@@ -8,13 +8,14 @@ import { reducers } from '@csd-store/reducers';
 import { storageMetaReducer } from '@csd-store/storage.meta-reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { AuthTokenInterceptor } from './common/interceptors/auth-token.interceptor';
-import { ErrorsHandlerInterceptor } from './common/interceptors/errors-handler.interceptor';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { AuthEffects } from '@csd-store/auth/auth.effects';
-import { CsdSnackbarModule } from './common/modules/snackbar/snackbar.module';
 import { AppRoutingModule } from './app-routing.module';
 import { NavDefaultComponent } from '@csd-components/nav-default/nav-default.component';
+import { AuthTokenInterceptor } from '@csd-interceptors/auth-token.interceptor';
+import { ErrorsHandlerInterceptor } from '@csd-interceptors/errors-handler.interceptor';
+import { UserEffects } from '@csd-store/user/user.effects';
+import { CsdSnackbarModule } from '@csd-modules/snackbar/snackbar.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,7 +28,7 @@ import { NavDefaultComponent } from '@csd-components/nav-default/nav-default.com
 
     //@ts-ignore
     StoreModule.forRoot(reducers, { metaReducers: [storageMetaReducer] }),
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([AuthEffects, UserEffects]),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable

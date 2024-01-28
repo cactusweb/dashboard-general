@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HttpRequestData } from './http.models';
 import { Observable, throwError } from 'rxjs';
+import { environment } from 'environment/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,8 @@ export class HttpService {
     urlParam: string = '',
     urlQuery: string = ''
   ): Observable<Response> {
-    let reqUrl = reqParams.url.replace(':param', urlParam) + urlQuery;
+    let reqUrl =
+      environment.apiUrl + reqParams.url.replace(':param', urlParam) + urlQuery;
 
     switch (reqParams.method) {
       case 'POST':

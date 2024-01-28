@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { RouterPaths } from './common/consts/router-paths.conts';
-import { isAuthedGuard } from './auth/guards/is-authed.guard';
-import { isLoginRedirectGuard } from './auth/guards/is-login-redirect.guard';
-import { isNotAuthedGuard } from './auth/guards/is-not-authed.guard';
+import { isAuthedGuard } from '@csd-auth/guards/is-authed.guard';
+import { isLoginRedirectGuard } from '@csd-auth/guards/is-login-redirect.guard';
+import { RouterPaths } from '@csd-consts/router-paths.conts';
 
 const routes: Routes = [
   {
@@ -20,7 +19,6 @@ const routes: Routes = [
   },
   {
     path: RouterPaths.LICENSES,
-    canMatch: [isNotAuthedGuard],
     loadChildren: () =>
       import('./licenses-list/licenses-list.module').then(
         (m) => m.LicensesListModule
