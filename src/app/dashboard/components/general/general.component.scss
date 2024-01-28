@@ -1,0 +1,4 @@
+.card {
+  grid-template-columns: 1fr 1fr;
+  @apply tw-gap-x-4 tw-gap-y-6 xs:tw-gap-y-4;
+}

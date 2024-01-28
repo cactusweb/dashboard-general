@@ -8,7 +8,7 @@ import {
   GetLicensesSuccess,
   LicensesActions,
 } from './licenses.actions';
-import { catchError, switchMap, throwError } from 'rxjs';
+import { catchError, map, switchMap, throwError } from 'rxjs';
 import { LicenseDTO } from '@csd-models/license.models';
 import { Requests } from '@csd-consts/requests.consts';
 
@@ -24,6 +24,14 @@ export class LicensesEffects {
             return throwError(() => err);
           })
         )
+      ),
+      map((licenses) =>
+        licenses.map((lic) => ({
+          ...lic,
+          expires_in: lic.expires_in ? lic.expires_in * 1000 : null,
+          created_at: lic.created_at * 1000,
+          bought_at: lic.created_at * 1000,
+        }))
       ),
       switchMap((licenses) => [new GetLicensesSuccess(licenses)])
     )

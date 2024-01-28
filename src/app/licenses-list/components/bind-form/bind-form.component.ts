@@ -1,7 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { Requests } from '@csd-consts/requests.consts';
+import { RouterPaths } from '@csd-consts/router-paths.conts';
 import { LicenseDTO } from '@csd-models/license.models';
 import { CsdSnackbarLevels } from '@csd-modules/snackbar/interfaces/snackbar-item.models';
 import { CsdSnackbarService } from '@csd-modules/snackbar/services/snackbar.service';
@@ -28,7 +30,8 @@ export class BindFormComponent {
     private http: HttpService,
     private store: Store<State>,
     private snackbar: CsdSnackbarService,
-    private matDialogRef: MatDialogRef<BindFormComponent>
+    private matDialogRef: MatDialogRef<BindFormComponent>,
+    private router: Router
   ) {}
 
   onBind() {
@@ -44,6 +47,13 @@ export class BindFormComponent {
             CsdSnackbarLevels.SUCCESS
           );
           this.matDialogRef.close();
+          this.router.navigate([
+            '/' +
+              RouterPaths.DASHBOARD.replace(
+                ':owner_name',
+                lic.owner.name.replace(' ', '-')
+              ),
+          ]);
         },
       });
   }

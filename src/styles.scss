@@ -9,9 +9,10 @@
 
 // components
 @import "./styles/components/buttons";
-@import "./styles/components/skeleton-loading";
 @import "./styles/components/card";
 @import "./styles/components/input";
+@import "./styles/components/tag";
+@import "./styles/components/skeleton-loading";
 
 body {
   @apply tw-bg-[#CEDEE5];

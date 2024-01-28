@@ -3,6 +3,6 @@
     <img *ngIf="user" [src]="user?.avatar" alt="" />
   </div>
   <span class="user__name" [attr.data-skeleton-load]="user ? null : 'text'">
-    {{ user.full_name }}
+    {{ user?.full_name }}
   </span>
 </div>

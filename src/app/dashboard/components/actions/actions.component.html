@@ -1,0 +1,23 @@
+<div class="card row" *ngVar="isUnbindable$ | async as isUnbindable">
+  <button
+    class="csd-button_stroked"
+    color="primary"
+    (click)="onJoinDiscord()"
+    [disabled]="(joinDsLoading$ | async) || isUnbindable === null"
+  >
+    Join Discord
+    <mat-icon
+      fontIcon="icon-discord"
+      class="!tw-text-base xs:!tw-text-sm"
+    ></mat-icon>
+  </button>
+
+  <button
+    class="csd-button_stroked"
+    color="warn"
+    (click)="onUnbind()"
+    [disabled]="!isUnbindable"
+  >
+    Unbind
+  </button>
+</div>

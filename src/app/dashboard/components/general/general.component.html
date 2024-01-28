@@ -1,0 +1,24 @@
+<div class="card">
+  <csd-tag-container [label]="'Plan type'" [skeletons]="!license">
+    {{ license?.type }}
+  </csd-tag-container>
+  <csd-tag-container [label]="'Renewal'" [skeletons]="!license">
+    {{
+      price
+        ? (price
+          | currency : license!.payment.currency : "symbol-narrow" : "1.0-1")
+        : "—"
+    }}
+  </csd-tag-container>
+  <csd-tag-container [label]="'Date of joining'" [skeletons]="!license">
+    {{ joiningDate ? (joiningDate | date : "dd.MM.YY") : "—" }}
+  </csd-tag-container>
+  <csd-tag-container
+    [label]="
+      license?.type === LicenseTypes.TRIAL ? 'Expires date' : 'Next renewal'
+    "
+    [skeletons]="!license"
+  >
+    {{ renewalDate ? (renewalDate | date : "dd.MM.YY") : "—" }}
+  </csd-tag-container>
+</div>

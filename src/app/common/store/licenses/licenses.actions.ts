@@ -29,7 +29,7 @@ export class SetLicenseData implements Action {
 
 export class DeleteLicense implements Action {
   readonly type = LicensesActions.DeleteLicense;
-  constructor(public licenseId: string) {}
+  constructor(public ownerName: string) {}
 }
 
 export class AddLicense implements Action {

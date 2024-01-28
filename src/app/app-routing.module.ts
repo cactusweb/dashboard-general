@@ -25,6 +25,11 @@ const routes: Routes = [
       ),
   },
   {
+    path: RouterPaths.DASHBOARD,
+    loadChildren: () =>
+      import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
+  },
+  {
     path: '**',
     redirectTo: '/' + RouterPaths.AUTH,
   },

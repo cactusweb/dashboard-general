@@ -4,7 +4,7 @@
   @apply tw-border tw-border-solid tw-border-transparent;
   outline: none;
   transition: 0.3s;
-&.ng-invalid.ng-touched {
+  &.ng-invalid.ng-touched {
     @apply tw-border-error;
   }
 }

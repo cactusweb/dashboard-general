@@ -48,9 +48,12 @@ export class LicensesListComponent implements OnInit {
   }
 
   getPathToDash(ownerName: string) {
-    return RouterPaths.DASHBOARD.replace(
-      ':owner_name',
-      ownerName.split(' ').join('-')
+    return (
+      '/' +
+      RouterPaths.DASHBOARD.replace(
+        ':owner_name',
+        ownerName.split(' ').join('-')
+      )
     );
   }
 }

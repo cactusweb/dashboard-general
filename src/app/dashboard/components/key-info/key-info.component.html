@@ -1,0 +1,49 @@
+<div class="card" *ngVar="license$ | async as license">
+  <div class="owner row">
+    <div class="owner__logo" [attr.data-skeleton-load]="!license ? '' : null">
+      <img [src]="license.owner.avatar" alt="" *ngIf="license" />
+    </div>
+    <h1
+      class="owner__name"
+      [attr.data-skeleton-load]="!license ? 'text' : null"
+    >
+      {{ license?.owner?.name }}
+    </h1>
+  </div>
+
+  <div class="general row">
+    <div class="csd-tag" [attr.data-skeleton-load]="license ? null : ''">
+      <span
+        class="tw-overflow-hidden tw-text-ellipsis tw-whitespace-nowrap tw-max-w-full"
+      >
+        {{ license?.key }}
+      </span>
+      <button
+        class="csd-button_icon"
+        color="primary"
+        (click)="onCopyKey(license!.key)"
+        [disabled]="!license"
+      >
+        <mat-icon fontIcon="icon-copy"></mat-icon>
+      </button>
+    </div>
+
+    <div class="csd-tag" [attr.data-skeleton-load]="license ? null : ''">
+      <span *ngIf="license?.activations as activations">
+        Used:
+        <span class="tw-font-semibold">
+          {{ activations.devices.length }}/{{ activations.quantity }}
+        </span>
+      </span>
+      <button
+        class="csd-button_icon"
+        color="primary"
+        (click)="onResetActivations()"
+        *ngVar="loading$ | async as loading"
+        [disabled]="loading || !license"
+      >
+        <mat-icon fontIcon="icon-reset" [class.rotation]="loading"></mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

@@ -36,8 +36,22 @@
 
   &[color="primary"] {
     @apply tw-border-primary tw-text-primary;
-    &:not(:disabled) {
-      @apply hover:tw-bg-primary hover:tw-text-white;
+    &:not(:disabled):hover {
+      @apply tw-bg-primary tw-text-white;
     }
   }
+
+  &[color="warn"] {
+    @apply tw-border-error tw-text-error;
+    &:not(:disabled):hover {
+      @apply tw-bg-error-hover tw-text-white;
+    }
+  }
+}
+
+.csd-button_icon {
+  @include Button();
+  @extend .csd-button_stroked;
+  @apply tw-h-12 tw-w-12 xs:tw-h-10 xs:tw-w-10;
+  border-width: 2px;
 }

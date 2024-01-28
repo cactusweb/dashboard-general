@@ -35,7 +35,7 @@ export const licensesRedusers = (
       return {
         ...state,
         data: {
-          licenses: deleteLicense(action.licenseId, state.data!.licenses),
+          licenses: deleteLicense(action.ownerName, state.data!.licenses),
         },
       };
     case LicensesActions.AddLicense:
@@ -61,6 +61,8 @@ function putLicense(license: LicenseDTO, licensesList: LicenseDTO[]) {
   });
 }
 
-function deleteLicense(licenseId: string, licenses: LicenseDTO[]) {
-  return licenses.filter((lic) => lic.id !== licenseId);
+function deleteLicense(ownerName: string, licenses: LicenseDTO[]) {
+  return licenses.filter(
+    (lic) => lic.owner.name.toLowerCase() !== ownerName.toLowerCase()
+  );
 }

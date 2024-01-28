@@ -1,0 +1,40 @@
+.card {
+  @apply tw-gap-6;
+}
+
+.owner {
+  @apply tw-justify-start tw-gap-4;
+
+  &__logo {
+    @apply tw-w-12 tw-h-12 tw-rounded-full tw-overflow-hidden;
+    img {
+      @apply tw-object-cover tw-w-full tw-h-full;
+    }
+  }
+
+  &__name {
+    @apply tw-text-[22px] tw-leading-[27px] tw-font-semibold xs:tw-text-xl xs:tw-leading-6;
+    &[data-skeleton-load] {
+      @apply tw-h-[27px] xs:tw-h-6 tw-w-44;
+    }
+  }
+}
+
+.general {
+  @apply tw-justify-stretch tw-grid-cols-[1fr_160px] xs:tw-grid-cols-1 tw-gap-4 xs:tw-grid-flow-row;
+}
+
+.rotation {
+  animation: rotate 1s linear 0s infinite normal;
+  transform-origin: center center;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
