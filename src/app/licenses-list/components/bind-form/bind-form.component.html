@@ -1,0 +1,20 @@
+<div class="card">
+  <form [formGroup]="form" (ngSubmit)="onBind()">
+    <h3 class="card__title">Bind license</h3>
+    <input
+      type="text"
+      placeholder="Input license key"
+      class="csd-input"
+      formControlName="key"
+      mask="AAAA-AAAA-AAAA-AAAA"
+      [dropSpecialCharacters]="false"
+    />
+    <button
+      class="csd-button_flat"
+      color="primary"
+      [disabled]="loading$ | async"
+    >
+      Bind
+    </button>
+  </form>
+</div>

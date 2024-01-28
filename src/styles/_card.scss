@@ -1,4 +1,5 @@
 .card {
+  @apply tw-relative;
   @apply tw-bg-white tw-rounded-2xl tw-p-6 xs:tw-py-4 xs:tw-px-6;
   @apply tw-grid;
 }

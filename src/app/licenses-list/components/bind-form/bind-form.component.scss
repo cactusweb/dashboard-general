@@ -1,0 +1,14 @@
+.card {
+  @apply tw-py-10;
+
+  &__title {
+    @apply tw-text-lg tw-leading-[22px] tw-font-semibold tw-mb-1.5 tw-text-center;
+  }
+}
+
+form {
+  @apply tw-justify-items-center tw-max-w-xs tw-w-full tw-grid tw-gap-2.5 tw-justify-self-center;
+  > * {
+    @apply tw-w-full;
+  }
+}

@@ -1,9 +1,9 @@
 // @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
-// @use "@angular/material" as mat;
-// @import "@angular/material/theming";
+@use "@angular/material" as mat;
+@import "@angular/material/theming";
 
-// @include mat.core();
+@include mat.core();
 
 // $bg-color: #010d09;
 
@@ -49,3 +49,4 @@
 // @include mat.all-component-themes($theme);
 
 @import "./mat-icon";
+@import "./mat-dialog";

@@ -1,0 +1,10 @@
+.csd-input {
+  @apply tw-h-11 tw-rounded-lg tw-bg-input tw-text-center placeholder:tw-text-input-placeholder;
+  @apply tw-text-base tw-font-medium tw-leading-5;
+  @apply tw-border tw-border-solid tw-border-transparent;
+  outline: none;
+  transition: 0.3s;
+&.ng-invalid.ng-touched {
+    @apply tw-border-error;
+  }
+}

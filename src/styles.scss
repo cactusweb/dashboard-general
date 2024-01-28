@@ -5,9 +5,13 @@
 @import "./styles/reset";
 @import "./styles/material/theme";
 
+@import "./styles/global";
+
+// components
 @import "./styles/buttons";
 @import "./styles/skeleton-loading";
 @import "./styles/card";
+@import "./styles/input";
 
 body {
   @apply tw-bg-[#CEDEE5];

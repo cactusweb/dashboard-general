@@ -47,6 +47,10 @@ module.exports = {
         secondary: {
           DEFAULT: "#486270",
         },
+        input: {
+          DEFAULT: "#EDEDED",
+          placeholder: "#A0A0A0",
+        },
       },
     },
   },
