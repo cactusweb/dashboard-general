@@ -28,7 +28,7 @@ import { RouterPaths } from '@csd-consts/router-paths.conts';
       }
 
       .link {
-        @apply tw-justify-start tw-gap-1 xs:tw-text-sm;
+        @apply tw-justify-start tw-gap-1 xs:tw-text-sm tw-font-medium;
         color: #5f8ca0;
 
         svg {

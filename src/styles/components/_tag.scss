@@ -14,6 +14,9 @@
 
   &-container {
     @apply tw-grid tw-gap-2.5;
+    &_disabled {
+      @apply tw-pointer-events-none tw-opacity-50;
+    }
   }
 
   &-label {

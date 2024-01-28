@@ -3,7 +3,10 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 @Component({
   selector: 'csd-tag-container',
   template: `
-    <p class="csd-tag-container">
+    <p
+      class="csd-tag-container"
+      [class.csd-tag-container_disabled]="disabled && !skeletons"
+    >
       <span class="csd-tag-label">
         {{ label }}
       </span>
@@ -23,4 +26,7 @@ export class TagContainerComponent {
 
   @Input()
   skeletons = false;
+
+  @Input()
+  disabled = false;
 }

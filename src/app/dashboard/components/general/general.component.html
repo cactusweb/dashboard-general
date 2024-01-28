@@ -2,7 +2,11 @@
   <csd-tag-container [label]="'Plan type'" [skeletons]="!license">
     {{ license?.type }}
   </csd-tag-container>
-  <csd-tag-container [label]="'Renewal'" [skeletons]="!license">
+  <csd-tag-container
+    [label]="'Renewal'"
+    [skeletons]="!license"
+    [disabled]="!price"
+  >
     {{
       price
         ? (price
@@ -10,14 +14,17 @@
         : "—"
     }}
   </csd-tag-container>
+
   <csd-tag-container [label]="'Date of joining'" [skeletons]="!license">
     {{ joiningDate ? (joiningDate | date : "dd.MM.YY") : "—" }}
   </csd-tag-container>
+
   <csd-tag-container
     [label]="
       license?.type === LicenseTypes.TRIAL ? 'Expires date' : 'Next renewal'
     "
     [skeletons]="!license"
+    [disabled]="!renewalDate"
   >
     {{ renewalDate ? (renewalDate | date : "dd.MM.YY") : "—" }}
   </csd-tag-container>
