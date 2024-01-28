@@ -2,22 +2,30 @@
   <button
     class="csd-button_stroked"
     color="primary"
+    *ngVar="joinDsLoading$ | async as joinDsLoading"
     (click)="onJoinDiscord()"
     [disabled]="(joinDsLoading$ | async) || isUnbindable === null"
   >
-    Join Discord
-    <mat-icon
-      fontIcon="icon-discord"
-      class="!tw-text-base xs:!tw-text-sm"
-    ></mat-icon>
+    <ng-container *ngIf="!joinDsLoading; else spinner">
+      Join Discord
+      <mat-icon
+        fontIcon="icon-discord"
+        class="!tw-text-base xs:!tw-text-sm"
+      ></mat-icon>
+    </ng-container>
   </button>
 
   <button
     class="csd-button_stroked"
     color="warn"
+    *ngVar="unbindLoading$ | async as unbindLoading"
     (click)="onUnbind()"
-    [disabled]="!isUnbindable"
+    [disabled]="!isUnbindable || unbindLoading"
   >
-    Unbind
+    <ng-container *ngIf="!unbindLoading; else spinner"> Unbind </ng-container>
   </button>
 </div>
+
+<ng-template #spinner>
+  <mat-spinner color="accent" [diameter]="26" [strokeWidth]="3" />
+</ng-template>

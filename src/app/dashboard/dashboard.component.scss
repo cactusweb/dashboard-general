@@ -15,17 +15,23 @@ csd-dashboard {
     @apply tw-h-12 xs:tw-h-10;
   }
 
-  .csd-button_stroked,
-  .csd-button_icon {
-    border-color: var(--primary-color);
-    color: var(--primary-color);
+  .csd-button_stroked[color="primary"],
+  .csd-button_icon[color="primary"] {
+    border-color: var(--primary-color) !important;
+    color: var(--primary-color) !important;
+
     &:not(:disabled):hover {
-      @apply tw-bg-primary tw-text-white;
-      background-color: var(--primary-color);
+      @apply tw-text-white #{!important};
+      background-color: var(--primary-color) !important;
+    }
+
+    .mat-mdc-progress-spinner
+      .mdc-circular-progress__indeterminate-circle-graphic {
+      stroke: var(--primary-color) !important;
     }
   }
 
   .csd-button_flat {
-    background-color: var(--primary-color);
+    background-color: var(--primary-color) !important;
   }
 }

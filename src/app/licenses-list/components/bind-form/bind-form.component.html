@@ -12,9 +12,13 @@
     <button
       class="csd-button_flat"
       color="primary"
-      [disabled]="loading$ | async"
+      *ngVar="loading$ | async as loading"
+      [disabled]="loading"
     >
-      Bind
+      <ng-container *ngIf="!loading; else spinner"> Bind </ng-container>
+      <ng-template #spinner>
+        <mat-spinner [diameter]="26" [strokeWidth]="3" color="accent" />
+      </ng-template>
     </button>
   </form>
 </div>

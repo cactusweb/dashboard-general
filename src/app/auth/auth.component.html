@@ -1,1 +1,9 @@
-<button class="csd-button_flat" (click)="onAuth()">Login with Discord</button>
+<button class="csd-button_flat" (click)="onAuth()">
+  <ng-container *ngIf="!(authPending$ | async); else spinner">
+    Login with Discord
+    <mat-icon fontIcon="icon-discord" class="!tw-text-base xs:!tw-text-sm" />
+  </ng-container>
+  <ng-template #spinner>
+    <mat-spinner [strokeWidth]="3" color="accent" [diameter]="26" />
+  </ng-template>
+</button>

@@ -5,7 +5,7 @@ import {
   OnInit,
   inject,
 } from '@angular/core';
-import { NgvarDirective } from '@csd-directives/ngvar.directive';
+import { NgVarDirective } from '@csd-directives/ngvar.directive';
 import { State } from '@csd-store/state';
 import { GetUser } from '@csd-store/user/user.actions';
 import { selectUser } from '@csd-store/user/user.selectors';
@@ -16,7 +16,7 @@ import { Store } from '@ngrx/store';
   selector: 'csd-user-data',
   templateUrl: './user-data.component.html',
   styleUrls: ['./user-data.component.scss'],
-  imports: [CommonModule, NgvarDirective],
+  imports: [CommonModule, NgVarDirective],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

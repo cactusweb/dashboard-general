@@ -11,6 +11,8 @@ import { BindFormComponent } from './components/bind-form/bind-form.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { NgVarDirective } from '@csd-directives/ngvar.directive';
 
 const route: Route = {
   path: '',
@@ -34,6 +36,8 @@ const route: Route = {
     FormsModule,
     ReactiveFormsModule,
     NgxMaskDirective,
+    MatProgressSpinnerModule,
+    NgVarDirective,
   ],
   providers: [provideNgxMask()],
 })

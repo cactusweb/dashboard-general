@@ -17,6 +17,7 @@ import { ErrorsHandlerInterceptor } from '@csd-interceptors/errors-handler.inter
 import { UserEffects } from '@csd-store/user/user.effects';
 import { CsdSnackbarModule } from '@csd-modules/snackbar/snackbar.module';
 import { LicensesEffects } from '@csd-store/licenses/licenses.effects';
+import { LazyLoadingSpinnerComponent } from '@csd-components/lazy-loading-spinner.component';
 
 @NgModule({
   declarations: [AppComponent],
@@ -39,6 +40,7 @@ import { LicensesEffects } from '@csd-store/licenses/licenses.effects';
 
     CsdSnackbarModule,
     NavDefaultComponent,
+    LazyLoadingSpinnerComponent,
   ],
   providers: [
     {

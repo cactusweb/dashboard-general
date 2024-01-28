@@ -46,6 +46,11 @@
     &:not(:disabled):hover {
       @apply tw-bg-error-hover tw-text-white;
     }
+
+    .mat-mdc-progress-spinner
+      .mdc-circular-progress__indeterminate-circle-graphic {
+      @apply tw-stroke-error;
+    }
   }
 }
 

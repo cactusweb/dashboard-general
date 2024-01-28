@@ -39,7 +39,7 @@ interface NgVarContext<T> {
   selector: '[ngVar]',
   standalone: true,
 })
-export class NgvarDirective<T> {
+export class NgVarDirective<T> {
   private context: NgVarContext<T | null> = { ngVar: null, $implicit: null };
   private hasView = false;
 
@@ -78,7 +78,7 @@ export class NgvarDirective<T> {
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static ngTemplateContextGuard<T>(
-    dir: NgvarDirective<T>,
+    dir: NgVarDirective<T>,
     ctx: any
   ): ctx is NgVarContext<T> {
     return true;
