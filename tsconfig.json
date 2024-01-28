@@ -12,6 +12,7 @@
       "@csd-models/*": ["app/common/models/*"],
       "@csd-interceptors/*": ["app/common/interceptors/*"],
       "@csd-consts/*": ["app/common/consts/*"],
+      "@csd-utils/*": ["app/common/utils/*"],
       "@csd-auth/*": ["app/auth/*"]
     },
     "outDir": "./dist/out-tsc",

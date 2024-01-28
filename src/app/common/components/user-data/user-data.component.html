@@ -1,0 +1,8 @@
+<div class="user row" *ngVar="user$ | async as user">
+  <div class="user__img" [attr.data-skeleton-load]="user ? null : ''">
+    <img *ngIf="user" [src]="user?.avatar" alt="" />
+  </div>
+  <span class="user__name" [attr.data-skeleton-load]="user ? null : 'text'">
+    {{ user.full_name }}
+  </span>
+</div>

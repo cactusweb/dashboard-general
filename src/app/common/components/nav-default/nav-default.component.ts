@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { UserDataComponent } from '@csd-components/user-data/user-data.component';
 import { RouterPaths } from '@csd-consts/router-paths.conts';
 import { NgvarDirective } from '@csd-directives/ngvar.directive';
 import { AuthLogout } from '@csd-store/auth/auth.actions';
@@ -12,7 +13,7 @@ import { Store } from '@ngrx/store';
   selector: 'csd-nav-default',
   templateUrl: './nav-default.component.html',
   styleUrls: ['./nav-default.component.scss'],
-  imports: [CommonModule, NgvarDirective, RouterModule],
+  imports: [CommonModule, NgvarDirective, RouterModule, UserDataComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })

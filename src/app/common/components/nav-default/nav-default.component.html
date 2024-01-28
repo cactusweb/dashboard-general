@@ -3,7 +3,7 @@
   *ngVar="isAuthed$ | async as isAuthed"
   [class.nav_empty]="!isAuthed"
 >
-  <div class="" *ngIf="isAuthed"></div>
+  <csd-user-data *ngIf="isAuthed" />
   <a aria-label="Go to main page" class="nav__logo" routerLink="/">
     <img src="/assets/cactusdash-logo.svg" alt="CactusDash" />
   </a>

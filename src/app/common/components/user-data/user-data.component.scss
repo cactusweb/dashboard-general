@@ -1,0 +1,19 @@
+.user {
+  @apply tw-gap-4 tw-justify-start;
+  &__img {
+    @apply tw-rounded-full tw-w-12 xs:tw-w-14 tw-h-12 xs:tw-h-14 tw-overflow-hidden;
+
+    img {
+      @apply tw-object-cover tw-w-full tw-h-full;
+    }
+  }
+
+  &__name {
+    @apply tw-text-lg tw-leading-[22px] tw-font-medium tw-h-[22px];
+    @apply tw-max-w-64 tw-overflow-hidden tw-text-ellipsis tw-whitespace-nowrap;
+    @apply xs:tw-hidden;
+    &[data-skeleton-load] {
+      @apply tw-w-36;
+    }
+  }
+}
