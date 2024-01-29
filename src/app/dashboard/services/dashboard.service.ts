@@ -15,36 +15,27 @@ import { selectLicenses } from '@csd-store/licenses/licenses.selectors';
 import { State } from '@csd-store/state';
 import { distinctUntilChangedJSON } from '@csd-utils/distinct-until-changed-json.pipeline';
 import { Store } from '@ngrx/store';
-import { filter, map, shareReplay, tap } from 'rxjs';
+import {
+  ReplaySubject,
+  Subject,
+  filter,
+  map,
+  share,
+  shareReplay,
+  takeUntil,
+  tap,
+} from 'rxjs';
 
 @Injectable()
 export class DashboardService implements OnDestroy {
   private readonly ownerName = this.getOwnerName();
 
-  readonly license$ = this.store.select(selectLicenses).pipe(
-    distinctUntilChangedJSON(),
-    filter((licenses) => !!licenses),
-    map((licenses) =>
-      licenses!.find((lic) => lic.owner.name === this.ownerName)
-    ),
-    tap((lic) => {
-      if (!lic) {
-        const msg = `You don't have license of ${this.ownerName}.`;
-        this.snackbar.createItem(msg, CsdSnackbarLevels.ERROR);
-        this.router.navigate([RouterPaths.LICENSES]);
-        throw new Error(msg);
-      }
-    }),
-    map((d) => d as LicenseDTO),
-    tap((lic) => {
-      this.seo.changeTitle(lic.owner.name + ' - Dashboard');
-      if (lic.owner.avatar) {
-        this.seo.changeIcon(lic.owner.avatar);
-      }
-    }),
-    distinctUntilChangedJSON(),
-    shareReplay()
-  );
+  private readonly _license$ = new ReplaySubject<LicenseDTO>();
+  readonly license$ = this._license$.asObservable().pipe(shareReplay());
+
+  private readonly destroyed$ = new Subject<void>();
+
+  private unbinded = false;
 
   constructor(
     private store: Store<State>,
@@ -52,10 +43,14 @@ export class DashboardService implements OnDestroy {
     private router: Router,
     private http: HttpService,
     private seo: SeoService
-  ) {}
+  ) {
+    this.getLicense();
+  }
 
   ngOnDestroy(): void {
     this.seo.changeIcon();
+    this.destroyed$.next();
+    this.destroyed$.complete();
   }
 
   resetActivations() {
@@ -92,9 +87,10 @@ export class DashboardService implements OnDestroy {
       .request<void>(Requests.UNBIND_LICENSE, null, this.ownerName)
       .pipe(
         tap(() => {
+          this.unbinded = true;
+          this.router.navigate([RouterPaths.LICENSES]);
           this.store.dispatch(new DeleteLicense(this.ownerName));
           this.snackbar.createItem('License unbinded', CsdSnackbarLevels.ERROR);
-          this.router.navigate([RouterPaths.LICENSES]);
         })
       );
   }
@@ -103,5 +99,41 @@ export class DashboardService implements OnDestroy {
     return (
       inject(ActivatedRoute).snapshot.params['owner_name'] as string
     ).replace('-', ' ');
+  }
+
+  private getLicense() {
+    this.store
+      .select(selectLicenses)
+      .pipe(
+        takeUntil(this.destroyed$),
+        distinctUntilChangedJSON(),
+        filter((licenses) => !!licenses),
+        map((licenses) =>
+          licenses!.find((lic) => lic.owner.name === this.ownerName)
+        ),
+        tap((lic) => {
+          if (this.unbinded) {
+            throw new Error('Licenses undinded');
+          }
+          if (!lic) {
+            const msg = `You don't have license of ${this.ownerName}.`;
+            this.snackbar.createItem(msg, CsdSnackbarLevels.ERROR);
+            this.router.navigate([RouterPaths.LICENSES]);
+            throw new Error(msg);
+          }
+        }),
+        map((d) => d as LicenseDTO),
+        tap((lic) => {
+          this.seo.changeTitle(lic.owner.name + ' - Dashboard');
+          if (lic.owner.avatar) {
+            this.seo.changeIcon(lic.owner.avatar);
+          }
+        }),
+        distinctUntilChangedJSON()
+      )
+      .subscribe({
+        next: (lic) => this._license$.next(lic),
+        error: () => {},
+      });
   }
 }

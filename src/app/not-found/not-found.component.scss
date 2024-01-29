@@ -11,6 +11,5 @@ h1 {
 }
 
 .link {
-  color: #5f8ca0;
-  @apply tw-mt-5 hover:tw-text-primary tw-font-medium;
+  @apply tw-mt-5 hover:tw-text-primary tw-font-medium tw-text-accent;
 }

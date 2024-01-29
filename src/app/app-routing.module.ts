@@ -36,6 +36,15 @@ const routes: Routes = [
       import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
   },
   {
+    path: 'main',
+    redirectTo: RouterPaths.LICENSES,
+  },
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: RouterPaths.LICENSES,
+  },
+  {
     path: '**',
     title: `Not found ${titlePostfix}`,
     loadComponent: () =>

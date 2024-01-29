@@ -21,6 +21,12 @@
 .icon-warn:before {
   content: "\e802";
 }
+.icon-vk:before {
+  content: "\e804";
+}
+.icon-twitter:before {
+  content: "\e805";
+}
 .icon-reset:before {
   content: "\e806";
 }

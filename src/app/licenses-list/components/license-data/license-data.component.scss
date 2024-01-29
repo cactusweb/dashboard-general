@@ -2,7 +2,7 @@
   @apply tw-justify-start tw-gap-6 xs:tw-gap-3;
 
   &__img {
-    @apply tw-h-24 tw-w-24 tw-rounded-full xs:tw-h-14 xs:tw-w-14;
+    @apply tw-h-24 tw-w-24 tw-rounded-full xs:tw-h-14 xs:tw-w-14 tw-overflow-hidden;
     img {
       @apply tw-w-full tw-h-full tw-object-cover;
     }

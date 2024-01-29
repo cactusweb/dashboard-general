@@ -3,7 +3,7 @@
 
   @apply tw-grid-cols-[1fr_auto_1fr] xs:tw-grid-cols-2 xs:tw-justify-between;
 
-  @apply tw-px-20 md:tw-px-10 xs:tw-px-5 tw-py-6 tw-bg-white tw-rounded-b-2xl;
+  @apply tw-px-20 md:tw-px-10 xs:tw-px-6 tw-py-7 xs:tw-py-5 tw-bg-white tw-rounded-b-2xl;
 
   &_empty {
     grid-template-columns: 1fr;
@@ -26,5 +26,5 @@
 }
 
 button {
-  @apply tw-w-40 tw-h-[50px] xs:tw-w-32 xs:tw-h-10 tw-justify-self-end;
+  @apply tw-w-40 tw-h-[50px] xs:tw-w-32 xs:tw-h-11 tw-justify-self-end;
 }

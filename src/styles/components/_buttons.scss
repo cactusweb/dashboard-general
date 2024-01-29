@@ -1,4 +1,4 @@
-@mixin Button() {
+.csd-button {
   @apply tw-flex tw-justify-center tw-items-center tw-gap-1.5;
   @apply tw-h-12 tw-w-full tw-rounded-lg tw-px-2.5;
   @apply tw-text-base tw-leading-5 tw-font-semibold xs:tw-text-sm xs:tw-leading-[17px];
@@ -11,12 +11,12 @@
 }
 
 @mixin ButtonStroked() {
-  @include Button();
+  @extend .csd-button;
   @apply tw-border tw-border-solid;
 }
 
 .csd-button_flat {
-  @include Button();
+  @extend .csd-button;
   @apply tw-bg-primary tw-text-white;
   &:not(:disabled) {
     @apply hover:tw-bg-primary-hover;
@@ -24,7 +24,7 @@
 }
 
 .csd-button_stroked {
-  @include Button();
+  @extend .csd-button;
   @apply tw-border tw-border-solid;
 
   &[color="secondary"] {
@@ -55,7 +55,7 @@
 }
 
 .csd-button_icon {
-  @include Button();
+  @extend .csd-button;
   @extend .csd-button_stroked;
   @apply tw-h-12 tw-w-12 xs:tw-h-10 xs:tw-w-10;
   border-width: 2px;

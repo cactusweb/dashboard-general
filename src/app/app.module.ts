@@ -18,6 +18,7 @@ import { UserEffects } from '@csd-store/user/user.effects';
 import { CsdSnackbarModule } from '@csd-modules/snackbar/snackbar.module';
 import { LicensesEffects } from '@csd-store/licenses/licenses.effects';
 import { LazyLoadingSpinnerComponent } from '@csd-components/lazy-loading-spinner.component';
+import { FooterComponent } from '@csd-components/footer/footer.component';
 
 @NgModule({
   declarations: [AppComponent],
@@ -41,6 +42,7 @@ import { LazyLoadingSpinnerComponent } from '@csd-components/lazy-loading-spinne
     CsdSnackbarModule,
     NavDefaultComponent,
     LazyLoadingSpinnerComponent,
+    FooterComponent,
   ],
   providers: [
     {
