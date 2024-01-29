@@ -37,7 +37,11 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: '/' + RouterPaths.AUTH,
+    title: `Not found ${titlePostfix}`,
+    loadComponent: () =>
+      import('./not-found/not-found.component').then(
+        (c) => c.NotFoundComponent
+      ),
   },
 ];
 
