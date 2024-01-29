@@ -3,4 +3,6 @@ export enum RouterPaths {
   LOGIN = 'login',
   LICENSES = 'licenses',
   DASHBOARD = ':owner_name/dashboard',
+  PURCHASE = ':owner_name/purchase',
+  NOT_FOUND = 'not-found',
 }

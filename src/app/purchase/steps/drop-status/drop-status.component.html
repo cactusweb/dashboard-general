@@ -1,0 +1,21 @@
+<csd-purchase-owner />
+
+<button
+  class="csd-button_flat"
+  *ngVar="state$ | async as state"
+  [disabled]="state === DropStates.DISABLED || state === DropStates.PENDING"
+  (click)="onPurchase()"
+>
+  <ng-container [ngSwitch]="state">
+    <mat-spinner
+      color="accent"
+      [diameter]="26"
+      [strokeWidth]="3"
+      *ngSwitchCase="DropStates.PENDING"
+    />
+
+    <ng-container *ngSwitchCase="DropStates.DISABLED"> Sold Out </ng-container>
+
+    <ng-container *ngSwitchCase="DropStates.ACTIVE"> Purchase </ng-container>
+  </ng-container>
+</button>

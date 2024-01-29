@@ -1,8 +1,8 @@
 .csd-button {
   @apply tw-flex tw-justify-center tw-items-center tw-gap-1.5;
   @apply tw-h-12 tw-w-full tw-rounded-lg tw-px-2.5;
-  @apply tw-text-base tw-leading-5 tw-font-semibold xs:tw-text-sm xs:tw-leading-[17px];
-  @apply disabled:tw-opacity-70;
+  @apply tw-text-base tw-leading-5 tw-font-semibold;
+  @apply disabled:tw-opacity-50;
   transition: 0.3s;
 
   mat-icon {
@@ -18,8 +18,9 @@
 .csd-button_flat {
   @extend .csd-button;
   @apply tw-bg-primary tw-text-white;
+  background-color: var(--primary-color);
   &:not(:disabled) {
-    @apply hover:tw-bg-primary-hover;
+    @apply hover:tw-brightness-105;
   }
 }
 
@@ -36,8 +37,18 @@
 
   &[color="primary"] {
     @apply tw-border-primary tw-text-primary;
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+
     &:not(:disabled):hover {
       @apply tw-bg-primary tw-text-white;
+      background-color: var(--primary-color);
+    }
+
+    .mat-mdc-progress-spinner
+      .mdc-circular-progress__indeterminate-circle-graphic {
+      @apply tw-stroke-primary;
+      stroke: var(--primary-color);
     }
   }
 
@@ -58,5 +69,6 @@
   @extend .csd-button;
   @extend .csd-button_stroked;
   @apply tw-h-12 tw-w-12 xs:tw-h-10 xs:tw-w-10;
+  @apply xs:tw-text-sm xs:tw-leading-[17px];
   border-width: 2px;
 }

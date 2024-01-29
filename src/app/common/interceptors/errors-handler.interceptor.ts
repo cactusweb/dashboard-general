@@ -32,7 +32,7 @@ export class ErrorsHandlerInterceptor implements HttpInterceptor {
       catchError((err) => {
         this.handleError(err);
 
-        return throwError(() => err);
+        return throwError(err);
       })
     );
   }

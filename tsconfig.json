@@ -14,7 +14,8 @@
       "@csd-consts/*": ["app/common/consts/*"],
       "@csd-utils/*": ["app/common/utils/*"],
       "@csd-auth/*": ["app/auth/*"],
-      "@csd-licenses-list/*": ["app/licenses-list/*"]
+      "@csd-licenses-list/*": ["app/licenses-list/*"],
+      "@csd-purchase/*": ["app/purchase/*"]
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,

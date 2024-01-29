@@ -1,0 +1,8 @@
+<div class="owner" *ngVar="owner$ | async as owner">
+  <div class="owner__logo" [attr.data-skeleton-load]="owner ? null : ''">
+    <img [src]="owner.avatar" alt="" *ngIf="owner" />
+  </div>
+  <h1 class="owner__name" [attr.data-skeleton-load]="owner ? null : 'text'">
+    {{ owner?.name }}
+  </h1>
+</div>

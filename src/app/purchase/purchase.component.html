@@ -1,0 +1,5 @@
+<ng-container [ngSwitch]="step$ | async">
+  <csd-drop-status *ngSwitchCase="PurchaseSteps.STATUS" />
+  <csd-purchase-form *ngSwitchCase="PurchaseSteps.FORM" />
+  <div class="card" *ngSwitchDefault></div>
+</ng-container>

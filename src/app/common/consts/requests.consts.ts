@@ -7,6 +7,7 @@ const enum HttpRequestNames {
   RESET_ACTIVATIONS = 'RESET_ACTIVATIONS',
   JOIN_DISCORD = 'JOIN_DISCORD',
   UNBIND_LICENSE = 'UNBIND_LICENSE',
+  GET_OWNER = 'GET_OWNER',
 }
 
 export const Requests: Record<HttpRequestNames, HttpRequestData> = {
@@ -31,6 +32,11 @@ export const Requests: Record<HttpRequestNames, HttpRequestData> = {
 
   [HttpRequestNames.UNBIND_LICENSE]: {
     url: '/license/:param/unbind',
+    method: 'GET',
+  },
+
+  [HttpRequestNames.GET_OWNER]: {
+    url: '/owner/:param',
     method: 'GET',
   },
 };

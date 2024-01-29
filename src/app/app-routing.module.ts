@@ -36,6 +36,12 @@ const routes: Routes = [
       import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
   },
   {
+    path: RouterPaths.PURCHASE,
+    title: `Purchase ${titlePostfix}`,
+    loadChildren: () =>
+      import('./purchase/purchase.module').then((m) => m.PurchaseModule),
+  },
+  {
     path: 'main',
     redirectTo: RouterPaths.LICENSES,
   },

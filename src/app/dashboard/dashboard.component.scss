@@ -14,24 +14,4 @@ csd-dashboard {
   .csd-button_stroked {
     @apply tw-h-12 xs:tw-h-10;
   }
-
-  .csd-button_stroked[color="primary"],
-  .csd-button_icon[color="primary"] {
-    border-color: var(--primary-color) !important;
-    color: var(--primary-color) !important;
-
-    &:not(:disabled):hover {
-      @apply tw-text-white #{!important};
-      background-color: var(--primary-color) !important;
-    }
-
-    .mat-mdc-progress-spinner
-      .mdc-circular-progress__indeterminate-circle-graphic {
-      stroke: var(--primary-color) !important;
-    }
-  }
-
-  .csd-button_flat {
-    background-color: var(--primary-color) !important;
-  }
 }

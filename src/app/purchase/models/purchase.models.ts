@@ -1,0 +1,8 @@
+export enum PurchaseSteps {
+  STATUS = 'STATUS',
+  FORM = 'FORM',
+  PAYMENT_PENDING = 'PAYMENT_PENDING',
+  CHECK_RESULT = 'CHECK_RESULT',
+  SUCCESS = 'SUCCESS',
+  FAILED = 'FAILED',
+}

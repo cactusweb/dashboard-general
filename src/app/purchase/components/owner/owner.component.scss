@@ -1,0 +1,17 @@
+.owner {
+  @apply tw-grid tw-gap-2 tw-justify-items-center tw-text-center tw-content-center tw-justify-center;
+
+  &__logo {
+    @apply tw-w-[100px] tw-h-[100px] xs:tw-w-20 xs:tw-h-20 tw-rounded-full tw-overflow-hidden;
+    img {
+      @apply tw-w-full tw-h-full tw-object-cover;
+    }
+  }
+
+  &__name {
+    @apply tw-text-[22px] tw-leading-[27px] xs:tw-text-lg xs:tw-leading-[22px] tw-font-semibold;
+    &[data-skeleton-load] {
+      @apply tw-h-[27px] xs:tw-h-[22px] tw-w-36;
+    }
+  }
+}

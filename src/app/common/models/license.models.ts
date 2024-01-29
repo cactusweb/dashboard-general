@@ -1,5 +1,5 @@
+import { PaymentWays } from './order/payment.models';
 import { OwnerDTO } from './owner.models';
-import { LicensePaymentDTO } from './payment.models';
 import { LicenseReferralDTO } from './referral.models';
 
 export interface LicenseDTO {
@@ -28,4 +28,20 @@ export enum LicenseTypes {
   LIFETIME = 'lifetime',
   TRIAL = 'trial',
   TRIAL_RENEWAL = 'trial-renewal',
+}
+
+export interface LicensePaymentDTO {
+  toRub: number;
+  price: number;
+
+  currency: string;
+
+  email: string;
+
+  last_4: string;
+  exp_date: string;
+
+  stripe_customer_created: boolean;
+
+  way: PaymentWays;
 }
