@@ -13,7 +13,7 @@ import { ToolsService } from 'src/app/tools/services/tools.service';
 
 @Injectable()
 export class DashboardService {
-  private ownerName: string = '';
+  ownerName: string = '';
 
   private licenseLoading: boolean = false;
   private redirected: boolean = false;

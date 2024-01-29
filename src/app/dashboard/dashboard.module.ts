@@ -16,6 +16,8 @@ import { LinkToMainComponent } from './components/link-to-main/link-to-main.comp
 import { CryptoRenewComponent } from './components/crypto-renew/crypto-renew.component';
 import { RenewSuccessComponent } from './components/renew-success/renew-success.component';
 import { CryptoPaymentModule } from '../crypto-payment/crypto-payment.module';
+import { StripePaymentComponent } from './components/stripe-payment/stripe-payment.component';
+import { StripePaymentService } from './components/stripe-payment/services/stripe-payment.service';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent, data: { title: 'Dashboard' } }
@@ -34,7 +36,8 @@ const routes: Routes = [
     OwnerComponent,
     LinkToMainComponent,
     CryptoRenewComponent,
-    RenewSuccessComponent
+    RenewSuccessComponent,
+    StripePaymentComponent
   ],
   imports: [
     CommonModule,
@@ -42,6 +45,6 @@ const routes: Routes = [
     ToolsModule,
     CryptoPaymentModule
   ],
-  providers: [DashboardService]
+  providers: [DashboardService, StripePaymentService]
 })
 export class DashboardModule { }

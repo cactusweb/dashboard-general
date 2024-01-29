@@ -1,0 +1,12 @@
+:host {
+  display: grid;
+}
+
+.refund-link {
+  margin-top: 4px;
+  font-size: 14px;
+  justify-self: end;
+  &:hover {
+    text-decoration: underline;
+  }
+}

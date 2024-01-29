@@ -9,7 +9,7 @@ export interface Order {
     price: number,
     to_rub: number,
 
-    payment_way: '' | 'Tinkoff' | 'Ameria'
+    payment_way: '' | 'Tinkoff' | 'Ameria' | 'Stripe' | 'Crypto'
     tinkoff: { terminal_key: string }
     crypto: CryptoPaymentMethod[]
 

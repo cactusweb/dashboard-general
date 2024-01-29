@@ -91,6 +91,21 @@ export class PurchaseService {
 
 
 
+  purchasePaid(email: string){
+    if ( !this.drop ){
+      this.$purchaseState.next('status-payment-failed')
+      this.tools.generateNotification('Drop is undefined', 'err')
+      return throwError({ message: "Drop is undefined" })
+    }
+
+    return this.http.request( Requests['postOrderEmail'], { email }, this.drop?.id )
+      .pipe(
+        tap(d => this.$purchaseState.next('payment')),
+        tap(d => (this.drop?.payment_way == 'Ameria' || this.drop?.payment_way == 'Stripe') ? window.location.href = d.payment_url : null),
+      )
+  }
+
+  
   freePurchase(email: string): Observable<License>{
     if ( !this.drop ){
       this.$purchaseState.next('status-payment-failed')

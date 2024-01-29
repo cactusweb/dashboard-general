@@ -23,12 +23,17 @@ export class PurchaseComponent implements OnInit, OnDestroy {
   constructor(
     private purchase: PurchaseService,
     private seo: SeoService,
+    private activatedRoute: ActivatedRoute,
   ) {
     this.purchaseState = purchase.$purchaseState.asObservable();
   }
 
   ngOnInit(): void {  
     this.getOwner();
+
+    if (this.activatedRoute.snapshot.queryParams['status'] === 'pending') {
+      this.purchase.$purchaseState.next('status-check');
+    }
   }
 
   ngOnDestroy(): void {

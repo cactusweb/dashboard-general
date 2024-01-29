@@ -1,0 +1,23 @@
+<div class="control-wrapper">
+  <button
+    class="btn btn--primary"
+    [disabled]="loading"
+    *ngIf="!paymentData.stripe_customer_created; else portalLink"
+    (click)="createCustomer()"
+  >
+    <btn-loader
+      [isSpinner]="loading"
+      text="Create customer portal"
+    ></btn-loader>
+  </button>
+
+  <ng-template #portalLink>
+    <button
+      class="btn btn--outline-primary"
+      (click)="goToPortal()"
+      [disabled]="loading"
+    >
+      <btn-loader [isSpinner]="loading" text="Customer portal"></btn-loader>
+    </button>
+  </ng-template>
+</div>

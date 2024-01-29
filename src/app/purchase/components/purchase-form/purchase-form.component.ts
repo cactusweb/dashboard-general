@@ -1,7 +1,7 @@
 import { CurrencyPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { finalize, map, Observable, take } from 'rxjs';
+import { finalize, map, Observable, switchMap, take } from 'rxjs';
 import { User } from 'src/app/tools/interfaces/user';
 import { PurchaseService } from '../../services/purchase.service';
 
@@ -50,15 +50,23 @@ export class PurchaseFormComponent implements OnInit {
     if ( this.form.invalid ) return;
 
     this.loading = true;
-    this.drop.freePurchase( this.form.controls['email'].value )
-      .pipe(
-        take(1),
-        finalize(() => this.loading = false)
+    const email = this.form.controls['email'].value;
+    this.drop.getDrop().pipe(
+      map(d => d.payment_way),
+      switchMap((way) =>
+        way === '' || way === 'Crypto'
+          ? this.drop.freePurchase(email)
+          : this.drop.purchasePaid(email)
       )
-      .subscribe({
-        error: () => {},
-        next: d => {}
-      })
+    )
+    .pipe(
+      take(1),
+      finalize(() => this.loading = false)
+    )
+    .subscribe({
+      error: () => {},
+      next: d => {}
+    })
 
   }
 
