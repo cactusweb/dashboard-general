@@ -5,6 +5,8 @@ import {
   OnInit,
   inject,
 } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { RouterPaths } from '@csd-consts/router-paths.conts';
 import { NgVarDirective } from '@csd-directives/ngvar.directive';
 import { State } from '@csd-store/state';
 import { GetUser } from '@csd-store/user/user.actions';
@@ -16,7 +18,7 @@ import { Store } from '@ngrx/store';
   selector: 'csd-user-data',
   templateUrl: './user-data.component.html',
   styleUrls: ['./user-data.component.scss'],
-  imports: [CommonModule, NgVarDirective],
+  imports: [CommonModule, NgVarDirective, RouterModule],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -24,6 +26,8 @@ export class UserDataComponent implements OnInit {
   readonly user$ = this.store
     .select(selectUser)
     .pipe(distinctUntilChangedJSON());
+
+  readonly licensesPath = '/' + RouterPaths.LICENSES;
 
   constructor(private store: Store<State>) {}
 

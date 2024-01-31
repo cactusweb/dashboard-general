@@ -35,6 +35,12 @@ export class BindFormComponent {
   ) {}
 
   onBind() {
+    this.form.markAllAsTouched();
+
+    if (this.form.invalid) {
+      return;
+    }
+
     this.loading$.next(true);
     this.http
       .request<LicenseDTO>(Requests.BIND_LICENSES, this.form.value)
