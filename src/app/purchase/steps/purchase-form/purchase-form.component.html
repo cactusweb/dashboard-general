@@ -1,4 +1,6 @@
 <form class="card" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <csd-purchase-form-title />
+
   <csd-purchase-owner />
 
   <div class="fieldset">
@@ -6,7 +8,8 @@
       type="email"
       class="csd-input"
       formControlName="email"
-      placeholder="E-mail"
+      placeholder="Email"
+      autocomplete="email"
     />
 
     <button
@@ -15,10 +18,22 @@
       *ngVar="loading$ | async as loading"
       [disabled]="loading"
     >
-      <ng-container *ngIf="!loading; else spinner"> Purchase </ng-container>
+      <ng-container *ngIf="!loading; else spinner">
+        <ng-template *ngTemplateOutlet="purchaseText" />
+      </ng-container>
       <ng-template #spinner>
         <mat-spinner color="accent" [diameter]="26" [strokeWidth]="3" />
       </ng-template>
     </button>
   </div>
 </form>
+
+<ng-template #purchaseText>
+  <ng-container *ngVar="(priceData$ | async)! as priceData">
+    Purchase
+    {{
+      priceData.price
+        | currency : priceData.currency : "symbol-narrow" : "1.0-1"
+    }}
+  </ng-container>
+</ng-template>

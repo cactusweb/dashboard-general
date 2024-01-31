@@ -16,6 +16,18 @@
 
     <ng-container *ngSwitchCase="DropStates.DISABLED"> Sold Out </ng-container>
 
-    <ng-container *ngSwitchCase="DropStates.ACTIVE"> Purchase </ng-container>
+    <ng-container *ngSwitchCase="DropStates.ACTIVE">
+      <ng-template *ngTemplateOutlet="purchaseText" />
+    </ng-container>
   </ng-container>
 </button>
+
+<ng-template #purchaseText>
+  <ng-container *ngVar="(priceData$ | async)! as priceData">
+    Purchase
+    {{
+      priceData.price
+        | currency : priceData.currency : "symbol-narrow" : "1.0-1"
+    }}
+  </ng-container>
+</ng-template>

@@ -1,3 +1,7 @@
-:host {
+csd-purchase {
   @apply tw-grid tw-content-center;
+  .card {
+    @apply tw-max-w-[530px] tw-w-full tw-justify-self-center tw-justify-items-center;
+    @apply tw-py-9 tw-px-8 xs:tw-py-8 xs:tw-px-6;
+  }
 }

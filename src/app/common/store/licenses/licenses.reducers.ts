@@ -43,7 +43,14 @@ export const licensesRedusers = (
         ...state,
         data: !state.data
           ? null
-          : { licenses: [...state.data.licenses, action.license] },
+          : {
+              licenses: [
+                ...state.data.licenses.filter(
+                  (l) => l.id !== action.license.id
+                ),
+                action.license,
+              ],
+            },
       };
     case LicensesActions.SetLicensesInitialState:
       return initialLicensesState;

@@ -33,3 +33,7 @@ csd-root {
 .row {
   @apply tw-grid tw-grid-flow-col tw-justify-between tw-items-center;
 }
+
+mat-progress-bar[for-block] {
+  @apply tw-absolute tw-w-full tw-top-0 tw-left-0;
+}

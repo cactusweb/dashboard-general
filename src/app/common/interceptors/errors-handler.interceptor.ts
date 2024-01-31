@@ -30,7 +30,7 @@ export class ErrorsHandlerInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
       catchError((err) => {
-        this.handleError(err);
+        this.handleError(err, request.headers.has('no-handle-error'));
 
         return throwError(err);
       })
@@ -41,7 +41,7 @@ export class ErrorsHandlerInterceptor implements HttpInterceptor {
     this.snackbarService.createItem(message, CsdSnackbarLevels.ERROR);
   }
 
-  private handleError(err: any) {
+  private handleError(err: any, noHandleBadReq: boolean = false) {
     if (err.status < 500 && err?.error?.message)
       err.error.message = this.utilsService.capitalizeFirstLetter(
         err.error.message
@@ -62,7 +62,7 @@ export class ErrorsHandlerInterceptor implements HttpInterceptor {
           `Error ${err.status}: ${ErrorEnum.ServerUnavailable}`
       );
       err.message = ErrorEnum.ServerUnavailable;
-    } else if (err.status >= 400 && err.status <= 500)
+    } else if (err.status >= 400 && err.status <= 500 && !noHandleBadReq)
       this.generateNotification(
         `${err.error.message || err.error.error || err.message}`
       );

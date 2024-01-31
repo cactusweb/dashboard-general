@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HttpRequestData } from './http.models';
 import { Observable, throwError } from 'rxjs';
@@ -14,44 +14,75 @@ export class HttpService {
     reqParams: HttpRequestData,
     body: any = '',
     urlParam: string = '',
-    urlQuery: string = ''
+    urlQuery: string = '',
+    handleErros: boolean = true
   ): Observable<Response> {
     let reqUrl =
       environment.apiUrl + reqParams.url.replace(':param', urlParam) + urlQuery;
 
+    const headers = handleErros ? undefined : this.getHeadersNoHandleErrors();
+
     switch (reqParams.method) {
       case 'POST':
-        return this.postHttp(reqUrl, body);
+        return this.postHttp(reqUrl, body, headers);
       case 'GET':
-        return this.getHttp(reqUrl);
+        return this.getHttp(reqUrl, headers);
       case 'DELETE':
-        return this.deleteHttp(reqUrl);
+        return this.deleteHttp(reqUrl, headers);
       case 'PUT':
-        return this.putHttp(reqUrl, body);
+        return this.putHttp(reqUrl, body, headers);
       case 'PATCH':
-        return this.patchHttp(reqUrl, body);
+        return this.patchHttp(reqUrl, body, headers);
       default:
         return throwError(() => 'Method is not defined');
     }
   }
 
-  private postHttp<Response>(url: string, data: Record<string, any>) {
-    return this.http.post<Response>(url, data);
+  private postHttp<Response>(
+    url: string,
+    data: Record<string, any>,
+    headers?: HttpHeaders
+  ) {
+    return this.http.post<Response>(url, data, {
+      headers,
+    });
   }
 
-  private getHttp<Response>(url: string) {
-    return this.http.get<Response>(url);
+  private getHttp<Response>(url: string, headers?: HttpHeaders) {
+    return this.http.get<Response>(url, {
+      headers,
+    });
   }
 
-  private putHttp<Response>(url: string, data: Record<string, any>) {
-    return this.http.put<Response>(url, data);
+  private putHttp<Response>(
+    url: string,
+    data: Record<string, any>,
+    headers?: HttpHeaders
+  ) {
+    return this.http.put<Response>(url, data, {
+      headers,
+    });
   }
 
-  private deleteHttp<Response>(url: string) {
-    return this.http.delete<Response>(url);
+  private deleteHttp<Response>(url: string, headers?: HttpHeaders) {
+    return this.http.delete<Response>(url, {
+      headers,
+    });
   }
 
-  private patchHttp<Response>(url: string, data: Record<string, any>) {
-    return this.http.patch<Response>(url, data);
+  private patchHttp<Response>(
+    url: string,
+    data: Record<string, any>,
+    headers?: HttpHeaders
+  ) {
+    return this.http.patch<Response>(url, data, {
+      headers,
+    });
+  }
+
+  private getHeadersNoHandleErrors() {
+    return new HttpHeaders({
+      'no-handle-error': 'true',
+    });
   }
 }

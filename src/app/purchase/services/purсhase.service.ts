@@ -1,36 +1,40 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, OnDestroy, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Requests } from '@csd-consts/requests.consts';
 import { RouterPaths } from '@csd-consts/router-paths.conts';
+import { LicenseDTO } from '@csd-models/license.models';
 import { OrderDTO } from '@csd-models/order/order.models';
 import { OwnerDTO } from '@csd-models/owner.models';
-import { CsdSnackbarService } from '@csd-modules/snackbar/services/snackbar.service';
 import { PurchaseRequests } from '@csd-purchase/consts/requests.consts';
 import { PurchaseSteps } from '@csd-purchase/models/purchase.models';
 import { HttpService } from '@csd-services/http/http.service';
 import { SeoService } from '@csd-services/seo.service';
+import { AddLicense } from '@csd-store/licenses/licenses.actions';
 import { State } from '@csd-store/state';
 import { Store } from '@ngrx/store';
 import {
   BehaviorSubject,
+  ReplaySubject,
   catchError,
   distinctUntilChanged,
   shareReplay,
+  tap,
   throwError,
 } from 'rxjs';
 
 @Injectable()
-export class PurchaseService {
+export class PurchaseService implements OnDestroy {
   readonly owner$;
   readonly drop$;
   readonly step$;
+  readonly receivedLicense$;
 
+  private readonly _receivedLicense$ = new ReplaySubject<LicenseDTO>();
   private readonly ownerName = this.getOwnerName();
   private readonly _step$ = new BehaviorSubject(PurchaseSteps.STATUS);
 
   constructor(
     private store: Store<State>,
-    private snackbar: CsdSnackbarService,
     private router: Router,
     private http: HttpService,
     private seo: SeoService
@@ -38,10 +42,31 @@ export class PurchaseService {
     this.step$ = this._step$.asObservable().pipe(distinctUntilChanged());
     this.owner$ = this.getOwner();
     this.drop$ = this.getDropData();
+    this.receivedLicense$ = this._receivedLicense$
+      .asObservable()
+      .pipe(shareReplay());
+    this.checkAndChangeStep();
+  }
+
+  ngOnDestroy(): void {
+    this.seo.changeIcon();
   }
 
   changeStep(step: PurchaseSteps) {
     this._step$.next(step);
+  }
+
+  onLicenseReceive(lic: LicenseDTO) {
+    lic = {
+      ...lic,
+      expires_in: lic.expires_in ? lic.expires_in * 1000 : lic.expires_in,
+      created_at: lic.created_at * 1000,
+      bought_at: lic.bought_at * 1000,
+    };
+
+    this._receivedLicense$.next(lic);
+    this.store.dispatch(new AddLicense(lic));
+    this._step$.next(PurchaseSteps.SUCCESS);
   }
 
   private getDropData() {
@@ -78,7 +103,20 @@ export class PurchaseService {
           }
           return throwError(() => err);
         }),
+        tap((owner) => {
+          this.seo.changeTitle(`${owner.name} - Purchase`);
+          this.seo.changeIcon(owner.avatar);
+        }),
         shareReplay(1)
       );
+  }
+
+  private checkAndChangeStep() {
+    const isPending =
+      inject(ActivatedRoute).snapshot.queryParams['status'] === 'pending';
+    if (!isPending) {
+      return;
+    }
+    this.changeStep(PurchaseSteps.CHECK_RESULT);
   }
 }

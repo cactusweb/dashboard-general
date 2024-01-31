@@ -1,0 +1,17 @@
+.referral {
+  @apply tw-font-semibold tw-text-base tw-leading-5 tw-text-center tw-text-black;
+  @apply tw-grid tw-gap-y-2 tw-justify-center;
+
+  &__user {
+    @apply tw-text-2xl tw-leading-[29px] tw-break-all xs:tw-text-lg xs:tw-leading-[22px];
+    color: var(--primary-color);
+
+    span {
+      @apply tw-text-black;
+    }
+  }
+}
+
+.title {
+  @apply tw-text-center tw-font-medium tw-text-[22px] xs:tw-text-xl xs:tw-leading-6 tw-font-semibold;
+}

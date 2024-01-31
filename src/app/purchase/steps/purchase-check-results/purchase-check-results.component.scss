@@ -1,0 +1,16 @@
+csd-purchase-check-results {
+  @apply tw-grid;
+
+  .card {
+    @apply tw-gap-3;
+  }
+
+  p {
+    @apply tw-text-center tw-text-lg tw-leading-[22px] xs:tw-text-base xs:tw-leading-5 tw-font-semibold;
+  }
+
+  .mat-mdc-progress-spinner
+    .mdc-circular-progress__indeterminate-circle-graphic {
+    stroke: var(--primary-color);
+  }
+}

@@ -1,0 +1,11 @@
+<ng-container *ngVar="inviter$ | async as user">
+  <h1 class="title" *ngIf="!user; else referral">Purchase now!</h1>
+
+  <ng-template #referral>
+    <h1 class="referral">
+      Purchase by the
+      <span class="referral__user">{{ user!.full_name }} <span>'s</span> </span>
+      referral link
+    </h1>
+  </ng-template>
+</ng-container>

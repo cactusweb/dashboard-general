@@ -3,6 +3,7 @@ import {
   Component,
   HostBinding,
   OnInit,
+  ViewEncapsulation,
 } from '@angular/core';
 import { PurchaseService } from './services/purсhase.service';
 import { map } from 'rxjs';
@@ -14,6 +15,7 @@ import { PurchaseSteps } from './models/purchase.models';
   styleUrls: ['./purchase.component.scss'],
   providers: [PurchaseService],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class PurchaseComponent implements OnInit {
   @HostBinding('style.--primary-color')

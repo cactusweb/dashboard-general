@@ -1,6 +1,10 @@
 {
-  "name": "dashboard-general-v3",
-  "version": "0.0.0",
+  "name": "dashboard-general",
+  "version": "3.0.0",
+  "author": {
+    "name": "CactusWeb",
+    "url": "https://cactusweb.io"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

@@ -8,6 +8,11 @@ import { DropStatusComponent } from './steps/drop-status/drop-status.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { PurchaseFormComponent } from './steps/purchase-form/purchase-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PurchaseCheckResults } from './steps/purchase-check-results/purchase-check-results.component';
+import { PurchaseSuccessComponent } from './steps/purchase-success/purchase-success.component';
+import { PurchaseFailedComponent } from './steps/purchase-failed/purchase-failed.component';
+import { MatIconModule } from '@angular/material/icon';
+import { PurchaseFormTitleComponent } from './steps/purchase-form/purchase-form-title/purchase-form-title.component';
 
 const route: Route = {
   path: '',
@@ -20,6 +25,10 @@ const route: Route = {
     OwnerComponent,
     DropStatusComponent,
     PurchaseFormComponent,
+    PurchaseCheckResults,
+    PurchaseSuccessComponent,
+    PurchaseFailedComponent,
+    PurchaseFormTitleComponent,
   ],
   imports: [
     CommonModule,
@@ -28,6 +37,7 @@ const route: Route = {
     MatProgressSpinnerModule,
     FormsModule,
     ReactiveFormsModule,
+    MatIconModule,
   ],
 })
 export class PurchaseModule {}

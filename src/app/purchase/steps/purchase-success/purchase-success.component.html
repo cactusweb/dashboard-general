@@ -1,0 +1,25 @@
+<div class="card">
+  <csd-purchase-owner />
+
+  <div class="tw-grid tw-gap-2.5 tw-max-w-xs tw-w-full">
+    <div class="csd-tag-container">
+      <h2 class="csd-tag-label">Here is your key!</h2>
+      <div class="csd-tag" *ngVar="(license$ | async)! as license">
+        <span class="key">
+          {{ license.key }}
+        </span>
+        <button
+          class="csd-button_icon"
+          color="primary"
+          (click)="copy(license.key)"
+        >
+          <mat-icon fontIcon="icon-copy" />
+        </button>
+      </div>
+    </div>
+
+    <a class="csd-button_flat" color="primary" [routerLink]="[dashLink]">
+      Go to dashboard
+    </a>
+  </div>
+</div>

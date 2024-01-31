@@ -1,0 +1,22 @@
+:host {
+  @apply tw-grid;
+}
+
+.card {
+  @apply tw-gap-6;
+}
+
+.csd-tag {
+  @apply tw-h-11 tw-justify-center;
+
+  &-label {
+    @apply tw-text-[18px] xs:tw-text-base xs:tw-leading-5 tw-font-semibold tw-text-center;
+  }
+}
+.csd-button_icon {
+  @apply tw-h-11 tw-w-11;
+}
+
+.key {
+  @apply tw-max-w-full tw-overflow-hidden tw-text-ellipsis tw-whitespace-nowrap;
+}
