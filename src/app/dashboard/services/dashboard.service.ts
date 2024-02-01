@@ -124,10 +124,12 @@ export class DashboardService implements OnDestroy {
         }),
         map((d) => d as LicenseDTO),
         tap((lic) => {
-          this.seo.changeTitle(lic.owner.name + ' - Dashboard');
-          if (lic.owner.avatar) {
-            this.seo.changeIcon(lic.owner.avatar);
-          }
+          setTimeout(() => {
+            this.seo.changeTitle(lic.owner.name + ' - Dashboard');
+            if (lic.owner.avatar) {
+              this.seo.changeIcon(lic.owner.avatar);
+            }
+          }, 0);
         }),
         distinctUntilChangedJSON()
       )

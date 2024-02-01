@@ -10,6 +10,8 @@ import { GeneralComponent } from './components/general/general.component';
 import { TagContainerComponent } from './common/tag-container.component';
 import { BackLinkComponent } from './common/back-link.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { PaymentStripeComponent } from './components/payment-stripe/payment-stripe.component';
+import { PaymentInfoComponent } from './components/payment-info/payment-info.component';
 
 const route: Route = {
   path: '',
@@ -24,6 +26,8 @@ const route: Route = {
     GeneralComponent,
     TagContainerComponent,
     BackLinkComponent,
+    PaymentInfoComponent,
+    PaymentStripeComponent,
   ],
   imports: [
     CommonModule,

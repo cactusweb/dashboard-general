@@ -1,0 +1,45 @@
+<ng-container *ngIf="hasPortal$ | async; else createPortalBtn">
+  <ng-container
+    *ngTemplateOutlet="
+      button;
+      context: {
+        type: 'stroked',
+        text: 'Customer Portal',
+        cb: onGoToPortal.bind(this)
+      }
+    "
+  ></ng-container>
+</ng-container>
+
+<ng-template #createPortalBtn>
+  <ng-container
+    *ngTemplateOutlet="
+      button;
+      context: {
+        type: 'flat',
+        text: 'Create portal',
+        cb: onCreatePortal.bind(this)
+      }
+    "
+  ></ng-container>
+</ng-template>
+
+<!-- Button of template -->
+<ng-template #button let-type="type" let-text="text" let-cb="cb">
+  <ng-container *ngVar="loading$ | async as loading">
+    <button
+      [class]="'csd-button_' + type"
+      color="primary"
+      [disabled]="loading"
+      (click)="cb()"
+    >
+      <ng-container *ngIf="!loading; else spinner">
+        {{ text }}
+      </ng-container>
+    </button>
+  </ng-container>
+</ng-template>
+
+<ng-template #spinner>
+  <mat-spinner [strokeWidth]="3" color="accent" [diameter]="26" />
+</ng-template>

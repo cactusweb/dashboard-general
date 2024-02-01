@@ -2,7 +2,7 @@ csd-dashboard {
   @apply tw-grid tw-self-center;
   @apply tw-justify-self-center  tw-items-start;
   @apply tw-gap-6 xs:tw-gap-4;
-  @apply tw-grid-cols-[1fr_1fr] sm:tw-grid-cols-1;
+  @apply tw-grid-cols-[1fr_1fr] sm:tw-grid-cols-1 lg:tw-grid-rows-[repeat(3,_auto)];
   @apply tw-w-full tw-max-w-6xl sm:tw-max-w-xl xs:tw-max-w-md;
   @apply tw-relative;
 
@@ -13,5 +13,13 @@ csd-dashboard {
   .csd-button_flat,
   .csd-button_stroked {
     @apply tw-h-12 xs:tw-h-10;
+  }
+
+  .hr {
+    @apply tw-w-full tw-h-0.5 tw-rounded-lg tw-bg-[#BED0D9];
+  }
+
+  .main-info {
+    @apply lg:tw-col-start-2 lg:tw-row-[1/span_3] tw-gap-8 xs:tw-gap-4;
   }
 }

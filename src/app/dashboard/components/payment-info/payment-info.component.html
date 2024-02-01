@@ -1,0 +1,3 @@
+<ng-container [ngSwitch]="paymentWay$ | async">
+  <csd-payment-stripe *ngSwitchCase="PaymentWays.STRIPE" />
+</ng-container>
