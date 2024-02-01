@@ -2,6 +2,7 @@
 
 <button
   class="csd-button_flat"
+  color="primary"
   *ngVar="state$ | async as state"
   [disabled]="state === DropStates.DISABLED || state === DropStates.PENDING"
   (click)="onPurchase()"

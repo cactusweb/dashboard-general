@@ -17,8 +17,16 @@
 
 .csd-button_flat {
   @extend .csd-button;
-  @apply tw-bg-primary tw-text-white;
-  background-color: var(--primary-color);
+
+  &[color="primary"] {
+    @apply tw-bg-primary tw-text-white;
+    background-color: var(--primary-color);
+  }
+
+  &[color="warn"] {
+    @apply tw-bg-error tw-text-white;
+  }
+
   &:not(:disabled) {
     @apply hover:tw-brightness-105;
   }
