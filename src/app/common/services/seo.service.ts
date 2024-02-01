@@ -25,6 +25,10 @@ export class SeoService {
       'link[rel=icon], link[rel=apple-touch-icon]'
     );
 
+    if (url[0] === '.') {
+      url = url.replace('.', '');
+    }
+
     links.forEach((l) =>
       l.setAttribute('href', `${environment.siteUrl}${url}`)
     );
