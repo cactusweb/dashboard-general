@@ -69,7 +69,6 @@ export class PurchaseCheckResults implements OnInit, OnDestroy {
         if (completeInterval) {
           this.completeInterval();
         }
-        console.log(44);
         return this.http.request<LicenseDTO>(
           Requests.GET_LICENSE_BY_OWNER,
           null,

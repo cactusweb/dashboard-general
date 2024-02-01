@@ -14,9 +14,7 @@ export const licensesRedusers = (
       };
     case LicensesActions.GetLicensesSuccess:
       return {
-        data: {
-          licenses: action.licenses,
-        },
+        data: action.licenses,
         pending: false,
       };
     case LicensesActions.GetLicensesFailed:
@@ -27,30 +25,22 @@ export const licensesRedusers = (
     case LicensesActions.SetLicenseData:
       return {
         ...state,
-        data: {
-          licenses: putLicense(action.license, state.data!.licenses),
-        },
+        data: putLicense(action.license, state.data!),
       };
     case LicensesActions.DeleteLicense:
       return {
         ...state,
-        data: {
-          licenses: deleteLicense(action.ownerName, state.data!.licenses),
-        },
+        data: deleteLicense(action.ownerName, state.data!),
       };
     case LicensesActions.AddLicense:
       return {
         ...state,
         data: !state.data
           ? null
-          : {
-              licenses: [
-                ...state.data.licenses.filter(
-                  (l) => l.id !== action.license.id
-                ),
-                action.license,
-              ],
-            },
+          : [
+              ...state.data.filter((l) => l.id !== action.license.id),
+              action.license,
+            ],
       };
     case LicensesActions.SetLicensesInitialState:
       return initialLicensesState;

@@ -3,9 +3,7 @@ import { State } from '@csd-store/state';
 import { createSelector } from '@ngrx/store';
 
 export interface LicensesState {
-  data: {
-    licenses: LicenseDTO[];
-  } | null;
+  data: LicenseDTO[] | null;
   pending: boolean;
 }
 
@@ -23,7 +21,7 @@ export const selectLicensesState = createSelector(
 
 export const selectLicenses = createSelector(
   licenseState,
-  (state) => state.data?.licenses
+  (state) => state.data
 );
 
 export const selectLicensesPending = createSelector(

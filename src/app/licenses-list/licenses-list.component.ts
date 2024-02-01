@@ -32,7 +32,7 @@ export class LicensesListComponent implements OnInit {
       if (state.pending && !state.data) {
         return PageStates.PENDING;
       }
-      if (state.data!.licenses.length) {
+      if (state.data!.length) {
         return PageStates.VIEW;
       }
       return PageStates.EMPTY;
