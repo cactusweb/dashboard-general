@@ -57,15 +57,15 @@ export class PurchaseService implements OnDestroy {
   }
 
   onLicenseReceive(lic: LicenseDTO) {
-    lic = {
+    const license = {
       ...lic,
       expires_in: lic.expires_in ? lic.expires_in * 1000 : lic.expires_in,
       created_at: lic.created_at * 1000,
       bought_at: lic.bought_at * 1000,
     };
 
-    this._receivedLicense$.next(lic);
-    this.store.dispatch(new AddLicense(lic));
+    this._receivedLicense$.next(license);
+    this.store.dispatch(new AddLicense(license));
     this._step$.next(PurchaseSteps.SUCCESS);
   }
 

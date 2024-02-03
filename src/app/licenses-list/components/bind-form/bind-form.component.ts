@@ -11,7 +11,7 @@ import { HttpService } from '@csd-services/http/http.service';
 import { AddLicense } from '@csd-store/licenses/licenses.actions';
 import { State } from '@csd-store/state';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, finalize } from 'rxjs';
+import { BehaviorSubject, finalize, map } from 'rxjs';
 
 @Component({
   selector: './csd-bind-form',
@@ -44,7 +44,15 @@ export class BindFormComponent {
     this.loading$.next(true);
     this.http
       .request<LicenseDTO>(Requests.BIND_LICENSES, this.form.value)
-      .pipe(finalize(() => this.loading$.next(false)))
+      .pipe(
+        finalize(() => this.loading$.next(false)),
+        map((lic) => ({
+          ...lic,
+          expires_in: lic.expires_in ? lic.expires_in * 1000 : lic.expires_in,
+          created_at: lic.created_at * 1000,
+          bought_at: lic.bought_at * 1000,
+        }))
+      )
       .subscribe({
         next: (lic) => {
           this.store.dispatch(new AddLicense(lic));
