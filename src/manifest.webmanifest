@@ -1,11 +1,11 @@
 {
-  "name": "DashboardGeneral-v3",
-  "short_name": "DashboardGeneral-v3",
-  "theme_color": "#1976d2",
-  "background_color": "#fafafa",
+  "name": "CactusDash - Subscriptions Manager",
+  "short_name": "CactusDash",
+  "theme_color": "#3880EC",
+  "background_color": "#CEDEE5",
   "display": "standalone",
   "scope": "./",
-  "start_url": "./",
+  "start_url": "./?byPwa=true",
   "icons": [
     {
       "src": "assets/icons/icon-72x72.png",
