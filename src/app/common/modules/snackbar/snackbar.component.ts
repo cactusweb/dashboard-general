@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CsdSnackbarService } from './services/snackbar.service';
+import { CsdSnackbarItem } from './interfaces/snackbar-item.models';
 
 @Component({
   selector: 'csd-snackbar',
@@ -9,4 +10,8 @@ import { CsdSnackbarService } from './services/snackbar.service';
 })
 export class SnackbarComponent {
   readonly items$ = inject(CsdSnackbarService).items$;
+
+  trackById(_: number, item: CsdSnackbarItem) {
+    return item.id;
+  }
 }

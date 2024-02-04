@@ -1,5 +1,5 @@
 <csd-snackbar-item
-  *ngFor="let item of items$ | async"
+  *ngFor="let item of items$ | async; trackBy: trackById"
   [text]="item.text"
   [level]="item.level"
   (close)="item.closeFn()"
