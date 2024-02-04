@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
 import { PaymentStripeService } from './services/payment-stripe.service';
-import { DashboardService } from 'app/dashboard/services/dashboard.service';
 import { map } from 'rxjs';
+import { DashboardService } from '@csd-dashboard/services/dashboard.service';
 
 @Component({
   selector: 'csd-payment-stripe',

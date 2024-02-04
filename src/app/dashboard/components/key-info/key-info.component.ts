@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { DashboardService } from '@csd-dashboard/services/dashboard.service';
 import { UtilsService } from '@csd-services/utils.service';
-import { DashboardService } from 'app/dashboard/services/dashboard.service';
 import { BehaviorSubject, finalize } from 'rxjs';
 
 @Component({

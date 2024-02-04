@@ -36,10 +36,10 @@ export interface LicensePaymentDTO {
 
   currency: string;
 
-  email: string;
+  email?: string;
 
-  last_4: string;
-  exp_date: string;
+  last_4?: string;
+  exp_date?: string;
 
   stripe_customer_created: boolean;
 

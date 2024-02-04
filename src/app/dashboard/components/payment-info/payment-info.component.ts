@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { DashboardService } from '@csd-dashboard/services/dashboard.service';
 import { LicenseTypes } from '@csd-models/license.models';
 import { PaymentWays } from '@csd-models/order/payment.models';
-import { DashboardService } from 'app/dashboard/services/dashboard.service';
 import { map } from 'rxjs';
 
 @Component({

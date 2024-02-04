@@ -23,15 +23,15 @@ export class CsdOrderService {
 
   private readonly _loading$ = new BehaviorSubject(false);
 
-  private order!: OrderDTO;
-
   constructor(private http: HttpService, private snackbar: CsdSnackbarService) {
     this.loading$ = this._loading$.asObservable().pipe(shareReplay());
   }
 
-  postOrderData(orderData: Record<string, any>, order: OrderDTO) {
-    this.order = order;
-
+  postOrderData(
+    orderData: Record<string, any>,
+    order: OrderDTO,
+    handle: boolean = true
+  ) {
     this._loading$.next(true);
 
     return this.http
@@ -41,7 +41,11 @@ export class CsdOrderService {
         order.id
       )
       .pipe(
-        tap((d) => this.handleOrder(d)),
+        tap((d) => {
+          if (handle) {
+            this.handleOrder(d, order);
+          }
+        }),
         catchError((err) => {
           this._loading$.next(false);
           return throwError(() => err);
@@ -49,13 +53,13 @@ export class CsdOrderService {
       );
   }
 
-  private handleOrder(data: OrderDataDTO | undefined) {
+  private handleOrder(data: OrderDataDTO | undefined, order: OrderDTO) {
     if (!data) {
       this._loading$.next(false);
       return;
     }
 
-    switch (this.order.payment_way) {
+    switch (order.payment_way) {
       case PaymentWays.AMERIA:
       case PaymentWays.STRIPE:
         this._loading$.next(true);

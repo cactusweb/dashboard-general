@@ -6,8 +6,8 @@ import {
   OnInit,
   inject,
 } from '@angular/core';
+import { DashboardService } from '@csd-dashboard/services/dashboard.service';
 import { LicenseDTO, LicenseTypes } from '@csd-models/license.models';
-import { DashboardService } from 'app/dashboard/services/dashboard.service';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({

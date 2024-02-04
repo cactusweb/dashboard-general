@@ -1,0 +1,26 @@
+.btns {
+  @apply tw-flex tw-gap-2;
+
+  .text {
+    @apply tw-hidden tw-whitespace-nowrap tw-max-w-full tw-text-ellipsis tw-overflow-hidden;
+  }
+
+  mat-icon {
+    @apply tw-text-lg xs:tw-text-base;
+  }
+
+  @media screen and (min-width: 450px) {
+    button {
+      @apply hover:tw-w-[170%] tw-min-w-10 tw-px-0;
+      &:hover {
+        .text {
+          @apply tw-inline;
+        }
+
+        mat-icon {
+          @apply tw-hidden;
+        }
+      }
+    }
+  }
+}

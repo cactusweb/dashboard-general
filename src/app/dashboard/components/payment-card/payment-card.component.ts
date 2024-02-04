@@ -4,14 +4,16 @@ import {
   Input,
   inject,
 } from '@angular/core';
-import { LicenseTypes } from '@csd-models/license.models';
-import { DashboardService } from 'app/dashboard/services/dashboard.service';
+import { DashboardService } from '@csd-dashboard/services/dashboard.service';
 import { BehaviorSubject, map } from 'rxjs';
+import { PaymentCardService } from './services/payment-card.service';
+import { CsdOrderService } from '@csd-services/order.service';
 
 @Component({
   selector: 'csd-payment-card',
   templateUrl: './payment-card.component.html',
   styleUrls: ['./payment-card.component.scss'],
+  providers: [PaymentCardService, CsdOrderService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PaymentCardComponent {
@@ -27,9 +29,11 @@ export class PaymentCardComponent {
     })
   );
 
-  readonly loading$ = new BehaviorSubject(false);
+  readonly loading$ = this.paymentService.activateLoading$;
+
+  constructor(private paymentService: PaymentCardService) {}
 
   onChangeCard() {
-    this.loading$.next(true);
+    this.paymentService.linkCard();
   }
 }

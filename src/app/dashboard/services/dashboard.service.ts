@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Requests } from '@csd-consts/requests.consts';
 import { RouterPaths } from '@csd-consts/router-paths.conts';
 import { LicenseDTO } from '@csd-models/license.models';
-import { PaymentWays } from '@csd-models/order/payment.models';
 import { CsdSnackbarLevels } from '@csd-modules/snackbar/interfaces/snackbar-item.models';
 import { CsdSnackbarService } from '@csd-modules/snackbar/services/snackbar.service';
 import { HttpService } from '@csd-services/http/http.service';
@@ -56,12 +55,19 @@ export class DashboardService implements OnDestroy {
     this.seo.changeIcon();
     this.destroyed$.next();
     this.destroyed$.complete();
+    this._license$.complete();
   }
 
   resetActivations() {
     return this.http
       .request<LicenseDTO>(Requests.RESET_ACTIVATIONS, null, this.ownerName)
       .pipe(
+        map((lic) => ({
+          ...lic,
+          expires_in: lic.expires_in ? lic.expires_in * 1000 : lic.expires_in,
+          created_at: lic.created_at * 1000,
+          bought_at: lic.bought_at * 1000,
+        })),
         tap((license) => {
           this.store.dispatch(new SetLicenseData(license));
 
@@ -136,15 +142,7 @@ export class DashboardService implements OnDestroy {
             }
           }, 0);
         }),
-        distinctUntilChangedJSON(),
-        map((lic) => ({
-          ...lic,
-          payment: {
-            ...lic.payment,
-            // last_4: '2345'
-            way: PaymentWays.TINKOFF,
-          },
-        }))
+        distinctUntilChangedJSON()
       )
       .subscribe({
         next: (lic) => this._license$.next(lic),

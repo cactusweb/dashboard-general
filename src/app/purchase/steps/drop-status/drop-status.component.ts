@@ -2,20 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { PaymentWays } from '@csd-models/order/payment.models';
 import { PurchaseSteps } from '@csd-purchase/models/purchase.models';
 import { PurchaseService } from '@csd-purchase/services/purсhase.service';
-import {
-  BehaviorSubject,
-  Observable,
-  catchError,
-  concatMap,
-  exhaustMap,
-  map,
-  mergeMap,
-  of,
-  switchMap,
-  take,
-  tap,
-  throwError,
-} from 'rxjs';
+import { Observable, catchError, map, of, take } from 'rxjs';
 
 enum DropStates {
   PENDING = 'PENDING',

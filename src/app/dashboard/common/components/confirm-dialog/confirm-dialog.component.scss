@@ -1,0 +1,11 @@
+.card {
+  @apply tw-gap-6 tw-text-center;
+}
+
+p {
+  @apply tw-text-base tw-font-medium tw-leading-5 tw-whitespace-pre-line;
+}
+
+.row {
+  @apply tw-justify-stretch tw-grid-cols-[1fr_1fr] tw-gap-2;
+}

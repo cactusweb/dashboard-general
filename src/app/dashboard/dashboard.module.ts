@@ -15,8 +15,6 @@ import { PaymentInfoComponent } from './components/payment-info/payment-info.com
 import { PaymentCardComponent } from './components/payment-card/payment-card.component';
 import { PaymentCardBtnsComponent } from './components/payment-card/payment-card-btns/payment-card-btns.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { OrderEmailFormComponent } from './common/components/order-email-form/order-email-form.component';
 
 const route: Route = {
   path: '',
@@ -35,7 +33,6 @@ const route: Route = {
     PaymentStripeComponent,
     PaymentCardComponent,
     PaymentCardBtnsComponent,
-    OrderEmailFormComponent,
   ],
   imports: [
     CommonModule,
@@ -44,8 +41,6 @@ const route: Route = {
     MatIconModule,
     MatProgressSpinnerModule,
     MatDialogModule,
-    FormsModule,
-    ReactiveFormsModule,
   ],
 })
 export class DashboardModule {}

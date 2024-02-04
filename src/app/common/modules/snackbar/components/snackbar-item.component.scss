@@ -12,4 +12,11 @@ mat-icon {
 
 button {
   @apply tw-flex tw-items-center tw-justify-center;
+
+  @apply hover:tw-text-primary;
+
+  mat-icon {
+    @apply tw-text-xs;
+    transition: 0.2s;
+  }
 }

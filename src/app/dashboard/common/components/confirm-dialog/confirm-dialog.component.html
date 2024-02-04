@@ -1,0 +1,23 @@
+<div class="card">
+  <h2 class="card__title">{{ data.title }}</h2>
+  <p *ngIf="data.description">{{ data.description }}</p>
+  <div class="row">
+    <button
+      *ngVar="data.leftBtn as leftBtn"
+      [class]="leftBtn.class"
+      [attr.color]="leftBtn.color"
+      (click)="onLeftClick()"
+    >
+      {{ leftBtn.text }}
+    </button>
+
+    <button
+      *ngVar="data.rightBtn as rightBtn"
+      [class]="rightBtn.class"
+      [attr.color]="rightBtn.color"
+      (click)="onRightClick()"
+    >
+      {{ rightBtn.text }}
+    </button>
+  </div>
+</div>

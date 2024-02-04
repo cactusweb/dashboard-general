@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   HostBinding,
-  HostListener,
   OnInit,
   ViewEncapsulation,
 } from '@angular/core';
@@ -11,8 +10,6 @@ import { Store } from '@ngrx/store';
 import { State } from '@csd-store/state';
 import { GetLicenses } from '@csd-store/licenses/licenses.actions';
 import { map } from 'rxjs';
-import { Router } from '@angular/router';
-import { RouterPaths } from '@csd-consts/router-paths.conts';
 
 @Component({
   selector: 'csd-dashboard',
@@ -28,14 +25,8 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private dashService: DashboardService,
-    private store: Store<State>,
-    private router: Router
+    private store: Store<State>
   ) {}
-
-  @HostListener('document:keydown.escape', ['$event'])
-  onEscape() {
-    this.router.navigate(['/' + RouterPaths.LICENSES]);
-  }
 
   ngOnInit(): void {
     this.store.dispatch(new GetLicenses());

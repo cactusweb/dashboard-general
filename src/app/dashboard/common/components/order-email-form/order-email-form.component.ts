@@ -1,6 +1,15 @@
+import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { NgVarDirective } from '@csd-directives/ngvar.directive';
 import { OrderDTO } from '@csd-models/order/order.models';
 import { CsdOrderService } from '@csd-services/order.service';
 import {
@@ -15,7 +24,15 @@ import {
   selector: 'csd-order-email-form',
   templateUrl: './order-email-form.component.html',
   providers: [CsdOrderService],
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    CommonModule,
+    MatProgressSpinnerModule,
+    NgVarDirective,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class OrderEmailFormComponent {
   readonly form = new FormGroup({
@@ -29,7 +46,10 @@ export class OrderEmailFormComponent {
   constructor(
     private orderService: CsdOrderService,
     @Inject(MAT_DIALOG_DATA)
-    private order: OrderDTO
+    private dialogData: {
+      order: OrderDTO;
+      email?: string;
+    }
   ) {
     this.loading$ = combineLatest([
       this._loading$,
@@ -38,6 +58,8 @@ export class OrderEmailFormComponent {
       map(([loadingInner, loadingOrder]) => loadingOrder || loadingInner),
       distinctUntilChanged()
     );
+
+    this.form.get('email')!.patchValue(this.dialogData.email || '');
   }
 
   onSubmit() {
@@ -49,7 +71,7 @@ export class OrderEmailFormComponent {
     this._loading$.next(true);
 
     this.orderService
-      .postOrderData(this.form.value, this.order)
+      .postOrderData(this.form.value, this.dialogData.order)
       .pipe(finalize(() => this._loading$.next(false)))
       .subscribe({
         error: () => {},

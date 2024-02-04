@@ -19,7 +19,7 @@ export class CsdSnackbarService {
     const items = this._items$.value;
     const id = Math.random();
 
-    const timeout = setTimeout(() => {}, this.showTime);
+    const timeout = setTimeout(() => this.removeItem(id), this.showTime);
     const removeFn = this.removeItem.bind(this, id, timeout);
 
     this._items$.next([...items, { text, level, id, closeFn: removeFn }]);

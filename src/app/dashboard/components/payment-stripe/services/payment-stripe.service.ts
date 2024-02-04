@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from '@csd-services/http/http.service';
-import { DashboardService } from 'app/dashboard/services/dashboard.service';
 import {
   HttpStripeRequestNames,
   StripeRequests,
@@ -9,11 +8,12 @@ import {
   BehaviorSubject,
   Observable,
   catchError,
-  map,
   switchMap,
+  take,
   tap,
   throwError,
 } from 'rxjs';
+import { DashboardService } from '@csd-dashboard/services/dashboard.service';
 
 @Injectable()
 export class PaymentStripeService {
@@ -39,6 +39,7 @@ export class PaymentStripeService {
     this._loading$.next(true);
     this.dashService.ownerName$
       .pipe(
+        take(1),
         switchMap((ownerName) =>
           this.http.request<{ url: string }>(
             StripeRequests[request],

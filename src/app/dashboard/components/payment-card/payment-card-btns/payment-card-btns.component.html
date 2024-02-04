@@ -15,7 +15,35 @@
   </button>
 </ng-container>
 
-<ng-template #cardLinkedTmpl> </ng-template>
+<ng-template #cardLinkedTmpl>
+  <div class="btns">
+    <button
+      class="csd-button_stroked"
+      color="primary"
+      (click)="onRenewNow()"
+      *ngVar="renewLoading$ | async as renewLoading"
+      [disabled]="renewLoading"
+    >
+      <ng-container *ngIf="!renewLoading; else btnSpinner">
+        <mat-icon fontIcon="icon-refresh" />
+        <span class="text"> Renew now </span>
+      </ng-container>
+    </button>
+
+    <button
+      class="csd-button_stroked"
+      color="warn"
+      (click)="onCancel()"
+      *ngVar="cancelLoading$ | async as cancelLoading"
+      [disabled]="cancelLoading"
+    >
+      <ng-container *ngIf="!cancelLoading; else btnSpinner">
+        <mat-icon fontIcon="icon-close" />
+        <span class="text"> Cancel </span>
+      </ng-container>
+    </button>
+  </div>
+</ng-template>
 
 <ng-template let-loading="loading" let-text="text" #btnContent>
   <ng-container *ngIf="!loading; else btnSpinner">{{ text }}</ng-container>
