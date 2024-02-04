@@ -27,6 +27,10 @@
     @apply tw-bg-error tw-text-white;
   }
 
+  &[color="success"] {
+    @apply tw-bg-success tw-text-white;
+  }
+
   &:not(:disabled) {
     @apply hover:tw-brightness-105;
   }

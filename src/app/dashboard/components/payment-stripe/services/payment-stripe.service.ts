@@ -20,10 +20,6 @@ export class PaymentStripeService {
   readonly loading$;
   private readonly _loading$ = new BehaviorSubject(false);
 
-  private readonly _ownerName$ = this.dashService.license$.pipe(
-    map((l) => l.owner.name)
-  );
-
   constructor(
     private dashService: DashboardService,
     private http: HttpService
@@ -41,7 +37,7 @@ export class PaymentStripeService {
 
   private sendRequest(request: HttpStripeRequestNames) {
     this._loading$.next(true);
-    this._ownerName$
+    this.dashService.ownerName$
       .pipe(
         switchMap((ownerName) =>
           this.http.request<{ url: string }>(

@@ -12,7 +12,7 @@ csd-dashboard {
 
   .csd-button_flat,
   .csd-button_stroked {
-    @apply tw-h-12 xs:tw-h-10;
+    @apply tw-h-12 xs:tw-h-10 xs:tw-text-sm;
   }
 
   .hr {

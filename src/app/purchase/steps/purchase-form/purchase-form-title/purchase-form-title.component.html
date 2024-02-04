@@ -1,5 +1,5 @@
 <ng-container *ngVar="inviter$ | async as user">
-  <h1 class="title" *ngIf="!user; else referral">Purchase now!</h1>
+  <h1 class="card__title" *ngIf="!user; else referral">Purchase now!</h1>
 
   <ng-template #referral>
     <h1 class="referral">

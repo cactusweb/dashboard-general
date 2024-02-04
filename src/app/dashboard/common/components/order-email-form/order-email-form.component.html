@@ -1,0 +1,25 @@
+<form class="card tw-gap-6" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <h2 class="card__title-md tw-text-center">Auto-renewal activation</h2>
+
+  <fieldset class="tw-grid tw-gap-2.5">
+    <input
+      type="email"
+      class="csd-input"
+      placeholder="Email"
+      formControlName="email"
+      autocomplete="email"
+    />
+
+    <button
+      class="csd-button_flat"
+      color="primary"
+      *ngVar="loading$ | async as loading"
+      [disabled]="loading"
+    >
+      <ng-container *ngIf="!loading; else spinner">Start</ng-container>
+      <ng-template #spinner>
+        <mat-spinner [strokeWidth]="3" color="accent" [diameter]="26" />
+      </ng-template>
+    </button>
+  </fieldset>
+</form>

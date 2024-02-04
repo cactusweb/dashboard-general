@@ -1,7 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from './http/http.service';
 import { Requests } from '@csd-consts/requests.consts';
-import { BehaviorSubject, shareReplay, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  shareReplay,
+  tap,
+  throwError,
+} from 'rxjs';
 import { OrderDTO } from '@csd-models/order/order.models';
 import { PaymentWays } from '@csd-models/order/payment.models';
 import { CsdSnackbarService } from '@csd-modules/snackbar/services/snackbar.service';
@@ -34,7 +40,13 @@ export class CsdOrderService {
         orderData,
         order.id
       )
-      .pipe(tap((d) => this.handleOrder(d)));
+      .pipe(
+        tap((d) => this.handleOrder(d)),
+        catchError((err) => {
+          this._loading$.next(false);
+          return throwError(() => err);
+        })
+      );
   }
 
   private handleOrder(data: OrderDataDTO | undefined) {

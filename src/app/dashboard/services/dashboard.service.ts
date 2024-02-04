@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Requests } from '@csd-consts/requests.consts';
 import { RouterPaths } from '@csd-consts/router-paths.conts';
 import { LicenseDTO } from '@csd-models/license.models';
+import { PaymentWays } from '@csd-models/order/payment.models';
 import { CsdSnackbarLevels } from '@csd-modules/snackbar/interfaces/snackbar-item.models';
 import { CsdSnackbarService } from '@csd-modules/snackbar/services/snackbar.service';
 import { HttpService } from '@csd-services/http/http.service';
@@ -32,6 +33,10 @@ export class DashboardService implements OnDestroy {
 
   private readonly _license$ = new ReplaySubject<LicenseDTO>();
   readonly license$ = this._license$.asObservable().pipe(shareReplay());
+  readonly ownerName$ = this.license$.pipe(
+    map((lic) => lic.owner.name),
+    shareReplay()
+  );
 
   private readonly destroyed$ = new Subject<void>();
 
@@ -131,7 +136,15 @@ export class DashboardService implements OnDestroy {
             }
           }, 0);
         }),
-        distinctUntilChangedJSON()
+        distinctUntilChangedJSON(),
+        map((lic) => ({
+          ...lic,
+          payment: {
+            ...lic.payment,
+            // last_4: '2345'
+            way: PaymentWays.TINKOFF,
+          },
+        }))
       )
       .subscribe({
         next: (lic) => this._license$.next(lic),

@@ -2,4 +2,19 @@
   @apply tw-relative tw-overflow-hidden;
   @apply tw-bg-white tw-rounded-2xl tw-p-6 xs:tw-py-4 xs:tw-px-6;
   @apply tw-grid;
+
+  &__title {
+    @apply tw-text-[22px] tw-leading-[27px] xs:tw-text-xl xs:tw-leading-6 tw-font-semibold;
+    &[data-skeleton-load] {
+      @apply tw-h-[27px] xs:tw-h-6;
+    }
+  }
+
+  &__title-md {
+    @extend .card__title;
+    @apply xs:tw-text-lg xs:tw-leading-[22px];
+    &[data-skeleton-load] {
+      @apply xs:tw-h-[22px];
+    }
+  }
 }

@@ -7,11 +7,16 @@ import { KeyInfoComponent } from './components/key-info/key-info.component';
 import { MatIconModule } from '@angular/material/icon';
 import { ActionsComponent } from './components/actions/actions.component';
 import { GeneralComponent } from './components/general/general.component';
-import { TagContainerComponent } from './common/tag-container.component';
-import { BackLinkComponent } from './common/back-link.component';
+import { TagContainerComponent } from './common/components/tag-container.component';
+import { BackLinkComponent } from './common/components/back-link.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { PaymentStripeComponent } from './components/payment-stripe/payment-stripe.component';
 import { PaymentInfoComponent } from './components/payment-info/payment-info.component';
+import { PaymentCardComponent } from './components/payment-card/payment-card.component';
+import { PaymentCardBtnsComponent } from './components/payment-card/payment-card-btns/payment-card-btns.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { OrderEmailFormComponent } from './common/components/order-email-form/order-email-form.component';
 
 const route: Route = {
   path: '',
@@ -28,6 +33,9 @@ const route: Route = {
     BackLinkComponent,
     PaymentInfoComponent,
     PaymentStripeComponent,
+    PaymentCardComponent,
+    PaymentCardBtnsComponent,
+    OrderEmailFormComponent,
   ],
   imports: [
     CommonModule,
@@ -35,6 +43,9 @@ const route: Route = {
     NgVarDirective,
     MatIconModule,
     MatProgressSpinnerModule,
+    MatDialogModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
 })
 export class DashboardModule {}

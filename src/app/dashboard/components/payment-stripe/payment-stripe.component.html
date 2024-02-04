@@ -30,7 +30,7 @@
     <button
       [class]="'csd-button_' + type"
       color="primary"
-      [disabled]="loading"
+      [disabled]="loading || disabled"
       (click)="cb()"
     >
       <ng-container *ngIf="!loading; else spinner">

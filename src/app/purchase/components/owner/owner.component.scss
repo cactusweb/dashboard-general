@@ -9,9 +9,8 @@
   }
 
   &__name {
-    @apply tw-text-[22px] tw-leading-[27px] xs:tw-text-lg xs:tw-leading-[22px] tw-font-semibold;
     &[data-skeleton-load] {
-      @apply tw-h-[27px] xs:tw-h-[22px] tw-w-36;
+      @apply tw-w-36;
     }
   }
 }

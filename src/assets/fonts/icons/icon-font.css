@@ -21,6 +21,9 @@
 .icon-warn:before {
   content: "\e802";
 }
+.icon-edit:before {
+  content: "\e803";
+}
 .icon-vk:before {
   content: "\e804";
 }
@@ -36,12 +39,12 @@
 .icon-close:before {
   content: "\e808";
 }
-.icon-arrow:before {
-  content: "\e809";
-}
 .icon-plus:before {
   content: "\e80a";
 }
 .icon-discord:before {
   content: "\e80b";
+}
+.icon-refresh:before {
+  content: "\e80c";
 }

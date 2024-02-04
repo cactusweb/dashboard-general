@@ -1,0 +1,26 @@
+<ng-container *ngIf="disabled || !(isCardLinked$ | async); else cardLinkedTmpl">
+  <button
+    class="csd-button_flat"
+    color="success"
+    *ngVar="activateLoading$ | async as activateLoading"
+    [disabled]="disabled || activateLoading"
+    (click)="onActivate()"
+  >
+    <ng-template
+      *ngTemplateOutlet="
+        btnContent;
+        context: { loading: activateLoading, text: 'Activate' }
+      "
+    />
+  </button>
+</ng-container>
+
+<ng-template #cardLinkedTmpl> </ng-template>
+
+<ng-template let-loading="loading" let-text="text" #btnContent>
+  <ng-container *ngIf="!loading; else btnSpinner">{{ text }}</ng-container>
+</ng-template>
+
+<ng-template #btnSpinner>
+  <mat-spinner [strokeWidth]="3" color="accent" [diameter]="26" />
+</ng-template>

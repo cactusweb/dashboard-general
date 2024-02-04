@@ -44,7 +44,7 @@ module.exports = {
           hover: "#EA2121",
         },
         success: {
-          DEFAULT: "#21BC31",
+          DEFAULT: "#20C726",
           hover: "#19D720",
         },
         secondary: {

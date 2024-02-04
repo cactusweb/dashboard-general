@@ -1,0 +1,30 @@
+<div class="csd-tag-container" [class.csd-tag-container_disabled]="disabled">
+  <span class="csd-tag-label">Payment info</span>
+  <div class="csd-tag" *ngVar="cardNumber$ | async as cardNumber">
+    {{ cardNumber || "—" }}
+
+    <ng-container *ngIf="!disabled && cardNumber">
+      <button
+        *ngVar="loading$ | async as loading"
+        class="csd-button_icon"
+        color="primary"
+        [disabled]="loading"
+        (click)="onChangeCard()"
+      >
+        <mat-icon
+          fontIcon="icon-edit"
+          class="!tw-text-lg xs:!tw-text-base"
+          *ngIf="!loading; else spinner"
+        />
+        <ng-template #spinner>
+          <mat-spinner [strokeWidth]="2.5" color="accent" [diameter]="23" />
+        </ng-template>
+      </button>
+    </ng-container>
+  </div>
+</div>
+
+<div class="csd-tag-container" [class.csd-tag-container_disabled]="disabled">
+  <span class="csd-tag-label">Auto-renewal</span>
+  <csd-payment-card-btns [disabled]="disabled" />
+</div>

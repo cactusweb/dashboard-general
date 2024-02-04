@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
 import { PaymentStripeService } from './services/payment-stripe.service';
 import { DashboardService } from 'app/dashboard/services/dashboard.service';
 import { map } from 'rxjs';
@@ -11,6 +11,9 @@ import { map } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PaymentStripeComponent {
+  @Input()
+  disabled!: boolean;
+
   readonly hasPortal$ = inject(DashboardService).license$.pipe(
     map((lic) => lic.payment.stripe_customer_created)
   );

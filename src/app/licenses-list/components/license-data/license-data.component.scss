@@ -13,10 +13,8 @@
   }
 
   &__title {
-    @apply tw-text-[22px] tw-leading-[27px] tw-font-semibold xs:tw-text-lg xs:tw-leading-[22px];
-
     &[data-skeleton-load] {
-      @apply tw-h-[27px] xs:tw-leading-[22px] tw-w-48;
+      @apply tw-w-48;
     }
   }
 

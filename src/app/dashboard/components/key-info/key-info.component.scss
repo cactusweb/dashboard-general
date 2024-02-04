@@ -12,11 +12,8 @@
     }
   }
 
-  &__name {
-    @apply tw-text-[22px] tw-leading-[27px] tw-font-semibold xs:tw-text-xl xs:tw-leading-6;
-    &[data-skeleton-load] {
-      @apply tw-h-[27px] xs:tw-h-6 tw-w-44;
-    }
+  &__name[data-skeleton-load] {
+    @apply tw-w-44;
   }
 }
 
