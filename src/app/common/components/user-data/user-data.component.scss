@@ -1,3 +1,7 @@
+:host {
+  @apply tw-grid tw-justify-start;
+}
+
 .user {
   @apply tw-gap-4 tw-justify-start;
   &__img {
