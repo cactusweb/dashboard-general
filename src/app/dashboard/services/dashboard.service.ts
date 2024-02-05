@@ -136,7 +136,7 @@ export class DashboardService implements OnDestroy {
         map((d) => d as LicenseDTO),
         tap((lic) => {
           setTimeout(() => {
-            this.seo.changeTitle(lic.owner.name + ' - Dashboard');
+            this.seo.changeTitle(lic.owner.name + ' - Dashboard | CactusDash');
             if (lic.owner.avatar) {
               this.seo.changeIcon(lic.owner.avatar);
             }

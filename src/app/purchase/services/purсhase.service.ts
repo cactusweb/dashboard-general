@@ -104,7 +104,7 @@ export class PurchaseService implements OnDestroy {
           return throwError(() => err);
         }),
         tap((owner) => {
-          this.seo.changeTitle(`${owner.name} - Purchase`);
+          this.seo.changeTitle(`${owner.name} - Purchase | CactusDash`);
           this.seo.changeIcon(owner.avatar);
         }),
         shareReplay(1)

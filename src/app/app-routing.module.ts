@@ -4,7 +4,7 @@ import { isAuthedGuard } from '@csd-auth/guards/is-authed.guard';
 import { isLoginRedirectGuard } from '@csd-auth/guards/is-login-redirect.guard';
 import { RouterPaths } from '@csd-consts/router-paths.conts';
 
-const titlePostfix = '- CactusDash';
+const titlePostfix = '| CactusDash';
 
 const routes: Routes = [
   {

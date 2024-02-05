@@ -3,7 +3,7 @@
   "short_name": "CactusDash",
   "theme_color": "#3880EC",
   "background_color": "#CEDEE5",
-  "display": "standalone",
+  "display": "fullscreen",
   "scope": "./",
   "start_url": "./?byPwa=true",
   "icons": [
