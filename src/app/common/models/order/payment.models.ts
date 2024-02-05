@@ -1,7 +1,7 @@
 export enum PaymentWays {
   TINKOFF = 'Tinkoff',
   NONE = '',
-  AMERIA = 'AMERIA',
+  AMERIA = 'Ameria',
   CRYPTO = 'Crypto',
   STRIPE = 'Stripe',
 }
