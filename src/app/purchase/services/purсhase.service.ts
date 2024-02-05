@@ -112,11 +112,12 @@ export class PurchaseService implements OnDestroy {
   }
 
   private checkAndChangeStep() {
-    const isPending =
-      inject(ActivatedRoute).snapshot.queryParams['status'] === 'pending';
-    if (!isPending) {
-      return;
+    const status = inject(ActivatedRoute).snapshot.queryParams['status'];
+
+    if (status === 'pending') {
+      this.changeStep(PurchaseSteps.CHECK_RESULT);
+    } else if (status === 'payment-failed') {
+      this.changeStep(PurchaseSteps.FAILED);
     }
-    this.changeStep(PurchaseSteps.CHECK_RESULT);
   }
 }
