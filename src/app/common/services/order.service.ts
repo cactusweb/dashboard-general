@@ -3,7 +3,9 @@ import { HttpService } from './http/http.service';
 import { Requests } from '@csd-consts/requests.consts';
 import {
   BehaviorSubject,
+  Observable,
   catchError,
+  finalize,
   shareReplay,
   tap,
   throwError,
@@ -12,6 +14,7 @@ import { OrderDTO } from '@csd-models/order/order.models';
 import { PaymentWays } from '@csd-models/order/payment.models';
 import { CsdSnackbarService } from '@csd-modules/snackbar/services/snackbar.service';
 import { CsdSnackbarLevels } from '@csd-modules/snackbar/interfaces/snackbar-item.models';
+import { LicenseDTO } from '@csd-models/license.models';
 
 interface OrderDataDTO {
   payment_url: string;
@@ -31,9 +34,30 @@ export class CsdOrderService {
     orderData: Record<string, any>,
     order: OrderDTO,
     handle: boolean = true
-  ) {
+  ): Observable<LicenseDTO | OrderDataDTO | undefined> {
     this._loading$.next(true);
 
+    if (this.isPaidOrder(order)) {
+      return this.purchasePaidOrder(orderData, order, handle);
+    }
+    return this.purchaseFreeOrder(orderData, order);
+  }
+
+  isPaidOrder(order: OrderDTO) {
+    return !(order.payment_way === PaymentWays.NONE || order.price === 0);
+  }
+
+  private purchaseFreeOrder(orderData: Record<string, any>, order: OrderDTO) {
+    return this.http
+      .request<LicenseDTO>(Requests.PUT_FREE_ORDER_DATA, orderData, order.id)
+      .pipe(finalize(() => this._loading$.next(false)));
+  }
+
+  private purchasePaidOrder(
+    orderData: Record<string, any>,
+    order: OrderDTO,
+    handle: boolean
+  ) {
     return this.http
       .request<OrderDataDTO | undefined>(
         Requests.PUT_ORDER_DATA,

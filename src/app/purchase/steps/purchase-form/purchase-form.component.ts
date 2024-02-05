@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { LicenseDTO } from '@csd-models/license.models';
 import { PurchaseService } from '@csd-purchase/services/purсhase.service';
 import { CsdOrderService } from '@csd-services/order.service';
 import {
@@ -57,11 +58,24 @@ export class PurchaseFormComponent {
       .pipe(
         take(1),
         switchMap((order) =>
-          this.orderService.postOrderData(this.form.value, order)
+          this.orderService
+            .postOrderData(this.form.value, order)
+            .pipe(
+              map((data) =>
+                this.orderService.isPaidOrder(order)
+                  ? null
+                  : (data as LicenseDTO)
+              )
+            )
         ),
         finalize(() => this._loading$.next(false))
       )
       .subscribe({
+        next: (license) => {
+          if (license) {
+            this.prchService.onLicenseReceive(license);
+          }
+        },
         error: () => {},
       });
   }
