@@ -18,6 +18,12 @@ export class SeoService {
 
   changeTitle(title: string) {
     this.title.setTitle(title);
+
+    const titles: NodeListOf<HTMLLinkElement> = this.doc.head.querySelectorAll(
+      'meta[name=title], meta[property="og:title"]'
+    );
+
+    titles.forEach((t) => t.setAttribute('content', title));
   }
 
   changeIcon(url: string = ImagesPaths.LOGO_PNG) {
