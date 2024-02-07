@@ -1,3 +1,4 @@
+import { CryptoPaymentOptionDTO } from '@csd-modules/crypto-payment/models/crypto-payment.models';
 import { UserDTO } from '../user.models';
 import { PaymentCurrencies, PaymentWays } from './payment.models';
 
@@ -16,7 +17,7 @@ export interface OrderDTO {
 
   payment_way: PaymentWays;
   tinkoff: { terminal_key: string };
-  // crypto: CryptoPaymentMethod[];
+  crypto: CryptoPaymentOptionDTO[];
 
   status: OrderStatuses;
 

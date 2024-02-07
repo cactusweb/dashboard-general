@@ -5,3 +5,7 @@
 .cdk-global-overlay-wrapper {
   @apply tw-px-5;
 }
+
+.cdk-overlay-dark-backdrop {
+  @apply tw-backdrop-blur-[2px] tw-bg-black/25 #{!important};
+}

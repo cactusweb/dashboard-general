@@ -1,0 +1,14 @@
+<button
+  class="method"
+  [class.method_active]="selected"
+  type="button"
+  role="option"
+>
+  <span class="method__network">{{ option.network }}</span>
+  <div class="method__amount row">
+    <span class="method__icon">
+      <img [src]="option.coin.image" alt="" />
+    </span>
+    {{ option.amount }} {{ option.coin.name }}
+  </div>
+</button>

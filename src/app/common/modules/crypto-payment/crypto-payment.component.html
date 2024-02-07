@@ -1,0 +1,34 @@
+<form class="card" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="tw-grid tw-gap-3">
+    <csd-crypto-method-selector
+      [paymentOptions]="order.crypto"
+      formControlName="typeId"
+    />
+
+    <csd-crypto-recipient [recipient]="recipientAddress" />
+  </div>
+
+  <input
+    type="text"
+    placeholder="Input transaction hash"
+    class="csd-input"
+    formControlName="tx"
+  />
+
+  <button
+    class="csd-button_flat"
+    color="primary"
+    *ngVar="loading$ | async as loading"
+    [disabled]="loading"
+  >
+    <ng-container *ngIf="!loading; else spinner">
+      Confirm payment
+    </ng-container>
+
+    <ng-template #spinner>
+      <mat-spinner [strokeWidth]="3" color="accent" [diameter]="26" />
+    </ng-template>
+  </button>
+
+  <csd-crypto-help-link class="tw-mt-2" />
+</form>

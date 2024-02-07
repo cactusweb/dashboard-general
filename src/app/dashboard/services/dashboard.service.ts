@@ -2,6 +2,7 @@ import { Injectable, OnDestroy, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Requests } from '@csd-consts/requests.consts';
 import { RouterPaths } from '@csd-consts/router-paths.conts';
+import { RenewSuccessComponent } from '@csd-dashboard/common/components/renew-success.component';
 import { LicenseDTO } from '@csd-models/license.models';
 import { CsdSnackbarLevels } from '@csd-modules/snackbar/interfaces/snackbar-item.models';
 import { CsdSnackbarService } from '@csd-modules/snackbar/services/snackbar.service';
@@ -20,11 +21,13 @@ import {
   Subject,
   filter,
   map,
-  share,
   shareReplay,
+  take,
   takeUntil,
   tap,
 } from 'rxjs';
+import * as dateFns from 'date-fns';
+import { MatDialog } from '@angular/material/dialog';
 
 @Injectable()
 export class DashboardService implements OnDestroy {
@@ -46,7 +49,8 @@ export class DashboardService implements OnDestroy {
     private snackbar: CsdSnackbarService,
     private router: Router,
     private http: HttpService,
-    private seo: SeoService
+    private seo: SeoService,
+    private matDialog: MatDialog
   ) {
     this.getLicense();
   }
@@ -104,6 +108,22 @@ export class DashboardService implements OnDestroy {
           this.snackbar.createItem('License unbinded', CsdSnackbarLevels.ERROR);
         })
       );
+  }
+
+  handleSuccefullRenew() {
+    this.license$.pipe(take(1)).subscribe((lic) => {
+      const newLicData = {
+        ...lic,
+        expires_in: dateFns.addMonths(lic.expires_in!, 1).getTime(),
+      };
+
+      this.store.dispatch(new SetLicenseData(newLicData));
+
+      this.matDialog.open(RenewSuccessComponent, {
+        maxWidth: '405px',
+        width: '100%',
+      });
+    });
   }
 
   private getOwnerName() {

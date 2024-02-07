@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { Requests } from '@csd-consts/requests.consts';
 import { LicenseDTO } from '@csd-models/license.models';
-import { PurchaseSteps } from '@csd-purchase/models/purchase.models';
+import { IPurchaseSteps } from '@csd-purchase/models/purchase.models';
 import { PurchaseService } from '@csd-purchase/services/purсhase.service';
 import { HttpService } from '@csd-services/http/http.service';
 import {
@@ -82,7 +82,7 @@ export class PurchaseCheckResults implements OnInit, OnDestroy {
       }),
       catchError(() => {
         if (!this._intervalDestoyer$.observed) {
-          this.prchService.changeStep(PurchaseSteps.FAILED);
+          this.prchService.changeStep(IPurchaseSteps.FAILED);
         }
         return of();
       })

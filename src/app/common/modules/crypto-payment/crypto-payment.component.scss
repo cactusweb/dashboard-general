@@ -1,0 +1,9 @@
+.card {
+  @apply tw-justify-items-stretch tw-gap-6;
+  @apply tw-py-6 tw-px-8 xs:tw-py-4 xs:tw-px-6;
+  @apply tw-max-w-[600px] tw-w-full;
+}
+
+.csd-input {
+  @apply tw-text-sm tw-leading-5;
+}

@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { PaymentWays } from '@csd-models/order/payment.models';
-import { PurchaseSteps } from '@csd-purchase/models/purchase.models';
+import { IPurchaseSteps } from '@csd-purchase/models/purchase.models';
 import { PurchaseService } from '@csd-purchase/services/purсhase.service';
 import { Observable, catchError, map, of, take } from 'rxjs';
 
-enum DropStates {
+enum IDropStates {
   PENDING = 'PENDING',
   DISABLED = 'DISABLED',
   ACTIVE = 'ACTIVE',
@@ -17,14 +17,14 @@ enum DropStates {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DropStatusComponent {
-  readonly state$ = new Observable<DropStates>((sub) => {
-    sub.next(DropStates.PENDING);
+  readonly state$ = new Observable<IDropStates>((sub) => {
+    sub.next(IDropStates.PENDING);
 
     this.prchService.drop$
       .pipe(
         take(1),
-        map(() => DropStates.ACTIVE),
-        catchError(() => of(DropStates.DISABLED))
+        map(() => IDropStates.ACTIVE),
+        catchError(() => of(IDropStates.DISABLED))
       )
       .subscribe((res) => sub.next(res));
   });
@@ -33,18 +33,21 @@ export class DropStatusComponent {
     map((d) => ({ price: d.price, currency: d.currency }))
   );
 
-  readonly DropStates = DropStates;
+  readonly IDropStates = IDropStates;
 
   constructor(private prchService: PurchaseService) {}
 
   onPurchase() {
     this.prchService.drop$
-      .pipe(map((d) => d.payment_way))
+      .pipe(
+        take(1),
+        map((d) => d.payment_way)
+      )
       .subscribe((pWay) =>
         this.prchService.changeStep(
           pWay === PaymentWays.CRYPTO
-            ? PurchaseSteps.CRYPTO_PAYMENT
-            : PurchaseSteps.FORM
+            ? IPurchaseSteps.CRYPTO_PAYMENT
+            : IPurchaseSteps.FORM
         )
       );
   }

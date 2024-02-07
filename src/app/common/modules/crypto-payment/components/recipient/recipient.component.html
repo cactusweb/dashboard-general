@@ -1,0 +1,17 @@
+<div class="csd-tag" (click)="copyRecipient()">
+  <span *ngIf="recipient; else placeholder">
+    {{ recipient }}
+  </span>
+  <ng-template #placeholder>
+    <span class="csd-tag__placeholder"> Firstly choose the method </span>
+  </ng-template>
+
+  <button
+    class="csd-button_icon"
+    color="primary"
+    type="button"
+    [disabled]="!recipient"
+  >
+    <mat-icon fontIcon="icon-copy" />
+  </button>
+</div>

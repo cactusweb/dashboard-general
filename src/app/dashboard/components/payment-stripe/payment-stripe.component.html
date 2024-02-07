@@ -1,15 +1,22 @@
-<ng-container *ngIf="hasPortal$ | async; else createPortalBtn">
-  <ng-container
-    *ngTemplateOutlet="
-      button;
-      context: {
-        type: 'stroked',
-        text: 'Customer Portal',
-        cb: onGoToPortal.bind(this)
-      }
-    "
-  ></ng-container>
-</ng-container>
+<div class="csd-tag-container" [class.csd-tag-container_disabled]="disabled">
+  <span class="csd-tag-label">Payment info</span>
+  <ng-template *ngTemplateOutlet="targetBtn" />
+</div>
+
+<ng-template #targetBtn>
+  <ng-container *ngIf="hasPortal$ | async; else createPortalBtn">
+    <ng-container
+      *ngTemplateOutlet="
+        button;
+        context: {
+          type: 'stroked',
+          text: 'Customer Portal',
+          cb: onGoToPortal.bind(this)
+        }
+      "
+    ></ng-container>
+  </ng-container>
+</ng-template>
 
 <ng-template #createPortalBtn>
   <ng-container

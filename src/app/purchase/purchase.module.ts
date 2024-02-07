@@ -13,6 +13,7 @@ import { PurchaseSuccessComponent } from './steps/purchase-success/purchase-succ
 import { PurchaseFailedComponent } from './steps/purchase-failed/purchase-failed.component';
 import { MatIconModule } from '@angular/material/icon';
 import { PurchaseFormTitleComponent } from './steps/purchase-form/purchase-form-title/purchase-form-title.component';
+import { CsdCryptoPaymentModule } from '@csd-modules/crypto-payment/crypto-payment.module';
 
 const route: Route = {
   path: '',
@@ -38,6 +39,7 @@ const route: Route = {
     FormsModule,
     ReactiveFormsModule,
     MatIconModule,
+    CsdCryptoPaymentModule,
   ],
 })
 export class PurchaseModule {}

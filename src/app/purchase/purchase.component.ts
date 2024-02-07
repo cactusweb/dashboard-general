@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { PurchaseService } from './services/purсhase.service';
 import { map } from 'rxjs';
-import { PurchaseSteps } from './models/purchase.models';
+import { IPurchaseSteps } from './models/purchase.models';
 
 @Component({
   selector: 'csd-purchase',
@@ -23,7 +23,9 @@ export class PurchaseComponent implements OnInit {
 
   readonly step$ = this.prchService.step$;
 
-  readonly PurchaseSteps = PurchaseSteps;
+  readonly IPurchaseSteps = IPurchaseSteps;
+
+  readonly order$ = this.prchService.drop$;
 
   constructor(private prchService: PurchaseService) {}
 

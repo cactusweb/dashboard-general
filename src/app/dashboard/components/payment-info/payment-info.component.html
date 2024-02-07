@@ -4,6 +4,11 @@
     [disabled]="!!(paymentDisabled$ | async)"
   />
 
+  <csd-payment-crypto
+    *ngSwitchCase="PaymentWays.CRYPTO"
+    [disabled]="!!(paymentDisabled$ | async)"
+  />
+
   <csd-payment-card
     *ngSwitchDefault
     [disabled]="!!(paymentDisabled$ | async)"

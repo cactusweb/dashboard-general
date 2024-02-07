@@ -22,4 +22,8 @@
   &-label {
     @apply tw-text-base tw-leading-5 xs:tw-text-sm xs:tw-leading-4 tw-font-medium;
   }
+
+  &__placeholder {
+    @apply tw-text-input-placeholder;
+  }
 }

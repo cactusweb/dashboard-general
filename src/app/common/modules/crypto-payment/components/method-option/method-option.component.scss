@@ -1,0 +1,40 @@
+:host {
+  @apply tw-grid;
+}
+
+.method {
+  @apply tw-grid tw-h-11 tw-gap-0.5 tw-cursor-pointer tw-rounded-lg;
+  @apply tw-justify-center tw-justify-items-center tw-content-center;
+  @apply tw-border tw-border-solid tw-border-transparent hover:tw-border-primary;
+  @apply tw-text-black tw-text-sm tw-leading-[17px] tw-font-medium;
+
+  @apply tw-h-11;
+
+  transition: 0.3s;
+
+  &:hover {
+    border-color: var(--primary-color);
+  }
+
+  &_active {
+    @apply tw-bg-primary tw-text-white;
+    background-color: var(--primary-color);
+  }
+
+  &__amount {
+    @apply tw-gap-1;
+  }
+
+  &__icon {
+    @apply tw-h-5 tw-w-5 tw-p-0.5;
+    @apply tw-grid tw-box-border tw-rounded-full;
+
+    img {
+      @apply tw-max-h-4 tw-max-w-4 tw-self-center tw-justify-self-center;
+    }
+  }
+
+  &_active &__icon {
+    @apply tw-bg-white;
+  }
+}

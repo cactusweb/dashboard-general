@@ -4,7 +4,7 @@
   class="csd-button_flat"
   color="primary"
   *ngVar="state$ | async as state"
-  [disabled]="state === DropStates.DISABLED || state === DropStates.PENDING"
+  [disabled]="state === IDropStates.DISABLED || state === IDropStates.PENDING"
   (click)="onPurchase()"
 >
   <ng-container [ngSwitch]="state">
@@ -12,12 +12,12 @@
       color="accent"
       [diameter]="26"
       [strokeWidth]="3"
-      *ngSwitchCase="DropStates.PENDING"
+      *ngSwitchCase="IDropStates.PENDING"
     />
 
-    <ng-container *ngSwitchCase="DropStates.DISABLED"> Sold Out </ng-container>
+    <ng-container *ngSwitchCase="IDropStates.DISABLED"> Sold Out </ng-container>
 
-    <ng-container *ngSwitchCase="DropStates.ACTIVE">
+    <ng-container *ngSwitchCase="IDropStates.ACTIVE">
       <ng-template *ngTemplateOutlet="purchaseText" />
     </ng-container>
   </ng-container>

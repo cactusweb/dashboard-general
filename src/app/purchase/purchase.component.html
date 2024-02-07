@@ -1,8 +1,11 @@
 <ng-container [ngSwitch]="step$ | async">
-  <csd-drop-status *ngSwitchCase="PurchaseSteps.STATUS" />
-  <csd-purchase-form *ngSwitchCase="PurchaseSteps.FORM" />
-  <csd-purchase-check-results *ngSwitchCase="PurchaseSteps.CHECK_RESULT" />
-  <csd-purchase-failed *ngSwitchCase="PurchaseSteps.FAILED" />
-  <csd-purchase-success *ngSwitchCase="PurchaseSteps.SUCCESS" />
-  <div class="card" *ngSwitchDefault></div>
+  <csd-drop-status *ngSwitchCase="IPurchaseSteps.STATUS" />
+  <csd-purchase-form *ngSwitchCase="IPurchaseSteps.FORM" />
+  <csd-purchase-check-results *ngSwitchCase="IPurchaseSteps.CHECK_RESULT" />
+  <csd-purchase-failed *ngSwitchCase="IPurchaseSteps.FAILED" />
+  <csd-purchase-success *ngSwitchCase="IPurchaseSteps.SUCCESS" />
+  <csd-crypto-payment
+    *ngSwitchCase="IPurchaseSteps.CRYPTO_PAYMENT"
+    [order]="(order$ | async)!"
+  />
 </ng-container>

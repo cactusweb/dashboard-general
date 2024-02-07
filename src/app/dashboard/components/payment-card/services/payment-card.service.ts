@@ -15,11 +15,9 @@ import { OrderDTO } from '@csd-models/order/order.models';
 import { HttpService } from '@csd-services/http/http.service';
 import { CsdOrderService } from '@csd-services/order.service';
 import { BehaviorSubject, finalize, map, switchMap, take, tap } from 'rxjs';
-import * as dateFns from 'date-fns';
 import { Store } from '@ngrx/store';
 import { State } from '@csd-store/state';
 import { SetLicenseData } from '@csd-store/licenses/licenses.actions';
-import { RenewSuccessComponent } from '@csd-dashboard/common/components/renew-success.component';
 
 @Injectable()
 export class PaymentCardService {
@@ -113,7 +111,10 @@ export class PaymentCardService {
 
   private openEmailForm() {
     this.dashService.license$
-      .pipe(map((lic) => lic.payment.email))
+      .pipe(
+        take(1),
+        map((lic) => lic.payment.email)
+      )
       .subscribe((email) => {
         this.matDialog.open(OrderEmailFormComponent, {
           maxWidth: '450px',
@@ -138,25 +139,9 @@ export class PaymentCardService {
         finalize(() => this._renewLoading$.next(false))
       )
       .subscribe({
-        next: () => this.handleSuccefullRenew(),
+        next: () => this.dashService.handleSuccefullRenew(),
         error: () => {},
       });
-  }
-
-  private handleSuccefullRenew() {
-    this.dashService.license$.pipe(take(1)).subscribe((lic) => {
-      const newLicData = {
-        ...lic,
-        expires_in: dateFns.addMonths(lic.expires_in!, 1).getTime(),
-      };
-
-      this.store.dispatch(new SetLicenseData(newLicData));
-
-      this.matDialog.open(RenewSuccessComponent, {
-        maxWidth: '405px',
-        width: '100%',
-      });
-    });
   }
 
   private handleSubCancellation() {

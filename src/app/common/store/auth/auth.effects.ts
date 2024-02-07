@@ -26,14 +26,16 @@ export class AuthEffects {
     )
   );
 
-  auth$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType<Auth>(AuthActions.Auth),
-      take(1),
-      tap((data) => {
-        this.authService.auth(data.redirectToParam);
-      })
-    )
+  auth$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType<Auth>(AuthActions.Auth),
+        take(1),
+        tap((data) => {
+          this.authService.auth(data.redirectToParam);
+        })
+      ),
+    { dispatch: false }
   );
 
   constructor(

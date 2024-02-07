@@ -6,7 +6,7 @@ import { LicenseDTO } from '@csd-models/license.models';
 import { OrderDTO } from '@csd-models/order/order.models';
 import { OwnerDTO } from '@csd-models/owner.models';
 import { PurchaseRequests } from '@csd-purchase/consts/requests.consts';
-import { PurchaseSteps } from '@csd-purchase/models/purchase.models';
+import { IPurchaseSteps } from '@csd-purchase/models/purchase.models';
 import { HttpService } from '@csd-services/http/http.service';
 import { SeoService } from '@csd-services/seo.service';
 import { AddLicense } from '@csd-store/licenses/licenses.actions';
@@ -31,7 +31,7 @@ export class PurchaseService implements OnDestroy {
 
   private readonly _receivedLicense$ = new ReplaySubject<LicenseDTO>();
   private readonly ownerName = this.getOwnerName();
-  private readonly _step$ = new BehaviorSubject(PurchaseSteps.STATUS);
+  private readonly _step$ = new BehaviorSubject(IPurchaseSteps.STATUS);
 
   constructor(
     private store: Store<State>,
@@ -50,9 +50,11 @@ export class PurchaseService implements OnDestroy {
 
   ngOnDestroy(): void {
     this.seo.changeIcon();
+    this._step$.complete();
+    this._receivedLicense$.complete();
   }
 
-  changeStep(step: PurchaseSteps) {
+  changeStep(step: IPurchaseSteps) {
     this._step$.next(step);
   }
 
@@ -66,7 +68,7 @@ export class PurchaseService implements OnDestroy {
 
     this._receivedLicense$.next(license);
     this.store.dispatch(new AddLicense(license));
-    this._step$.next(PurchaseSteps.SUCCESS);
+    this._step$.next(IPurchaseSteps.SUCCESS);
   }
 
   private getDropData() {
@@ -115,9 +117,9 @@ export class PurchaseService implements OnDestroy {
     const status = inject(ActivatedRoute).snapshot.queryParams['status'];
 
     if (status === 'pending') {
-      this.changeStep(PurchaseSteps.CHECK_RESULT);
+      this.changeStep(IPurchaseSteps.CHECK_RESULT);
     } else if (status === 'payment-failed') {
-      this.changeStep(PurchaseSteps.FAILED);
+      this.changeStep(IPurchaseSteps.FAILED);
     }
   }
 }

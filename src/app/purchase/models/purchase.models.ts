@@ -1,4 +1,4 @@
-export enum PurchaseSteps {
+export enum IPurchaseSteps {
   STATUS = 'STATUS',
   FORM = 'FORM',
   CRYPTO_PAYMENT = 'CRYPTO_PAYMENT',

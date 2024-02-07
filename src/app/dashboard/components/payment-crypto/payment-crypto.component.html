@@ -1,0 +1,18 @@
+<div class="csd-tag-container" [class.csd-tag-container_disabled]="disabled">
+  <span class="csd-tag-label">Payment info</span>
+
+  <button
+    class="csd-button_stroked"
+    color="primary"
+    *ngVar="loading$ | async as loading"
+    [disabled]="disabled || loading"
+    (click)="onRenew()"
+  >
+    <ng-container *ngIf="!loading; else spinner">
+      Pay renewal with crypto
+    </ng-container>
+    <ng-template #spinner>
+      <mat-spinner [strokeWidth]="3" color="accent" [diameter]="26" />
+    </ng-template>
+  </button>
+</div>

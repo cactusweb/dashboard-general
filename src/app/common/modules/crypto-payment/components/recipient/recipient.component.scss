@@ -1,0 +1,11 @@
+.csd-tag {
+  @apply tw-justify-start tw-h-11;
+  span {
+    @apply tw-text-sm tw-leading-5;
+    @apply tw-overflow-hidden tw-max-w-full tw-text-ellipsis tw-whitespace-nowrap;
+  }
+}
+
+.csd-button_icon {
+  @apply tw-h-11 tw-w-11;
+}
