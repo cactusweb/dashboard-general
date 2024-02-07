@@ -80,7 +80,7 @@
 .csd-button_icon {
   @extend .csd-button;
   @extend .csd-button_stroked;
-  @apply tw-h-12 tw-w-12 xs:tw-h-10 xs:tw-w-10;
+  @apply tw-h-12 tw-w-12 xs:tw-h-11 xs:tw-w-11;
   mat-icon {
     @apply tw-text-xl tw-leading-none xs:tw-text-lg;
   }

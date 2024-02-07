@@ -6,7 +6,7 @@
   background: rgba(248, 248, 248, 0.6);
   border: 1.5px solid #ffffff;
   backdrop-filter: blur(23px);
-  @apply tw-h-[170px] xs:tw-h-[120px] tw-content-center tw-overflow-hidden;
+  @apply tw-h-[170px] xs:tw-h-[130px] tw-content-center tw-overflow-hidden;
 
   &:hover {
     .circle_over {

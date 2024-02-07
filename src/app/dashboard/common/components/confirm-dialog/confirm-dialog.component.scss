@@ -9,3 +9,7 @@ p {
 .row {
   @apply tw-justify-stretch tw-grid-cols-[1fr_1fr] tw-gap-2;
 }
+
+button {
+  @apply xs:tw-h-11;
+}
