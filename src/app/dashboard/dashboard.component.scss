@@ -5,6 +5,7 @@ csd-dashboard {
   @apply tw-grid-cols-[1fr_1fr] sm:tw-grid-cols-1 lg:tw-grid-rows-[repeat(3,_auto)];
   @apply tw-w-full tw-max-w-6xl sm:tw-max-w-xl xs:tw-max-w-md;
   @apply tw-relative;
+  @apply tw-pt-6;
 
   .card {
     @apply tw-px-8 xs:tw-px-6;
