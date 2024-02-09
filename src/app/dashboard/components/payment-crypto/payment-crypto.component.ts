@@ -5,7 +5,7 @@ import { DashboardService } from '@csd-dashboard/services/dashboard.service';
 import { OrderDTO } from '@csd-models/order/order.models';
 import { CsdCryptoPaymentComponent } from '@csd-modules/crypto-payment/crypto-payment.component';
 import { HttpService } from '@csd-services/http/http.service';
-import { BehaviorSubject, finalize, take, takeUntil } from 'rxjs';
+import { BehaviorSubject, finalize, switchMap, take, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'csd-payment-crypto',
@@ -34,9 +34,14 @@ export class PaymentCryptoComponent {
     }
 
     this.loading$.next(true);
-    this.http
-      .request<OrderDTO>(DashboardRequests.RENEW)
-      .pipe(finalize(() => this.loading$.next(false)))
+    this.dashService.ownerName$
+      .pipe(
+        take(1),
+        switchMap((ownerName) =>
+          this.http.request<OrderDTO>(DashboardRequests.RENEW, null, ownerName)
+        ),
+        finalize(() => this.loading$.next(false))
+      )
       .subscribe({
         next: (order) => {
           this.order = order;
