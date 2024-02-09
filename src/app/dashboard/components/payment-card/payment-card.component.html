@@ -8,6 +8,7 @@
         *ngVar="loading$ | async as loading"
         class="csd-button_icon"
         color="primary"
+        aria-label="Change card for recurrent payments"
         [disabled]="loading"
         (click)="onChangeCard()"
       >

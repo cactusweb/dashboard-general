@@ -2,12 +2,16 @@
   class="user row"
   *ngVar="user$ | async as user"
   [routerLink]="[licensesPath]"
-  aria-label="Go to all Licenses"
+  aria-label="Link to all licenses"
 >
   <div class="user__img" [attr.data-skeleton-load]="user ? null : ''">
-    <img *ngIf="user" [src]="user?.avatar" alt="" />
+    <img *ngIf="user" [src]="user?.avatar" alt="Discord user avatar" />
   </div>
-  <span class="user__name" [attr.data-skeleton-load]="user ? null : 'text'">
+  <span
+    class="user__name"
+    [attr.data-skeleton-load]="user ? null : 'text'"
+    aria-label="Discord Username"
+  >
     {{ user?.full_name }}
   </span>
 </a>

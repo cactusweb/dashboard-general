@@ -21,6 +21,7 @@
       <button
         class="csd-button_icon"
         color="primary"
+        aria-label="Copy license key"
         (click)="onCopyKey(license!.key)"
         [disabled]="!license"
       >
@@ -38,6 +39,7 @@
       <button
         class="csd-button_icon"
         color="primary"
+        aria-label="Reset license activations"
         (click)="onResetActivations()"
         *ngVar="loading$ | async as loading"
         [disabled]="loading || !license"
