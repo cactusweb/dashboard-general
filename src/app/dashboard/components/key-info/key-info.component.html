@@ -33,7 +33,16 @@
       <span *ngIf="license?.activations as activations">
         Used:
         <span class="tw-font-semibold">
-          {{ activations.devices.length }}/{{ activations.quantity }}
+          {{ activations.devices.length }}/<ng-container
+            *ngIf="activations.quantity; else infinity"
+            >{{ activations.quantity }}</ng-container
+          >
+          <ng-template #infinity>
+            <mat-icon
+              fontIcon="icon-infinity"
+              class="infinity-icon"
+            />
+          </ng-template>
         </span>
       </span>
       <button

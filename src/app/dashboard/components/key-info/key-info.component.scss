@@ -35,3 +35,7 @@
     transform: rotate(360deg);
   }
 }
+
+.infinity-icon {
+  @apply tw-text-[8px] tw-overflow-visible tw-bottom-0.5 xs:tw-bottom-px tw-relative tw-inline;
+}

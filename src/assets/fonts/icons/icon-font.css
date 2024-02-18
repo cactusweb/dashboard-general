@@ -48,3 +48,6 @@
 .icon-refresh:before {
   content: "\e80c";
 }
+.icon-infinity:before {
+  content: "\e80d";
+}
