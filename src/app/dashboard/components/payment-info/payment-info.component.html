@@ -9,8 +9,10 @@
     [disabled]="!!(paymentDisabled$ | async)"
   />
 
-  <csd-payment-card
-    *ngSwitchDefault
-    [disabled]="!!(paymentDisabled$ | async)"
-  />
+  <ng-container *ngSwitchDefault>
+    <csd-payment-card
+      *ngVar="paymentDisabled$ | async as paymentDisabled"
+      [disabled]="paymentDisabled === null || paymentDisabled"
+    />
+  </ng-container>
 </ng-container>

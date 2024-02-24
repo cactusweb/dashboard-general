@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/dashboard-general-v3",
+            "outputPath": "dist/DashboardGeneral-v3/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": ["zone.js"],
@@ -98,6 +98,67 @@
             "styles": ["src/styles.scss"],
             "scripts": []
           }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/DashboardGeneral-v3/server",
+            "main": "server.ts",
+            "tsConfig": "tsconfig.server.json",
+            "inlineStyleLanguage": "scss"
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media",
+              "fileReplacements": [
+                {
+                  "replace": "src/environment/environment.ts",
+                  "with": "src/environment/environment.prod.ts"
+                }
+              ]
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "sourceMap": true,
+              "extractLicenses": false,
+              "vendorChunk": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "configurations": {
+            "development": {
+              "browserTarget": "DashboardGeneral-v3:build:development",
+              "serverTarget": "DashboardGeneral-v3:server:development"
+            },
+            "production": {
+              "browserTarget": "DashboardGeneral-v3:build:production",
+              "serverTarget": "DashboardGeneral-v3:server:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "routes": [
+              "/"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "DashboardGeneral-v3:build:production",
+              "serverTarget": "DashboardGeneral-v3:server:production"
+            },
+            "development": {
+              "browserTarget": "DashboardGeneral-v3:build:development",
+              "serverTarget": "DashboardGeneral-v3:server:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }

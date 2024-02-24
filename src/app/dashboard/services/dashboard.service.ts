@@ -30,6 +30,7 @@ import {
 import * as dateFns from 'date-fns';
 import { MatDialog } from '@angular/material/dialog';
 import { OwnerDTO } from '@csd-models/owner.models';
+import { selectIsAuthed } from '@csd-store/auth/auth.selectors';
 
 @Injectable()
 export class DashboardService implements OnDestroy {
@@ -167,8 +168,22 @@ export class DashboardService implements OnDestroy {
   }
 
   private getOwner() {
-    return this.http
-      .request<OwnerDTO>(Requests.GET_OWNER, null, this.getOwnerName())
+    return this.store
+      .select(selectIsAuthed)
+      .pipe(
+        switchMap((authed) => {
+          console.log(authed, 'lsamdlaskmd');
+          if (!authed) {
+            return this.http.request<OwnerDTO>(
+              Requests.GET_OWNER,
+              null,
+              this.ownerName
+            );
+          }
+
+          return this._license$.pipe(map((d) => d.owner));
+        })
+      )
       .pipe(
         tap((owner) => {
           this.seo.changeTitle(owner.name + ' - Dashboard | CactusDash');

@@ -21,7 +21,7 @@ export class AuthService {
 
   constructor(private router: Router, private store: Store<State>) {}
 
-  async auth(redirectTo?: AuthRedirectParam) {
+  auth(redirectTo?: AuthRedirectParam) {
     this._pending$.next(true);
     window.location.href =
       environment.apiUrl +
