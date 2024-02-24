@@ -1,13 +1,13 @@
 <div class="card" *ngVar="license$ | async as license">
-  <div class="owner row">
-    <div class="owner__logo" [attr.data-skeleton-load]="!license ? '' : null">
-      <img [src]="license.owner.avatar" alt="" *ngIf="license" />
+  <div class="owner row" *ngVar="owner$ | async as owner">
+    <div class="owner__logo" [attr.data-skeleton-load]="!owner ? '' : null">
+      <img [src]="owner.avatar" alt="" *ngIf="owner" />
     </div>
     <h1
       class="card__title owner__name"
-      [attr.data-skeleton-load]="!license ? 'text' : null"
+      [attr.data-skeleton-load]="!owner ? 'text' : null"
     >
-      {{ license?.owner?.name }}
+      {{ owner?.name }}
     </h1>
   </div>
 
@@ -38,10 +38,7 @@
             >{{ activations.quantity }}</ng-container
           >
           <ng-template #infinity>
-            <mat-icon
-              fontIcon="icon-infinity"
-              class="infinity-icon"
-            />
+            <mat-icon fontIcon="icon-infinity" class="infinity-icon" />
           </ng-template>
         </span>
       </span>

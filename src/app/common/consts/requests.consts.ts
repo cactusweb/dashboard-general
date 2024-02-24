@@ -45,6 +45,7 @@ export const Requests: Record<HttpRequestNames, HttpRequestData> = {
   [HttpRequestNames.GET_OWNER]: {
     url: '/owner/:param',
     method: 'GET',
+    optional: true,
   },
 
   [HttpRequestNames.PUT_ORDER_DATA]: {

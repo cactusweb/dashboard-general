@@ -20,7 +20,7 @@ export class HttpService {
     let reqUrl =
       environment.apiUrl + reqParams.url.replace(':param', urlParam) + urlQuery;
 
-    const headers = handleErros ? undefined : this.getHeadersNoHandleErrors();
+    const headers = this.getHeaders(handleErros, reqParams.optional);
 
     switch (reqParams.method) {
       case 'POST':
@@ -80,9 +80,20 @@ export class HttpService {
     });
   }
 
-  private getHeadersNoHandleErrors() {
-    return new HttpHeaders({
-      'no-handle-error': 'true',
-    });
+  private getHeaders(
+    noHandleErrors: boolean = false,
+    authOptional: boolean = false
+  ) {
+    const headers: Record<string, string> = {};
+
+    if (noHandleErrors) {
+      headers['no-handle-error'] = 'true';
+    }
+
+    if (authOptional) {
+      headers['auth-optional'] = 'true';
+    }
+
+    return new HttpHeaders(headers);
   }
 }

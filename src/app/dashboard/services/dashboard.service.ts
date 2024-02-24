@@ -22,12 +22,15 @@ import {
   filter,
   map,
   shareReplay,
+  switchMap,
   take,
   takeUntil,
   tap,
 } from 'rxjs';
 import * as dateFns from 'date-fns';
 import { MatDialog } from '@angular/material/dialog';
+import { OwnerDTO } from '@csd-models/owner.models';
+import { selectIsAuthed } from '@csd-store/auth/auth.selectors';
 
 @Injectable()
 export class DashboardService implements OnDestroy {
@@ -35,8 +38,10 @@ export class DashboardService implements OnDestroy {
 
   private readonly _license$ = new ReplaySubject<LicenseDTO>();
   readonly license$ = this._license$.asObservable().pipe(shareReplay());
-  readonly ownerName$ = this.license$.pipe(
-    map((lic) => lic.owner.name),
+
+  readonly owner$ = this.getOwner().pipe(shareReplay());
+  readonly ownerName$ = this.owner$.pipe(
+    map((owner) => owner.name),
     shareReplay()
   );
 
@@ -154,19 +159,38 @@ export class DashboardService implements OnDestroy {
           }
         }),
         map((d) => d as LicenseDTO),
-        tap((lic) => {
-          setTimeout(() => {
-            this.seo.changeTitle(lic.owner.name + ' - Dashboard | CactusDash');
-            if (lic.owner.avatar) {
-              this.seo.changeIcon(lic.owner.avatar);
-            }
-          }, 0);
-        }),
         distinctUntilChangedJSON()
       )
       .subscribe({
         next: (lic) => this._license$.next(lic),
         error: () => {},
       });
+  }
+
+  private getOwner() {
+    return this.store
+      .select(selectIsAuthed)
+      .pipe(
+        switchMap((authed) => {
+          console.log(authed, 'lsamdlaskmd');
+          if (!authed) {
+            return this.http.request<OwnerDTO>(
+              Requests.GET_OWNER,
+              null,
+              this.ownerName
+            );
+          }
+
+          return this._license$.pipe(map((d) => d.owner));
+        })
+      )
+      .pipe(
+        tap((owner) => {
+          this.seo.changeTitle(owner.name + ' - Dashboard | CactusDash');
+          if (owner.avatar) {
+            this.seo.changeIcon(owner.avatar);
+          }
+        })
+      );
   }
 }

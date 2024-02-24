@@ -8,7 +8,7 @@ import {
 import { State } from '@csd-store/state';
 import { distinctUntilChangedJSON } from '@csd-utils/distinct-until-changed-json.pipeline';
 import { Store } from '@ngrx/store';
-import { map } from 'rxjs';
+import { map, tap } from 'rxjs';
 
 enum PageStates {
   PENDING = 'pending',
@@ -32,7 +32,7 @@ export class LicensesListComponent implements OnInit {
       if (state.pending && !state.data) {
         return PageStates.PENDING;
       }
-      if (state.data!.length) {
+      if (state.data?.length) {
         return PageStates.VIEW;
       }
       return PageStates.EMPTY;
