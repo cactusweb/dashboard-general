@@ -14,7 +14,8 @@
     "dev:ssr": "ng run DashboardGeneral-v3:serve-ssr",
     "serve:ssr": "node dist/DashboardGeneral-v3/server/main.js",
     "build:ssr": "ng build && ng run DashboardGeneral-v3:server",
-    "prerender": "ng run DashboardGeneral-v3:prerender"
+    "prerender": "ng run DashboardGeneral-v3:prerender",
+    "deploy": "npm run build:ssr && pm2 delete dashboard.cactusweb.io && pm2 start npm --name 'dashboard.cactusweb.io' -- run 'serve:ssr'"
   },
   "private": true,
   "dependencies": {
