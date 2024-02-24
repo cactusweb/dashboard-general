@@ -12,6 +12,7 @@ import { BehaviorSubject, finalize } from 'rxjs';
 export class KeyInfoComponent {
   readonly license$ = this.dashService.license$;
   readonly loading$ = new BehaviorSubject(false);
+  readonly owner$ = this.dashService.owner$;
 
   constructor(
     private utilsService: UtilsService,
