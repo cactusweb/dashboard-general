@@ -27,5 +27,20 @@
         ]
       }
     }
+  ],
+  "dataGroups": [
+    {
+      "name": "api",
+      "urls": [
+        "https://api.cactusweb.io/api/v2/user/@me",
+        "https://api.cactusweb.io/api/v2/user/license"
+      ],
+      "cacheConfig": {
+        "strategy": "freshness",
+        "timeout": "5s",
+        "maxSize": 20,
+        "maxAge": "7d"
+      }
+    }
   ]
 }
