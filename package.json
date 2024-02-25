@@ -15,7 +15,7 @@
     "serve:ssr": "node dist/DashboardGeneral-v3/server/main.js",
     "build:ssr": "ng build && ng run DashboardGeneral-v3:server",
     "prerender": "ng run DashboardGeneral-v3:prerender",
-    "deploy": "npm i && npm run build:ssr && pm2 delete dashboard.cactusweb.io && . .env && pm2 start npm --name 'dashboard.cactusweb.io' -- run 'serve:ssr' --port 4040"
+    "deploy": "npm i && npm run build:ssr; pm2 delete dashboard.cactusweb.io; pm2 start ecosystem.config.js"
   },
   "private": true,
   "dependencies": {
