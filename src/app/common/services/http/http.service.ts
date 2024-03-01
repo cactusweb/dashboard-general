@@ -81,12 +81,12 @@ export class HttpService {
   }
 
   private getHeaders(
-    noHandleErrors: boolean = false,
+    handleErrors: boolean = false,
     authOptional: boolean = false
   ) {
     const headers: Record<string, string> = {};
 
-    if (noHandleErrors) {
+    if (!handleErrors) {
       headers['no-handle-error'] = 'true';
     }
 

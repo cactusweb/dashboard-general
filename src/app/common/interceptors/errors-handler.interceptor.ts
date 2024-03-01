@@ -47,13 +47,13 @@ export class ErrorsHandlerInterceptor implements HttpInterceptor {
         err.error.message
       );
 
-    if (err.status == 0) {
+    if (err.status === 0) {
       err.message = 'Connection timeout';
       this.generateNotification(ErrorEnum.ConnectionTimeout);
-    } else if (err.status == 404) {
+    } else if (err.status === 404) {
       err.message = ErrorEnum.NotFound;
       this.generateNotification(ErrorEnum.NotFound);
-    } else if (err.status == 401) {
+    } else if (err.status === 401) {
       this.onAuthErr();
       this.generateNotification(ErrorEnum.NotAuth);
     } else if (err.status >= 500) {
@@ -62,10 +62,11 @@ export class ErrorsHandlerInterceptor implements HttpInterceptor {
           `Error ${err.status}: ${ErrorEnum.ServerUnavailable}`
       );
       err.message = ErrorEnum.ServerUnavailable;
-    } else if (err.status >= 400 && err.status <= 500 && !noHandleBadReq)
+    } else if (err.status >= 400 && err.status <= 500 && !noHandleBadReq) {
       this.generateNotification(
         `${err.error.message || err.error.error || err.message}`
       );
+    }
   }
 
   private onAuthErr() {

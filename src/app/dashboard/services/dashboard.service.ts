@@ -172,7 +172,6 @@ export class DashboardService implements OnDestroy {
       .select(selectIsAuthed)
       .pipe(
         switchMap((authed) => {
-          console.log(authed, 'lsamdlaskmd');
           if (!authed) {
             return this.http.request<OwnerDTO>(
               Requests.GET_OWNER,
