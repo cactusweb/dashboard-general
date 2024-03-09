@@ -31,8 +31,7 @@ export class ErrorsHandlerInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((err) => {
         this.handleError(err, request.headers.has('no-handle-error'));
-
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }
