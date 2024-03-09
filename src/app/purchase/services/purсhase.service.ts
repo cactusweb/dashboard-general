@@ -49,7 +49,6 @@ export class PurchaseService implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.seo.changeIcon();
     this._step$.complete();
     this._receivedLicense$.complete();
   }
@@ -106,8 +105,7 @@ export class PurchaseService implements OnDestroy {
           return throwError(() => err);
         }),
         tap((owner) => {
-          this.seo.changeTitle(`${owner.name} - Purchase | CactusDash`);
-          this.seo.changeIcon(owner.avatar);
+          this.seo.setOwnerData(owner, 'Purchase')
         }),
         shareReplay(1)
       );

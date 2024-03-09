@@ -61,7 +61,6 @@ export class DashboardService implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.seo.changeIcon();
     this.destroyed$.next();
     this.destroyed$.complete();
     this._license$.complete();
@@ -183,13 +182,6 @@ export class DashboardService implements OnDestroy {
           return this._license$.pipe(map((d) => d.owner));
         })
       )
-      .pipe(
-        tap((owner) => {
-          this.seo.changeTitle(owner.name + ' - Dashboard | CactusDash');
-          if (owner.avatar) {
-            this.seo.changeIcon(owner.avatar);
-          }
-        })
-      );
+      .pipe(tap((owner) => this.seo.setOwnerData(owner, 'Dashboard')));
   }
 }
