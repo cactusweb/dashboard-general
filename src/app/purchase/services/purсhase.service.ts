@@ -36,7 +36,6 @@ export class PurchaseService implements OnDestroy {
   constructor(
     private store: Store<State>,
     private router: Router,
-    private http: HttpService,
     private seo: SeoService
   ) {
     this.step$ = this._step$.asObservable().pipe(distinctUntilChanged());
@@ -83,7 +82,7 @@ export class PurchaseService implements OnDestroy {
       code: queryParams['referral_code'],
     });
 
-    return this.http
+    return inject(HttpService)
       .request<OrderDTO>(getReqData(), getReqBody())
       .pipe(shareReplay(1));
   }
@@ -95,7 +94,7 @@ export class PurchaseService implements OnDestroy {
   }
 
   private getOwner() {
-    return this.http
+    return inject(HttpService)
       .request<OwnerDTO>(Requests.GET_OWNER, null, this.ownerName)
       .pipe(
         catchError((err) => {
@@ -105,7 +104,7 @@ export class PurchaseService implements OnDestroy {
           return throwError(() => err);
         }),
         tap((owner) => {
-          this.seo.setOwnerData(owner, 'Purchase')
+          this.seo.setOwnerData(owner, 'Purchase');
         }),
         shareReplay(1)
       );
