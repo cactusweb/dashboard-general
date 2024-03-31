@@ -1,11 +1,1 @@
-<div class="owner" *ngVar="owner$ | async as owner">
-  <div class="owner__logo" [attr.data-skeleton-load]="owner ? null : ''">
-    <img [src]="owner.avatar" alt="" *ngIf="owner" />
-  </div>
-  <h1
-    class="card__title-md owner__name"
-    [attr.data-skeleton-load]="owner ? null : 'text'"
-  >
-    {{ owner?.name }}
-  </h1>
-</div>
+<csd-owner-data [owner]="owner$ | async"/>

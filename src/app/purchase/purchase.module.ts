@@ -14,6 +14,7 @@ import { PurchaseFailedComponent } from './steps/purchase-failed/purchase-failed
 import { MatIconModule } from '@angular/material/icon';
 import { PurchaseFormTitleComponent } from './steps/purchase-form/purchase-form-title/purchase-form-title.component';
 import { CsdCryptoPaymentModule } from '@csd-modules/crypto-payment/crypto-payment.module';
+import { CsdOwnerDataComponent } from '@csd-components/owner-data/owner-data.component';
 
 const route: Route = {
   path: '',
@@ -40,6 +41,7 @@ const route: Route = {
     ReactiveFormsModule,
     MatIconModule,
     CsdCryptoPaymentModule,
+    CsdOwnerDataComponent,
   ],
 })
 export class PurchaseModule {}
