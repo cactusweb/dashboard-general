@@ -28,6 +28,8 @@ import { RouterPaths } from '@csd-consts/router-paths.conts';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { environment } from 'environment/environment';
+import { CsdSnackbarService } from '@csd-modules/snackbar/services/snackbar.service';
+import { CsdSnackbarLevels } from '@csd-modules/snackbar/interfaces/snackbar-item.models';
 
 @Component({
   selector: 'csd-nft-verification',
@@ -56,15 +58,15 @@ export class NftVerificationComponent implements OnInit {
   readonly loading$ = new BehaviorSubject(false);
   btnText = NftVerificationBtnStates.INITIAL;
 
-  private readonly auth = inject(AuthService).auth;
-
   constructor(
     private http: HttpService,
     private verifService: NftVerificationService,
     private solanaService: CsdSolanaService,
     private cdr: ChangeDetectorRef,
-    private router: Router,
-    private store: Store<State>
+    private store: Store<State>,
+    private snackbarService: CsdSnackbarService,
+    private authService: AuthService,
+    private router: Router
   ) {
     inject(MatIconRegistry).addSvgIcon(
       'icon_solana',
@@ -76,6 +78,9 @@ export class NftVerificationComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPrimaryColor();
+    setTimeout(() => {
+      this.navigateToDashboard();
+    }, 1000);
   }
 
   onRecieve() {
@@ -84,7 +89,17 @@ export class NftVerificationComponent implements OnInit {
     this.store
       .select(selectIsAuthed)
       .pipe(take(1))
-      .subscribe((authed) => (authed ? this.process() : this.auth()));
+      .subscribe((authed) => {
+        if (authed) {
+          this.process();
+        } else {
+          this.snackbarService.createItem(
+            'No have auth. Redirecting...',
+            CsdSnackbarLevels.ERROR
+          );
+          this.authService.auth();
+        }
+      });
   }
 
   private process() {

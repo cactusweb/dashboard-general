@@ -15,6 +15,7 @@ import { CsdSnackbarLevels } from '@csd-modules/snackbar/interfaces/snackbar-ite
 import { AuthService } from '@csd-services/auth.service';
 import { CookieService } from '@csd-services/cookie/cookie.service';
 import { ACCESS_TOKEN_KEY } from '@csd-consts/auth.consts';
+import { environment } from 'environment/environment';
 
 @Injectable()
 export class AuthTokenInterceptor implements HttpInterceptor {
@@ -32,7 +33,11 @@ export class AuthTokenInterceptor implements HttpInterceptor {
     return combineLatest([
       this.store
         .select(selectAuthToken)
-        .pipe(map((authToken) => authToken || this.cookieService.get(ACCESS_TOKEN_KEY))),
+        .pipe(
+          map(
+            (authToken) => authToken || this.cookieService.get(ACCESS_TOKEN_KEY)
+          )
+        ),
       this.authService.pending$,
     ]).pipe(
       take(1),
@@ -41,7 +46,7 @@ export class AuthTokenInterceptor implements HttpInterceptor {
           return next.handle(this.setAuthHeader(req, authToken));
         }
 
-        if (req.headers.has('auth-optional')) {
+        if (req.headers.has('auth-optional') || this.isRequestToFrontend(req)) {
           return next.handle(req);
         }
 
@@ -64,5 +69,11 @@ export class AuthTokenInterceptor implements HttpInterceptor {
     return req.clone({
       headers: req.headers.set('authorization', `Bearer ${accessToken}`),
     });
+  }
+
+  private isRequestToFrontend(req: HttpRequest<unknown>) {
+    const reqHost = new URL(req.url).host;
+    const frontHost = new URL(environment.siteUrl).host;
+    return reqHost === frontHost;
   }
 }
