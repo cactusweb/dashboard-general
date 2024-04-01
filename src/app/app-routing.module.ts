@@ -42,6 +42,14 @@ const routes: Routes = [
       import('./purchase/purchase.module').then((m) => m.PurchaseModule),
   },
   {
+    path: RouterPaths.NFT_VERIFICATION,
+    title: `NFT Verification ${titlePostfix}`,
+    loadComponent: () =>
+      import('./nft-verification/nft-verification.component').then(
+        (m) => m.NftVerificationComponent
+      ),
+  },
+  {
     path: 'main',
     redirectTo: RouterPaths.LICENSES,
   },

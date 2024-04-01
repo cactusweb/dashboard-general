@@ -1,0 +1,20 @@
+:host {
+  @apply tw-grid tw-content-center;
+}
+
+.card {
+  @apply tw-gap-6 tw-max-w-[620px] tw-w-full tw-justify-self-center;
+  @apply tw-py-8;
+}
+
+.csd-button_flat {
+  @apply xs:tw-h-11 tw-max-w-[350px] tw-w-full tw-justify-self-center;
+}
+
+.none-events {
+  @apply tw-pointer-events-none;
+}
+
+mat-icon {
+  @apply tw-h-4 tw-leading-5;
+}

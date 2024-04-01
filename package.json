@@ -33,6 +33,7 @@
     "@ngrx/effects": "^16.3.0",
     "@ngrx/store": "^16.3.0",
     "@nguniversal/express-engine": "^16.2.0",
+    "bs58": "^5.0.0",
     "compression": "^1.7.4",
     "date-fns": "^3.3.1",
     "express": "^4.15.2",

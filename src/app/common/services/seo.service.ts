@@ -37,7 +37,7 @@ export class SeoService {
       });
   }
 
-  setOwnerData(owner: OwnerDTO, page: 'Dashboard' | 'Purchase') {
+  setOwnerData(owner: OwnerDTO, page: 'Dashboard' | 'Purchase' | 'NFT Verification') {
     this.changeTitle(owner.name + ` - ${page} | CactusDash`);
     if (owner.avatar) {
       this.changeIcon(owner.avatar);

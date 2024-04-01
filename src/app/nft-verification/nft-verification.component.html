@@ -1,0 +1,22 @@
+<div class="card">
+  <csd-owner-data [owner]="owner$ | async" />
+
+  <button
+    *ngVar="loading$ | async as loading"
+    class="csd-button_flat"
+    color="primary"
+    [class.none-events]="loading"
+    (click)="onRecieve()"
+  >
+    <mat-icon [svgIcon]="'icon_solana'" *ngIf="!loading" />
+
+    <mat-spinner
+      [strokeWidth]="2"
+      color="accent"
+      [diameter]="20"
+      *ngIf="loading"
+    />
+
+    {{ btnText }}
+  </button>
+</div>

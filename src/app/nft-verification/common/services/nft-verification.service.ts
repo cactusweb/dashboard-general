@@ -1,0 +1,47 @@
+import { Injectable, inject } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpService } from '@csd-services/http/http.service';
+import { NftVerificationStatusDTO } from '../models/nft-verification.models';
+import { NftVerificationRequests } from '../consts/nft-verification.requests';
+import { catchError, shareReplay, tap, throwError } from 'rxjs';
+import { RouterPaths } from '@csd-consts/router-paths.conts';
+import { SeoService } from '@csd-services/seo.service';
+
+@Injectable()
+export class NftVerificationService {
+  readonly ownerName = this.getOwnerName();
+  readonly verificationStatus$ = this.getVerificationStatus();
+
+  constructor(private router: Router, private seo: SeoService, private http: HttpService) {}
+
+  getNonce( wallet: string ){
+    this.http.request(NftVerificationRequests.GET_NONCE, { wallet })
+  }
+
+  private getOwnerName() {
+    return (
+      inject(ActivatedRoute).snapshot.params['owner_name'] as string
+    ).replace('-', ' ');
+  }
+
+  private getVerificationStatus() {
+    return inject(HttpService)
+      .request<NftVerificationStatusDTO>(
+        NftVerificationRequests.GET_STATUS,
+        null,
+        this.ownerName
+      )
+      .pipe(
+        catchError((err) => {
+          if (err.error?.message === 'Owner not found') {
+            this.router.navigate(['/' + RouterPaths.NOT_FOUND]);
+          }
+          return throwError(() => err);
+        }),
+        tap((data) => {
+          this.seo.setOwnerData(data.owner, 'NFT Verification');
+        }),
+        shareReplay()
+      );
+  }
+}
