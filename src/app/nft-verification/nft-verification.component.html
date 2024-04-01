@@ -6,9 +6,10 @@
     class="csd-button_flat"
     color="primary"
     [class.none-events]="loading"
+    [disabled]="btnDisabled$ | async"
     (click)="onRecieve()"
   >
-    <mat-icon [svgIcon]="'icon_solana'" *ngIf="!loading" />
+    <mat-icon svgIcon="icon_solana" *ngIf="!loading" />
 
     <mat-spinner
       [strokeWidth]="2"

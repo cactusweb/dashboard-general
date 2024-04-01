@@ -52,8 +52,11 @@ export class NftVerificationComponent implements OnInit {
   @HostBinding('style.--primary-color')
   primaryColor: null | string = null;
 
-  readonly verificationStatus$ = this.verifService.verificationStatus$;
+  private readonly verificationStatus$ = this.verifService.verificationStatus$;
   readonly owner$ = this.verificationStatus$.pipe(map((d) => d.owner));
+  readonly btnDisabled$ = this.verificationStatus$.pipe(
+    map((d) => !d.enabled || d.hasLicense)
+  );
 
   readonly loading$ = new BehaviorSubject(false);
   btnText = NftVerificationBtnStates.INITIAL;
@@ -78,9 +81,6 @@ export class NftVerificationComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPrimaryColor();
-    setTimeout(() => {
-      this.navigateToDashboard();
-    }, 1000);
   }
 
   onRecieve() {
@@ -94,8 +94,8 @@ export class NftVerificationComponent implements OnInit {
           this.process();
         } else {
           this.snackbarService.createItem(
-            'No have auth. Redirecting...',
-            CsdSnackbarLevels.ERROR
+            'Redirecting to auth...',
+            CsdSnackbarLevels.INFO
           );
           this.authService.auth();
         }
@@ -132,17 +132,7 @@ export class NftVerificationComponent implements OnInit {
             this.verifService.ownerName
           );
         }),
-        map(
-          (lic) =>
-            ({
-              ...lic,
-              expires_in: lic.expires_in
-                ? lic.expires_in * 1000
-                : lic.expires_in,
-              created_at: lic.created_at * 1000,
-              bought_at: lic.bought_at * 1000,
-            } as LicenseDTO)
-        ),
+        map((lic) => this.mapLicense(lic)),
         finalize(() => {
           this.setBtnText(NftVerificationBtnStates.INITIAL);
           this.loading$.next(false);
@@ -174,5 +164,14 @@ export class NftVerificationComponent implements OnInit {
       this.verifService.ownerName
     );
     this.router.navigate([`/${dashLink}`]);
+  }
+
+  private mapLicense(lic: LicenseDTO) {
+    return {
+      ...lic,
+      expires_in: lic.expires_in ? lic.expires_in * 1000 : lic.expires_in,
+      created_at: lic.created_at * 1000,
+      bought_at: lic.bought_at * 1000,
+    } as LicenseDTO;
   }
 }

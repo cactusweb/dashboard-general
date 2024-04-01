@@ -6,17 +6,19 @@ import { NftVerificationRequests } from '../consts/nft-verification.requests';
 import { catchError, shareReplay, tap, throwError } from 'rxjs';
 import { RouterPaths } from '@csd-consts/router-paths.conts';
 import { SeoService } from '@csd-services/seo.service';
+import { CsdSnackbarService } from '@csd-modules/snackbar/services/snackbar.service';
+import { CsdSnackbarLevels } from '@csd-modules/snackbar/interfaces/snackbar-item.models';
 
 @Injectable()
 export class NftVerificationService {
   readonly ownerName = this.getOwnerName();
   readonly verificationStatus$ = this.getVerificationStatus();
 
-  constructor(private router: Router, private seo: SeoService, private http: HttpService) {}
-
-  getNonce( wallet: string ){
-    this.http.request(NftVerificationRequests.GET_NONCE, { wallet })
-  }
+  constructor(
+    private router: Router,
+    private seo: SeoService,
+    private snackbar: CsdSnackbarService
+  ) {}
 
   private getOwnerName() {
     return (
@@ -40,6 +42,19 @@ export class NftVerificationService {
         }),
         tap((data) => {
           this.seo.setOwnerData(data.owner, 'NFT Verification');
+        }),
+        tap((data) => {
+          if (data.hasLicense) {
+            this.snackbar.createItem(
+              `You are already have license.`,
+              CsdSnackbarLevels.ERROR
+            );
+          } else if (!data.enabled) {
+            this.snackbar.createItem(
+              `NFT Verification is disabled.`,
+              CsdSnackbarLevels.ERROR
+            );
+          }
         }),
         shareReplay()
       );
