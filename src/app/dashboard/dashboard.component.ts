@@ -23,6 +23,10 @@ export class DashboardComponent implements OnInit {
   @HostBinding('style.--primary-color')
   primaryColor: null | string = null;
 
+  readonly licenseNftData$ = this.dashService.license$.pipe(
+    map((d) => d.nft_data)
+  );
+
   constructor(
     private dashService: DashboardService,
     private store: Store<State>

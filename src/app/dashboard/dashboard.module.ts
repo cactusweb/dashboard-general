@@ -16,6 +16,7 @@ import { PaymentCardComponent } from './components/payment-card/payment-card.com
 import { PaymentCardBtnsComponent } from './components/payment-card/payment-card-btns/payment-card-btns.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { PaymentCryptoComponent } from './components/payment-crypto/payment-crypto.component';
+import { NftDataComponent } from './components/nft-data/nft-data.component';
 
 const route: Route = {
   path: '',
@@ -35,6 +36,7 @@ const route: Route = {
     PaymentCardComponent,
     PaymentCardBtnsComponent,
     PaymentCryptoComponent,
+    NftDataComponent,
   ],
   imports: [
     CommonModule,

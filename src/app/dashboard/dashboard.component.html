@@ -8,4 +8,9 @@
   <csd-dashboard-payment-info />
 </div>
 
+<csd-dashboard-nft-data
+  *ngIf="licenseNftData$ | async as data"
+  [nftData]="data"
+/>
+
 <csd-dashboard-actions />

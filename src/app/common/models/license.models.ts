@@ -16,6 +16,8 @@ export interface LicenseDTO {
   owner: OwnerDTO;
   payment: LicensePaymentDTO;
   referral: LicenseReferralDTO | null;
+
+  nft_data?: LicenseNftDataDTO | null;
 }
 
 export interface LicenseActivationsDTO {
@@ -44,4 +46,10 @@ export interface LicensePaymentDTO {
   stripe_customer_created: boolean;
 
   way: PaymentWays;
+}
+
+export interface LicenseNftDataDTO {
+  mintAddress: string;
+  name: string;
+  wallet: string;
 }

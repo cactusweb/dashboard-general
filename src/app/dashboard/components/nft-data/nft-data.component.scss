@@ -1,0 +1,8 @@
+.card {
+  grid-template-columns: 1fr 1fr;
+  @apply tw-gap-4;
+}
+
+.csd-tag span {
+  @apply tw-max-w-full tw-whitespace-nowrap tw-overflow-hidden tw-text-ellipsis;
+}
