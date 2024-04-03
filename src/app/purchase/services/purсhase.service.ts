@@ -90,7 +90,7 @@ export class PurchaseService implements OnDestroy {
   private getOwnerName() {
     return (
       inject(ActivatedRoute).snapshot.params['owner_name'] as string
-    ).replace('-', ' ');
+    ).replaceAll('-', ' ');
   }
 
   private getOwner() {

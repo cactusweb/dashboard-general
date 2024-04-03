@@ -65,7 +65,7 @@ export class BindFormComponent {
             '/' +
               RouterPaths.DASHBOARD.replace(
                 ':owner_name',
-                lic.owner.name.replace(' ', '-')
+                lic.owner.name.replaceAll(' ', '-')
               ),
           ]);
         },

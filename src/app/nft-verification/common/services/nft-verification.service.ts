@@ -23,7 +23,7 @@ export class NftVerificationService {
   private getOwnerName() {
     return (
       inject(ActivatedRoute).snapshot.params['owner_name'] as string
-    ).replace('-', ' ');
+    ).replaceAll('-', ' ');
   }
 
   private getVerificationStatus() {
