@@ -1,8 +1,11 @@
+import { isPlatformServer } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  Inject,
   OnDestroy,
   OnInit,
+  PLATFORM_ID,
   ViewEncapsulation,
 } from '@angular/core';
 import { Requests } from '@csd-consts/requests.consts';
@@ -33,10 +36,17 @@ export class PurchaseCheckResults implements OnInit, OnDestroy {
 
   constructor(
     private http: HttpService,
-    private prchService: PurchaseService
+    private prchService: PurchaseService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit(): void {
+    if (isPlatformServer(this.platformId)) {
+      this.fetchLicense(false, true).subscribe({
+        error: () => {},
+      });
+      return;
+    }
     interval(1000)
       .pipe(
         takeUntil(this._intervalDestoyer$),
@@ -62,7 +72,10 @@ export class PurchaseCheckResults implements OnInit, OnDestroy {
     this._intervalDestoyer$.complete();
   }
 
-  private fetchLicense(completeInterval: boolean = false) {
+  private fetchLicense(
+    completeInterval: boolean = false,
+    skipHanle: boolean = false
+  ) {
     return this.prchService.owner$.pipe(
       map((owner) => owner.name),
       switchMap((ownerName) => {
@@ -78,7 +91,9 @@ export class PurchaseCheckResults implements OnInit, OnDestroy {
         );
       }),
       tap((license) => {
-        this.prchService.onLicenseReceive(license);
+        if (!skipHanle) {
+          this.prchService.onLicenseReceive(license);
+        }
       }),
       catchError(() => {
         if (!this._intervalDestoyer$.observed) {
