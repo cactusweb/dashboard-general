@@ -8,5 +8,5 @@ import { RouterPaths } from '@csd-consts/router-paths.conts';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PurchaseFailedComponent {
-  readonly licensesLink = RouterPaths.LICENSES;
+  readonly licensesLink = `/${RouterPaths.LICENSES}`;
 }

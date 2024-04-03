@@ -144,7 +144,9 @@ export class DashboardService implements OnDestroy {
         distinctUntilChangedJSON(),
         filter((licenses) => !!licenses),
         map((licenses) =>
-          licenses!.find((lic) => lic.owner.name === this.ownerName)
+          licenses!.find(
+            (lic) => lic.owner.name.toLowerCase() === this.ownerName
+          )
         ),
         tap((lic) => {
           if (this.unbinded) {
