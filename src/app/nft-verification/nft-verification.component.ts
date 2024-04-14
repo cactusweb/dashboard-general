@@ -143,7 +143,11 @@ export class NftVerificationComponent implements OnInit {
           this.store.dispatch(new AddLicense(license));
           this.navigateToDashboard();
         },
-        error: () => {},
+        error: (err) => {
+          if (err.url) {
+            window.open(err.url, '_blank');
+          }
+        },
       });
   }
 
