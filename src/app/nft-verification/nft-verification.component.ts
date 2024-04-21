@@ -166,6 +166,7 @@ export class NftVerificationComponent implements OnInit {
           this.navigateToDashboard();
         },
         error: (err) => {
+          console.log(err);
           if (err.error?.url) {
             window.open(err.error?.url, '_blank');
           }
