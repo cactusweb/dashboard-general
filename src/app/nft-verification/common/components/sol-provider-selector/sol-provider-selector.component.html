@@ -1,0 +1,22 @@
+<div class="card">
+  <h2 class="card__title">Choose the wallet</h2>
+
+  <div class="tw-grid tw-gap-2.5">
+    <button
+      (click)="onSelectProvider(SolanaProvidersTypes.PHANTOM)"
+      class="csd-button_stroked"
+      color="primary"
+    >
+      <mat-icon fontIcon="icon-phantom" class="!tw-text-base" />
+      Phantom
+    </button>
+    <button
+      (click)="onSelectProvider(SolanaProvidersTypes.SOLFLARE)"
+      class="csd-button_stroked"
+      color="primary"
+    >
+      <mat-icon fontIcon="icon-solflare" class="!tw-text-xl" />
+      Solflare
+    </button>
+  </div>
+</div>

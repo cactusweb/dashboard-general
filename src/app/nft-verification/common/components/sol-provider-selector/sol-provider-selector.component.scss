@@ -1,0 +1,15 @@
+.card{
+    @apply tw-gap-6;
+
+    &__title{
+        @apply tw-text-base tw-leading-5 tw-font-semibold tw-text-center;
+    }
+}
+
+button{
+    @apply tw-gap-2.5;
+
+    mat-icon{
+        @apply tw-w-auto tw-h-auto;
+    }
+}

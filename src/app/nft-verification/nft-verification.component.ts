@@ -9,7 +9,16 @@ import {
 import { HttpService } from '@csd-services/http/http.service';
 import { NftVerificationRequests } from './common/consts/nft-verification.requests';
 import { NftVerificationBtnStates } from './common/models/nft-verification.models';
-import { BehaviorSubject, finalize, map, switchMap, take } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  filter,
+  finalize,
+  map,
+  switchMap,
+  take,
+  tap,
+} from 'rxjs';
 import { NftVerificationService } from './common/services/nft-verification.service';
 import { CsdSolanaService } from './common/services/solana.service';
 import { LicenseDTO } from '@csd-models/license.models';
@@ -30,6 +39,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { environment } from 'environment/environment';
 import { CsdSnackbarService } from '@csd-modules/snackbar/services/snackbar.service';
 import { CsdSnackbarLevels } from '@csd-modules/snackbar/interfaces/snackbar-item.models';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { SolProviderSelectorComponent } from './common/components/sol-provider-selector/sol-provider-selector.component';
+import { SolanaProvidersTypes } from './common/services/models/solana.models';
 
 @Component({
   selector: 'csd-nft-verification',
@@ -43,6 +55,8 @@ import { CsdSnackbarLevels } from '@csd-modules/snackbar/interfaces/snackbar-ite
     NgVarDirective,
     MatProgressSpinnerModule,
     MatIconModule,
+    MatDialogModule,
+    SolProviderSelectorComponent,
   ],
   providers: [NftVerificationService, CsdSolanaService],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -69,7 +83,8 @@ export class NftVerificationComponent implements OnInit {
     private store: Store<State>,
     private snackbarService: CsdSnackbarService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private matDialog: MatDialog
   ) {
     inject(MatIconRegistry).addSvgIcon(
       'icon_solana',
@@ -88,17 +103,24 @@ export class NftVerificationComponent implements OnInit {
 
     this.store
       .select(selectIsAuthed)
-      .pipe(take(1))
-      .subscribe((authed) => {
-        if (authed) {
-          this.process();
-        } else {
-          this.snackbarService.createItem(
-            'Redirecting to auth...',
-            CsdSnackbarLevels.INFO
-          );
+      .pipe(
+        take(1),
+        tap((authed) => {
+          if (authed) {
+            return;
+          }
+          const msg = 'Redirecting to auth...';
+          this.snackbarService.createItem(msg, CsdSnackbarLevels.INFO);
           this.authService.auth();
-        }
+          throw new Error(msg);
+        }),
+        switchMap(() => this.openSolProviderSelector()),
+        take(1)
+      )
+      .subscribe({
+        next: (selected) =>
+          selected ? this.process() : this.loading$.next(false),
+        error: () => {},
       });
   }
 
@@ -177,5 +199,19 @@ export class NftVerificationComponent implements OnInit {
       created_at: lic.created_at * 1000,
       bought_at: lic.bought_at * 1000,
     } as LicenseDTO;
+  }
+
+  private openSolProviderSelector() {
+    const onSelectProvider = (type: SolanaProvidersTypes) =>
+      this.solanaService.selectProvider(type);
+
+    return this.matDialog
+      .open(SolProviderSelectorComponent, {
+        maxWidth: '400px',
+        width: '100%',
+        autoFocus: false,
+        data: onSelectProvider,
+      })
+      .beforeClosed() as Observable<boolean | undefined>;
   }
 }

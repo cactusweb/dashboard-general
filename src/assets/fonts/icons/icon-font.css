@@ -52,3 +52,9 @@
 .icon-infinity:before {
   content: "\e80d";
 }
+.icon-phantom:before {
+  content: "\e80e";
+}
+.icon-solflare:before {
+  content: "\e80f";
+}

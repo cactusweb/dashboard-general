@@ -3,35 +3,33 @@ import { CsdSnackbarLevels } from '@csd-modules/snackbar/interfaces/snackbar-ite
 import { CsdSnackbarService } from '@csd-modules/snackbar/services/snackbar.service';
 import base58 from 'bs58';
 import { catchError, from, map, throwError } from 'rxjs';
-
-interface SolanaProvider {
-  signMessage: (msg: Uint8Array, encoding?: string) => Promise<SolanaSignedMsg>;
-  connect: () => Promise<{ publicKey: SolanaPublicKey }>;
-}
-
-interface SolanaSignedMsg {
-  signature: Uint8Array;
-  publicKey: SolanaPublicKey;
-}
-
-interface SolanaPublicKey {
-  toBase58: () => string;
-}
+import {
+  SolanaProvidersTypes,
+  SolanaProvider,
+  SolanaProvidersWindowNames,
+} from './models/solana.models';
 
 @Injectable()
 export class CsdSolanaService {
+  private provider!: SolanaProvider;
+
   constructor(private snackbar: CsdSnackbarService) {}
 
-  signMessage(nonce: string) {
-    let solana!: SolanaProvider;
+  selectProvider(providerType: SolanaProvidersTypes) {
+    const windowProviderName = SolanaProvidersWindowNames[providerType];
+    this.provider = (window as any)[windowProviderName];
 
-    try {
-      solana = this.getSolanaProvider();
-    } catch (err) {
-      return throwError(() => err);
+    if (!this.provider) {
+      const msg = 'Selected provider is not found.';
+      this.showSnackbarErr(msg);
+      throw new Error(msg);
     }
+  }
 
-    return from(solana.signMessage(new TextEncoder().encode(nonce))).pipe(
+  signMessage(nonce: string) {
+    return from(
+      this.provider.signMessage(new TextEncoder().encode(nonce))
+    ).pipe(
       map(({ publicKey, signature }) => ({
         publicKey: publicKey.toBase58(),
         signature: base58.encode(signature),
@@ -44,33 +42,13 @@ export class CsdSolanaService {
   }
 
   connect() {
-    let solana!: SolanaProvider;
-
-    try {
-      solana = this.getSolanaProvider();
-    } catch (err) {
-      return throwError(() => err);
-    }
-
-    return from(solana.connect()).pipe(
-      map((d) => d.publicKey.toBase58()),
+    return from(this.provider.connect()).pipe(
+      map((d) => this.provider.publicKey.toBase58()),
       catchError((err: Error) => {
         this.showSnackbarErr(err.message);
         return throwError(() => err);
       })
     );
-  }
-
-  private getSolanaProvider() {
-    const solana: SolanaProvider | undefined = (window as any).solana;
-
-    if (!solana) {
-      const msg = 'Solana provider is not found. Try download Phantom.';
-      this.showSnackbarErr(msg);
-      throw new Error(msg);
-    }
-
-    return solana;
   }
 
   private showSnackbarErr(msg: string) {
