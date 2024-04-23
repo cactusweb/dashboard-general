@@ -52,4 +52,5 @@ export interface LicenseNftDataDTO {
   mintAddress: string;
   name: string;
   wallet: string;
+  quantity: number;
 }
