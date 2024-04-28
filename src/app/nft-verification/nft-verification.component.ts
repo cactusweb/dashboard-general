@@ -211,6 +211,7 @@ export class NftVerificationComponent implements OnInit {
         maxWidth: '400px',
         width: '100%',
         autoFocus: false,
+        restoreFocus: false,
         data: onSelectProvider,
       })
       .beforeClosed() as Observable<boolean | undefined>;
