@@ -203,6 +203,9 @@ export class CsdMobileSolanaService {
       const state = JSON.parse(
         localStorage.getItem(MOBILE_SOLANA_STATE_KEY)!
       ) as MobileSolanaState;
+      if (!state) {
+        return;
+      }
       this.store.dispatch(new MobileSolanaOnConnect(state));
     } catch {}
   }
