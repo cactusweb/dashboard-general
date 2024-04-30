@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpService } from '@csd-services/http/http.service';
 import { NftVerificationStatusDTO } from '../models/nft-verification.models';
 import { NftVerificationRequests } from '../consts/nft-verification.requests';
-import { catchError, map, shareReplay, tap, throwError } from 'rxjs';
+import { catchError, map, shareReplay, take, tap, throwError } from 'rxjs';
 import { RouterPaths } from '@csd-consts/router-paths.conts';
 import { SeoService } from '@csd-services/seo.service';
 import { CsdSnackbarService } from '@csd-modules/snackbar/services/snackbar.service';
@@ -12,6 +12,8 @@ import { LicenseDTO } from '@csd-models/license.models';
 import { AddLicense } from '@csd-store/licenses/licenses.actions';
 import { Store } from '@ngrx/store';
 import { State } from '@csd-store/state';
+import { selectIsAuthed } from '@csd-store/auth/auth.selectors';
+import { AuthService } from '@csd-services/auth.service';
 
 @Injectable()
 export class NftVerificationService {
@@ -23,8 +25,24 @@ export class NftVerificationService {
     private seo: SeoService,
     private snackbar: CsdSnackbarService,
     private http: HttpService,
-    private store: Store<State>
+    private store: Store<State>,
+    private authService: AuthService
   ) {}
+
+  checkAuth() {
+    return this.store.select(selectIsAuthed).pipe(
+      take(1),
+      tap((authed) => {
+        if (authed) {
+          return;
+        }
+        const msg = 'Redirecting to auth...';
+        this.snackbar.createItem(msg, CsdSnackbarLevels.INFO);
+        this.authService.auth();
+        throw new Error(msg);
+      })
+    );
+  }
 
   getLicense(wallet: string, signature: string) {
     return this.http

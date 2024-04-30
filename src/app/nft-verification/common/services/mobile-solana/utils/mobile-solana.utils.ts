@@ -4,6 +4,16 @@ import {
   CommonMethodParams,
   MobileSolanaMethods,
 } from '../models/mobile-solana.models';
+import { Store } from '@ngrx/store';
+import { State } from '@csd-store/state';
+import { selectMobileSolanaProvider } from 'app/nft-verification/common/store/mobile-solana.selectors';
+import { map, take } from 'rxjs';
+import { SolanaProvidersTypes } from '../../solana/solana.models';
+
+const enum DeepLinkProviderLinks {
+  PHANTOM = 'https://phantom.app/ul/v1',
+  SOLFLARE = 'https://solflare.com/ul/v1',
+}
 
 const APP_URL = 'https://dashboard.cactusweb.io';
 
@@ -62,6 +72,7 @@ function decryptMobileSolanaResponse<Data>(
 
 function useMobileSolanaMethod(
   method: MobileSolanaMethods,
+  store: Store<State>,
   payload?: Record<string, any>,
   encriptionPublicKey?: string
 ) {
@@ -76,8 +87,23 @@ function useMobileSolanaMethod(
     ...commonPayload,
   });
 
-  const url = `https://phantom.app/ul/v1/${method}?${params.toString()}`;
-  window.open(url, '_self');
+  store
+    .select(selectMobileSolanaProvider)
+    .pipe(
+      take(1),
+      map((provider) => {
+        switch (provider) {
+          case SolanaProvidersTypes.PHANTOM:
+            return DeepLinkProviderLinks.PHANTOM;
+          case SolanaProvidersTypes.SOLFLARE:
+            return DeepLinkProviderLinks.SOLFLARE;
+        }
+      })
+    )
+    .subscribe((deepLinkPrefix) => {
+      const url = `${deepLinkPrefix}/${method}?${params.toString()}`;
+      window.location.href = url;
+    });
 }
 
 export { useMobileSolanaMethod, decryptMobileSolanaResponse };

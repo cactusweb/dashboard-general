@@ -4,9 +4,13 @@ import {
   MobileSolanaActions,
   MobileSolanaOnConnect,
   MobileSolanaOnDisconnect,
+  MobileSolanaOnSelectProvider,
 } from './mobile-solana.actions';
 import { tap } from 'rxjs';
-import { MOBILE_SOLANA_STATE_KEY } from './mobile-solana.selectors';
+import {
+  MOBILE_SOLANA_STATE_KEY,
+  initialMobileSolanaState,
+} from './mobile-solana.selectors';
 
 @Injectable()
 export class MobileSolanaEffects {
@@ -32,6 +36,25 @@ export class MobileSolanaEffects {
         ofType<MobileSolanaOnDisconnect>(MobileSolanaActions.OnDisconnect),
         tap(() => {
           localStorage.removeItem(MOBILE_SOLANA_STATE_KEY);
+        })
+      ),
+    { dispatch: false }
+  );
+
+  onSelectProvider$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType<MobileSolanaOnSelectProvider>(
+          MobileSolanaActions.OnSelectProvider
+        ),
+        tap((d) => {
+          localStorage.setItem(
+            MOBILE_SOLANA_STATE_KEY,
+            JSON.stringify({
+              ...initialMobileSolanaState,
+              provider: d.provider,
+            })
+          );
         })
       ),
     { dispatch: false }

@@ -16,6 +16,11 @@ export const mobileSolanaRedusers = (
       return action.state;
     case MobileSolanaActions.OnDisconnect:
       return initialMobileSolanaState;
+    case MobileSolanaActions.OnSelectProvider:
+      return {
+        ...initialMobileSolanaState,
+        walletProvider: action.provider
+      }
     default:
       return state;
   }

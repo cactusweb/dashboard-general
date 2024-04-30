@@ -1,6 +1,5 @@
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   DestroyRef,
   HostBinding,
@@ -25,21 +24,15 @@ import { NftVerificationService } from './common/services/nft-verification.servi
 import { CsdSolanaService } from './common/services/solana/solana.service';
 import { Store } from '@ngrx/store';
 import { State } from '@csd-store/state';
-import { selectIsAuthed } from '@csd-store/auth/auth.selectors';
-import { AuthService } from '@csd-services/auth.service';
 import { CommonModule } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { CsdOwnerDataComponent } from '@csd-components/owner-data/owner-data.component';
 import { MatButtonModule } from '@angular/material/button';
 import { NgVarDirective } from '@csd-directives/ngvar.directive';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { AddLicense } from '@csd-store/licenses/licenses.actions';
-import { RouterPaths } from '@csd-consts/router-paths.conts';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { environment } from 'environment/environment';
-import { CsdSnackbarService } from '@csd-modules/snackbar/services/snackbar.service';
-import { CsdSnackbarLevels } from '@csd-modules/snackbar/interfaces/snackbar-item.models';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { SolProviderSelectorComponent } from './common/components/sol-provider-selector/sol-provider-selector.component';
 import { SolanaProvidersTypes } from './common/services/solana/solana.models';
@@ -74,14 +67,16 @@ export class NftVerificationComponent implements OnInit {
   @HostBinding('style.--primary-color')
   primaryColor: null | string = null;
 
-  private readonly verificationStatus$ = this.verifService.verificationStatus$;
-  readonly owner$ = this.verificationStatus$.pipe(map((d) => d.owner));
-  readonly btnDisabled$ = this.verificationStatus$.pipe(
+  readonly owner$ = this.verifService.verificationStatus$.pipe(
+    map((d) => d.owner)
+  );
+
+  readonly btnDisabled$ = this.verifService.verificationStatus$.pipe(
     map((d) => !d.enabled || d.hasLicense)
   );
 
   readonly loading$ = new BehaviorSubject(false);
-  btnText = NftVerificationBtnStates.INITIAL;
+  readonly btnText$ = new BehaviorSubject(NftVerificationBtnStates.INITIAL);
 
   readonly #destroyed = inject(DestroyRef);
 
@@ -89,11 +84,7 @@ export class NftVerificationComponent implements OnInit {
     private http: HttpService,
     private verifService: NftVerificationService,
     private solanaService: CsdSolanaService,
-    private cdr: ChangeDetectorRef,
     private store: Store<State>,
-    private snackbarService: CsdSnackbarService,
-    private authService: AuthService,
-    private router: Router,
     private matDialog: MatDialog,
     private mobileSolanaService: CsdMobileSolanaService
   ) {
@@ -103,11 +94,12 @@ export class NftVerificationComponent implements OnInit {
         environment.siteUrl + '/assets/svg-icons/solana.svg'
       )
     );
+
     this.listenMobileSolanaState();
   }
 
   private get isMobile() {
-    return window.innerWidth <= 800;
+    return window.innerWidth <= 900;
   }
 
   ngOnInit(): void {
@@ -117,19 +109,9 @@ export class NftVerificationComponent implements OnInit {
   onRecieve() {
     this.loading$.next(true);
 
-    this.store
-      .select(selectIsAuthed)
+    this.verifService
+      .checkAuth()
       .pipe(
-        take(1),
-        tap((authed) => {
-          if (authed) {
-            return;
-          }
-          const msg = 'Redirecting to auth...';
-          this.snackbarService.createItem(msg, CsdSnackbarLevels.INFO);
-          this.authService.auth();
-          throw new Error(msg);
-        }),
         switchMap(() => this.openSolProviderSelector()),
         take(1)
       )
@@ -206,8 +188,7 @@ export class NftVerificationComponent implements OnInit {
   }
 
   private setBtnText(text: NftVerificationBtnStates) {
-    this.btnText = text;
-    this.cdr.markForCheck();
+    this.btnText$.next(text);
   }
 
   private getPrimaryColor() {
@@ -221,7 +202,9 @@ export class NftVerificationComponent implements OnInit {
 
   private openSolProviderSelector() {
     const onSelectProvider = (type: SolanaProvidersTypes) =>
-      this.solanaService.selectProvider(type);
+      this.isMobile
+        ? this.mobileSolanaService.selectProvider(type)
+        : this.solanaService.selectProvider(type);
 
     return this.matDialog
       .open(SolProviderSelectorComponent, {

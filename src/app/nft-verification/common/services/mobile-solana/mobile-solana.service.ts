@@ -40,9 +40,9 @@ import { SolanaProvidersTypes } from '../solana/solana.models';
 import {
   MobileSolanaOnConnect,
   MobileSolanaOnDisconnect,
+  MobileSolanaOnSelectProvider,
 } from '../../store/mobile-solana.actions';
 import { isPlatformBrowser } from '@angular/common';
-import nacl from 'tweetnacl';
 import bs58 from 'bs58';
 
 @Injectable()
@@ -69,9 +69,13 @@ export class CsdMobileSolanaService {
     return this.#state$.asObservable().pipe(shareReplay());
   }
 
+  selectProvider(provider: SolanaProvidersTypes) {
+    this.store.dispatch(new MobileSolanaOnSelectProvider(provider));
+  }
+
   connect() {
     try {
-      useMobileSolanaMethod(MobileSolanaMethods.CONNECT);
+      useMobileSolanaMethod(MobileSolanaMethods.CONNECT, this.store);
     } catch (e) {
       this.snbar.createItem(String(e), CsdSnackbarLevels.INFO);
     }
@@ -80,7 +84,12 @@ export class CsdMobileSolanaService {
   disconnect() {
     this.getCommonData().subscribe(([session, pubKey]) => {
       const payload: DisconnectPayload = { session };
-      useMobileSolanaMethod(MobileSolanaMethods.DISCONNECT, payload, pubKey);
+      useMobileSolanaMethod(
+        MobileSolanaMethods.DISCONNECT,
+        this.store,
+        payload,
+        pubKey
+      );
     });
   }
 
@@ -90,7 +99,12 @@ export class CsdMobileSolanaService {
         session,
         message: bs58.encode(Buffer.from(nonce)),
       };
-      useMobileSolanaMethod(MobileSolanaMethods.SIGN_MESSAGE, payload, pubKey);
+      useMobileSolanaMethod(
+        MobileSolanaMethods.SIGN_MESSAGE,
+        this.store,
+        payload,
+        pubKey
+      );
     });
   }
 
