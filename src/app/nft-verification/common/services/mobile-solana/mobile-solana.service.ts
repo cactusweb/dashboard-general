@@ -42,6 +42,8 @@ import {
   MobileSolanaOnDisconnect,
 } from '../../store/mobile-solana.actions';
 import { isPlatformBrowser } from '@angular/common';
+import nacl from 'tweetnacl';
+import bs58 from 'bs58';
 
 @Injectable()
 export class CsdMobileSolanaService {
@@ -84,7 +86,10 @@ export class CsdMobileSolanaService {
 
   signMessage(nonce: string) {
     this.getCommonData().subscribe(([session, pubKey]) => {
-      const payload: SignMessagePayload = { session, message: nonce };
+      const payload: SignMessagePayload = {
+        session,
+        message: bs58.encode(Buffer.from(nonce)),
+      };
       useMobileSolanaMethod(MobileSolanaMethods.SIGN_MESSAGE, payload, pubKey);
     });
   }
