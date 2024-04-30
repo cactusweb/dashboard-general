@@ -190,7 +190,7 @@ export class CsdMobileSolanaService {
         this.redirectToVerifRoot();
 
         this.#state$.next({
-          state: MobileSolanaStates.SIGN_MESSAGE,
+          state: MobileSolanaStates.GET_LICENSE,
           data: data.signature,
         });
       });
