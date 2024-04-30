@@ -39,6 +39,7 @@ import { SolanaProvidersTypes } from './common/services/solana/solana.models';
 import { CsdMobileSolanaService } from './common/services/mobile-solana/mobile-solana.service';
 import {
   selectMobileSolanaConnected,
+  selectMobileSolanaProvider,
   selectMobileSolanaWalletAddress,
 } from './common/store/mobile-solana.selectors';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -206,14 +207,25 @@ export class NftVerificationComponent implements OnInit {
         ? this.mobileSolanaService.selectProvider(type)
         : this.solanaService.selectProvider(type);
 
-    return this.matDialog
-      .open(SolProviderSelectorComponent, {
-        maxWidth: '400px',
-        width: '100%',
-        autoFocus: false,
-        data: onSelectProvider,
+    const openDialog = () =>
+      this.matDialog
+        .open(SolProviderSelectorComponent, {
+          maxWidth: '400px',
+          width: '100%',
+          autoFocus: false,
+          data: onSelectProvider,
+        })
+        .beforeClosed() as Observable<boolean | undefined>;
+
+    return this.store.select(selectMobileSolanaConnected).pipe(
+      switchMap((connected) => {
+        if (connected) {
+          return of(true);
+        }
+
+        return openDialog();
       })
-      .beforeClosed() as Observable<boolean | undefined>;
+    );
   }
 
   private getNonce(wallet: string) {
