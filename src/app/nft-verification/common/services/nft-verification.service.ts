@@ -3,11 +3,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpService } from '@csd-services/http/http.service';
 import { NftVerificationStatusDTO } from '../models/nft-verification.models';
 import { NftVerificationRequests } from '../consts/nft-verification.requests';
-import { catchError, shareReplay, tap, throwError } from 'rxjs';
+import { catchError, map, shareReplay, tap, throwError } from 'rxjs';
 import { RouterPaths } from '@csd-consts/router-paths.conts';
 import { SeoService } from '@csd-services/seo.service';
 import { CsdSnackbarService } from '@csd-modules/snackbar/services/snackbar.service';
 import { CsdSnackbarLevels } from '@csd-modules/snackbar/interfaces/snackbar-item.models';
+import { LicenseDTO } from '@csd-models/license.models';
 
 @Injectable()
 export class NftVerificationService {
@@ -17,8 +18,31 @@ export class NftVerificationService {
   constructor(
     private router: Router,
     private seo: SeoService,
-    private snackbar: CsdSnackbarService
+    private snackbar: CsdSnackbarService,
+    private http: HttpService
   ) {}
+
+  getLicense(wallet: string, signature: string) {
+    return this.http
+      .request<LicenseDTO>(
+        NftVerificationRequests.GET_LICENSE,
+        {
+          wallet,
+          signature,
+        },
+        this.ownerName
+      )
+      .pipe(map((lic) => this.mapLicense(lic)));
+  }
+
+  private mapLicense(lic: LicenseDTO) {
+    return {
+      ...lic,
+      expires_in: lic.expires_in ? lic.expires_in * 1000 : lic.expires_in,
+      created_at: lic.created_at * 1000,
+      bought_at: lic.bought_at * 1000,
+    } as LicenseDTO;
+  }
 
   private getOwnerName() {
     return (

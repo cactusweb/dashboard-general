@@ -35,18 +35,17 @@ export class AuthEffects {
     )
   );
 
-  auth$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType<Auth>(AuthActions.Auth),
-        take(1),
-        tap((data) => {
-          if (isPlatformBrowser(this.platformId)) {
-            this.authService.auth(data.redirectToParam);
-          }
-        })
-      ),
-    { dispatch: false }
+  auth$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType<Auth>(AuthActions.Auth),
+      take(1),
+      tap((data) => {
+        if (isPlatformBrowser(this.platformId)) {
+          this.authService.auth(data.redirectToParam);
+        }
+      }),
+      switchMap(() => [new MobileSolanaOnDisconnect()])
+    )
   );
 
   authSuccess = createEffect(

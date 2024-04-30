@@ -1,4 +1,4 @@
-import { NgModule, inject, isDevMode } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   BrowserModule,
@@ -21,10 +21,10 @@ import { CsdSnackbarModule } from '@csd-modules/snackbar/snackbar.module';
 import { LicensesEffects } from '@csd-store/licenses/licenses.effects';
 import { LazyLoadingSpinnerComponent } from '@csd-components/lazy-loading-spinner.component';
 import { FooterComponent } from '@csd-components/footer/footer.component';
-import { DOCUMENT } from '@angular/common';
 import { COOKIE } from '@csd-services/cookie/cookie.consts';
 import { CookieClientService } from '@csd-services/cookie/cookie-client.service';
 import { CookieService } from '@csd-services/cookie/cookie.service';
+import { MobileSolanaEffects } from './nft-verification/common/store/mobile-solana.effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -36,7 +36,12 @@ import { CookieService } from '@csd-services/cookie/cookie.service';
     AppRoutingModule,
 
     StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([AuthEffects, UserEffects, LicensesEffects]),
+    EffectsModule.forRoot([
+      AuthEffects,
+      UserEffects,
+      LicensesEffects,
+      MobileSolanaEffects,
+    ]),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable

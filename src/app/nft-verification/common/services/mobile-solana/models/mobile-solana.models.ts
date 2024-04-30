@@ -21,3 +21,9 @@ export const enum MobileSolanaMethods {
   DISCONNECT = 'disconnect',
   SIGN_MESSAGE = 'signMessage',
 }
+
+export const enum MobileSolanaStates {
+  DEFAULT = 'DEFAULT',
+  SIGN_MESSAGE = 'SIGN_MESSAGE',
+  GET_LICENSE = 'GET_LICENCE',
+}

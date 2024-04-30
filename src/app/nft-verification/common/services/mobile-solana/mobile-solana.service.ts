@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import {
   CommonErrorResonse,
   CommonSuccessResponse,
   MobileSolanaMethods,
+  MobileSolanaStates,
 } from './models/mobile-solana.models';
 import {
   decryptMobileSolanaResponse,
@@ -11,10 +12,18 @@ import {
 import { Store } from '@ngrx/store';
 import { State } from '@csd-store/state';
 import {
+  MOBILE_SOLANA_STATE_KEY,
+  MobileSolanaState,
   selectMobileSolanaEncryptionPublicKey,
   selectMobileSolanaSession,
 } from '../../store/mobile-solana.selectors';
-import { combineLatest, filter, map, take } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  filter,
+  shareReplay,
+  take,
+} from 'rxjs';
 import { DisconnectPayload } from './models/mobile-solana-disconnect.models';
 import {
   SignMessageDecryptedData,
@@ -28,19 +37,62 @@ import {
   ConnectionSuccessResponse,
 } from './models/mobile-solana-connect.models';
 import { SolanaProvidersTypes } from '../solana/solana.models';
-import { MobileSolanaOnConnect } from '../../store/mobile-solana.actions';
-
-const APP_URL = 'https://dashboard.cactusweb.io';
+import {
+  MobileSolanaOnConnect,
+  MobileSolanaOnDisconnect,
+} from '../../store/mobile-solana.actions';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable()
 export class CsdMobileSolanaService {
+  readonly #state$ = new BehaviorSubject({
+    state: MobileSolanaStates.DEFAULT,
+    data: '',
+  });
+
   constructor(
     private store: Store<State>,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private snbar: CsdSnackbarService
+    private snbar: CsdSnackbarService,
+    @Inject(PLATFORM_ID) platformId: Object
   ) {
-    this.checkMethodResponse();
+    if (isPlatformBrowser(platformId)) {
+      this.checkAndSetState();
+      this.checkMethodResponse();
+    }
+  }
+
+  get state$() {
+    return this.#state$.asObservable().pipe(shareReplay());
+  }
+
+  connect() {
+    useMobileSolanaMethod(MobileSolanaMethods.CONNECT);
+  }
+
+  disconnect() {
+    this.getCommonData().subscribe(([session, pubKey]) => {
+      const payload: DisconnectPayload = { session };
+      useMobileSolanaMethod(MobileSolanaMethods.DISCONNECT, payload, pubKey);
+    });
+  }
+
+  signMessage(nonce: string) {
+    this.getCommonData().subscribe(([session, pubKey]) => {
+      const payload: SignMessagePayload = { session, message: nonce };
+      useMobileSolanaMethod(MobileSolanaMethods.SIGN_MESSAGE, payload, pubKey);
+    });
+  }
+
+  private getCommonData() {
+    return combineLatest([
+      this.store.select(selectMobileSolanaSession),
+      this.store.select(selectMobileSolanaEncryptionPublicKey),
+    ]).pipe(
+      take(1),
+      filter(([session, pubKey]) => Boolean(session && pubKey))
+    );
   }
 
   private checkMethodResponse() {
@@ -55,7 +107,7 @@ export class CsdMobileSolanaService {
 
     if (response.errorMessage) {
       this.snbar.createItem(response.errorMessage, CsdSnackbarLevels.ERROR);
-      // TODO redirect to root verification here
+      this.redirectToVerifRoot();
       return;
     }
 
@@ -72,7 +124,6 @@ export class CsdMobileSolanaService {
         break;
       default:
         this.redirectToVerifRoot();
-      // TODO redirect on root verification
     }
   }
 
@@ -104,15 +155,19 @@ export class CsdMobileSolanaService {
         encryptionPublicKey,
       })
     );
-
     this.redirectToVerifRoot();
+    this.#state$.next({ state: MobileSolanaStates.SIGN_MESSAGE, data: '' });
   }
 
-  private handleDisconnect() {}
+  private handleDisconnect() {
+    this.store.dispatch(new MobileSolanaOnDisconnect());
+    this.redirectToVerifRoot();
+  }
 
   private handleSignMessage() {
     const response = this.activatedRoute.snapshot
       .queryParams as CommonSuccessResponse;
+
     this.store
       .select(selectMobileSolanaEncryptionPublicKey)
       .pipe(take(1))
@@ -124,41 +179,27 @@ export class CsdMobileSolanaService {
         );
 
         this.redirectToVerifRoot();
+
+        this.#state$.next({
+          state: MobileSolanaStates.SIGN_MESSAGE,
+          data: data.signature,
+        });
       });
-  }
-
-  connect() {
-    useMobileSolanaMethod(MobileSolanaMethods.CONNECT);
-  }
-
-  disconnect() {
-    this.getCommonData().subscribe(([session, pubKey]) => {
-      const payload: DisconnectPayload = { session };
-      useMobileSolanaMethod(MobileSolanaMethods.DISCONNECT, payload, pubKey);
-    });
-  }
-
-  signMessage(nonce: string) {
-    this.getCommonData().subscribe(([session, pubKey]) => {
-      const payload: SignMessagePayload = { session, message: nonce };
-      useMobileSolanaMethod(MobileSolanaMethods.SIGN_MESSAGE, payload, pubKey);
-    });
-  }
-
-  private getCommonData() {
-    return combineLatest([
-      this.store.select(selectMobileSolanaSession),
-      this.store.select(selectMobileSolanaEncryptionPublicKey),
-    ]).pipe(
-      take(1),
-      filter(([session, pubKey]) => Boolean(session && pubKey))
-    );
   }
 
   private redirectToVerifRoot() {
     this.router.navigate(['../'], {
       relativeTo: this.activatedRoute,
-      queryParamsHandling: 'merge',
+      queryParams: {},
     });
+  }
+
+  private checkAndSetState() {
+    try {
+      const state = JSON.parse(
+        localStorage.getItem(MOBILE_SOLANA_STATE_KEY)!
+      ) as MobileSolanaState;
+      this.store.dispatch(new MobileSolanaOnConnect(state));
+    } catch {}
   }
 }

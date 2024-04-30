@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DestroyRef,
   HostBinding,
   OnInit,
   inject,
@@ -22,7 +23,6 @@ import {
 } from 'rxjs';
 import { NftVerificationService } from './common/services/nft-verification.service';
 import { CsdSolanaService } from './common/services/solana/solana.service';
-import { LicenseDTO } from '@csd-models/license.models';
 import { Store } from '@ngrx/store';
 import { State } from '@csd-store/state';
 import { selectIsAuthed } from '@csd-store/auth/auth.selectors';
@@ -48,6 +48,8 @@ import {
   selectMobileSolanaConnected,
   selectMobileSolanaWalletAddress,
 } from './common/store/mobile-solana.selectors';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MobileSolanaStates } from './common/services/mobile-solana/models/mobile-solana.models';
 
 @Component({
   selector: 'csd-nft-verification',
@@ -81,6 +83,8 @@ export class NftVerificationComponent implements OnInit {
   readonly loading$ = new BehaviorSubject(false);
   btnText = NftVerificationBtnStates.INITIAL;
 
+  readonly #destroyed = inject(DestroyRef);
+
   constructor(
     private http: HttpService,
     private verifService: NftVerificationService,
@@ -99,6 +103,7 @@ export class NftVerificationComponent implements OnInit {
         environment.siteUrl + '/assets/svg-icons/solana.svg'
       )
     );
+    this.listenMobileSolanaState();
   }
 
   private get isMobile() {
@@ -144,36 +149,34 @@ export class NftVerificationComponent implements OnInit {
 
     this.store
       .select(selectMobileSolanaConnected)
+      .pipe(take(1))
+      .subscribe((connected) => {
+        if (connected) {
+          this.mobileSolanaService.connect();
+        } else {
+          this.signMessageMobile();
+        }
+      });
+  }
+
+  private signMessageMobile() {
+    this.setBtnText(NftVerificationBtnStates.NONCE_GETTING);
+    return this.store
+      .select(selectMobileSolanaWalletAddress)
       .pipe(
         take(1),
-        switchMap((connected) => {
-          if (!connected) {
-            this.mobileSolanaService.connect();
-            return of(null);
-          }
-          return this.getNonceMobile();
-        }),
-        filter(Boolean),
-        map((d) => d.nonce)
+        switchMap((wallet) => this.getNonce(wallet))
       )
       .subscribe({
         next: (nonce) => {
-          this.mobileSolanaService.signMessage(nonce);
           this.setBtnText(NftVerificationBtnStates.SIGNING);
+          this.mobileSolanaService.signMessage(nonce);
         },
         error: () => {
           this.setBtnText(NftVerificationBtnStates.INITIAL);
           this.loading$.next(false);
         },
       });
-  }
-
-  private getNonceMobile() {
-    this.setBtnText(NftVerificationBtnStates.NONCE_GETTING);
-    return this.store.select(selectMobileSolanaWalletAddress).pipe(
-      take(1),
-      switchMap((wallet) => this.getNonce(wallet))
-    );
   }
 
   private processPC() {
@@ -183,22 +186,14 @@ export class NftVerificationComponent implements OnInit {
       .connect()
       .pipe(
         switchMap((wallet) => this.getNonce(wallet)),
-        switchMap((d) => {
+        switchMap((nonce) => {
           this.setBtnText(NftVerificationBtnStates.SIGNING);
-          return this.solanaService.signMessage(d.nonce);
+          return this.solanaService.signMessage(nonce);
         }),
         switchMap((d) => {
           this.setBtnText(NftVerificationBtnStates.LICENSE_GETTING);
-          return this.http.request<LicenseDTO>(
-            NftVerificationRequests.GET_LICENSE,
-            {
-              wallet: d.publicKey,
-              signature: d.signature,
-            },
-            this.verifService.ownerName
-          );
+          return this.verifService.getLicense(d.publicKey, d.signature);
         }),
-        map((lic) => this.mapLicense(lic)),
         finalize(() => {
           this.setBtnText(NftVerificationBtnStates.INITIAL);
           this.loading$.next(false);
@@ -236,15 +231,6 @@ export class NftVerificationComponent implements OnInit {
     this.router.navigate([`/${dashLink}`]);
   }
 
-  private mapLicense(lic: LicenseDTO) {
-    return {
-      ...lic,
-      expires_in: lic.expires_in ? lic.expires_in * 1000 : lic.expires_in,
-      created_at: lic.created_at * 1000,
-      bought_at: lic.bought_at * 1000,
-    } as LicenseDTO;
-  }
-
   private openSolProviderSelector() {
     const onSelectProvider = (type: SolanaProvidersTypes) =>
       this.solanaService.selectProvider(type);
@@ -260,11 +246,36 @@ export class NftVerificationComponent implements OnInit {
   }
 
   private getNonce(wallet: string) {
-    return this.http.request<{ nonce: string }>(
-      NftVerificationRequests.GET_NONCE,
-      {
+    this.setBtnText(NftVerificationBtnStates.NONCE_GETTING);
+    return this.http
+      .request<{ nonce: string }>(NftVerificationRequests.GET_NONCE, {
         wallet,
-      }
-    );
+      })
+      .pipe(map((d) => d.nonce));
+  }
+
+  private listenMobileSolanaState() {
+    this.mobileSolanaService.state$
+      .pipe(
+        takeUntilDestroyed(this.#destroyed),
+        switchMap((data) => {
+          switch (data.state) {
+            case MobileSolanaStates.SIGN_MESSAGE:
+              this.signMessageMobile();
+              return of(null);
+            case MobileSolanaStates.GET_LICENSE:
+              return this.store
+                .select(selectMobileSolanaWalletAddress)
+                .pipe(map((wallet) => ({ wallet, signature: data.data })));
+            default:
+              return of(null);
+          }
+        }),
+        filter(Boolean)
+      )
+      .subscribe((data) => {
+        this.setBtnText(NftVerificationBtnStates.LICENSE_GETTING);
+        this.verifService.getLicense(data.wallet, data.signature);
+      });
   }
 }

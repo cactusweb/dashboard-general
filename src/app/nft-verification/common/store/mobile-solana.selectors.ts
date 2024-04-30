@@ -2,6 +2,8 @@ import { State } from '@csd-store/state';
 import { SolanaProvidersTypes } from '../services/solana/solana.models';
 import { createSelector } from '@ngrx/store';
 
+export const MOBILE_SOLANA_STATE_KEY = 'MOBILE_SOLANA_STATE';
+
 export type MobileSolanaState = {
   walletProvider: SolanaProvidersTypes | null;
   session: string | null;
