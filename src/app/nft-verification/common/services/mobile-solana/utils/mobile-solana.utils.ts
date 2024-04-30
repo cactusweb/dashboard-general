@@ -18,7 +18,7 @@ const DAPP_KEY_PAIR = nacl.box.keyPair.fromSecretKey(
  * @returns Возвращает Nonce и Payload для выполнения метода
  */
 function encryptPayload(
-  payload: Record<string, string>,
+  payloadData: Record<string, string>,
   encriptionPublicKey: string
 ) {
   const sharedSecretDapp = nacl.box.before(
@@ -28,11 +28,15 @@ function encryptPayload(
 
   const nonce = nacl.randomBytes(24);
 
-  const data = nacl.box
-    .after(Buffer.from(JSON.stringify(payload)), nonce, sharedSecretDapp)
-    .toString();
+  const payload = bs58.encode(
+    nacl.box.after(
+      Buffer.from(JSON.stringify(payloadData)),
+      nonce,
+      sharedSecretDapp
+    )
+  );
 
-  return { nonce: nonce.toString(), data };
+  return { nonce: bs58.encode(nonce), payload };
 }
 
 function decryptMobileSolanaResponse<Data>(
