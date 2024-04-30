@@ -15,12 +15,13 @@ import {
   filter,
   finalize,
   map,
+  of,
   switchMap,
   take,
   tap,
 } from 'rxjs';
 import { NftVerificationService } from './common/services/nft-verification.service';
-import { CsdSolanaService } from './common/services/solana.service';
+import { CsdSolanaService } from './common/services/solana/solana.service';
 import { LicenseDTO } from '@csd-models/license.models';
 import { Store } from '@ngrx/store';
 import { State } from '@csd-store/state';
@@ -41,7 +42,12 @@ import { CsdSnackbarService } from '@csd-modules/snackbar/services/snackbar.serv
 import { CsdSnackbarLevels } from '@csd-modules/snackbar/interfaces/snackbar-item.models';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { SolProviderSelectorComponent } from './common/components/sol-provider-selector/sol-provider-selector.component';
-import { SolanaProvidersTypes } from './common/services/models/solana.models';
+import { SolanaProvidersTypes } from './common/services/solana/solana.models';
+import { CsdMobileSolanaService } from './common/services/mobile-solana/mobile-solana.service';
+import {
+  selectMobileSolanaConnected,
+  selectMobileSolanaWalletAddress,
+} from './common/store/mobile-solana.selectors';
 
 @Component({
   selector: 'csd-nft-verification',
@@ -58,7 +64,7 @@ import { SolanaProvidersTypes } from './common/services/models/solana.models';
     MatDialogModule,
     SolProviderSelectorComponent,
   ],
-  providers: [NftVerificationService, CsdSolanaService],
+  providers: [NftVerificationService, CsdSolanaService, CsdMobileSolanaService],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
@@ -84,7 +90,8 @@ export class NftVerificationComponent implements OnInit {
     private snackbarService: CsdSnackbarService,
     private authService: AuthService,
     private router: Router,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private mobileSolanaService: CsdMobileSolanaService
   ) {
     inject(MatIconRegistry).addSvgIcon(
       'icon_solana',
@@ -92,6 +99,10 @@ export class NftVerificationComponent implements OnInit {
         environment.siteUrl + '/assets/svg-icons/solana.svg'
       )
     );
+  }
+
+  private get isMobile() {
+    return window.innerWidth <= 800;
   }
 
   ngOnInit(): void {
@@ -118,27 +129,60 @@ export class NftVerificationComponent implements OnInit {
         take(1)
       )
       .subscribe({
-        next: (selected) =>
-          selected ? this.process() : this.loading$.next(false),
+        next: (selected) => {
+          if (!selected) {
+            this.loading$.next(false);
+          }
+          this.isMobile ? this.processMobile() : this.processPC();
+        },
         error: () => {},
       });
   }
 
-  private process() {
+  private processMobile() {
+    this.setBtnText(NftVerificationBtnStates.WALLET_CONNECTING);
+
+    this.store
+      .select(selectMobileSolanaConnected)
+      .pipe(
+        take(1),
+        switchMap((connected) => {
+          if (!connected) {
+            this.mobileSolanaService.connect();
+            return of(null);
+          }
+          return this.getNonceMobile();
+        }),
+        filter(Boolean),
+        map((d) => d.nonce)
+      )
+      .subscribe({
+        next: (nonce) => {
+          this.mobileSolanaService.signMessage(nonce);
+          this.setBtnText(NftVerificationBtnStates.SIGNING);
+        },
+        error: () => {
+          this.setBtnText(NftVerificationBtnStates.INITIAL);
+          this.loading$.next(false);
+        },
+      });
+  }
+
+  private getNonceMobile() {
+    this.setBtnText(NftVerificationBtnStates.NONCE_GETTING);
+    return this.store.select(selectMobileSolanaWalletAddress).pipe(
+      take(1),
+      switchMap((wallet) => this.getNonce(wallet))
+    );
+  }
+
+  private processPC() {
     this.setBtnText(NftVerificationBtnStates.WALLET_CONNECTING);
 
     this.solanaService
       .connect()
       .pipe(
-        switchMap((wallet) => {
-          this.setBtnText(NftVerificationBtnStates.NONCE_GETTING);
-          return this.http.request<{ nonce: string }>(
-            NftVerificationRequests.GET_NONCE,
-            {
-              wallet,
-            }
-          );
-        }),
+        switchMap((wallet) => this.getNonce(wallet)),
         switchMap((d) => {
           this.setBtnText(NftVerificationBtnStates.SIGNING);
           return this.solanaService.signMessage(d.nonce);
@@ -213,5 +257,14 @@ export class NftVerificationComponent implements OnInit {
         data: onSelectProvider,
       })
       .beforeClosed() as Observable<boolean | undefined>;
+  }
+
+  private getNonce(wallet: string) {
+    return this.http.request<{ nonce: string }>(
+      NftVerificationRequests.GET_NONCE,
+      {
+        wallet,
+      }
+    );
   }
 }

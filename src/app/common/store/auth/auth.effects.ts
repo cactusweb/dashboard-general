@@ -15,6 +15,7 @@ import { SetLicensesInitialState } from '@csd-store/licenses/licenses.actions';
 import { isPlatformBrowser } from '@angular/common';
 import { CookieService } from '@csd-services/cookie/cookie.service';
 import { ACCESS_TOKEN_KEY } from '@csd-consts/auth.consts';
+import { MobileSolanaOnDisconnect } from 'app/nft-verification/common/store/mobile-solana.actions';
 
 @Injectable()
 export class AuthEffects {
@@ -29,6 +30,7 @@ export class AuthEffects {
         new SetAuthInitialState(),
         new SetUserInitialState(),
         new SetLicensesInitialState(),
+        new MobileSolanaOnDisconnect(),
       ])
     )
   );
