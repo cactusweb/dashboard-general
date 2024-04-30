@@ -200,15 +200,7 @@ export class NftVerificationComponent implements OnInit {
         })
       )
       .subscribe({
-        next: (license) => {
-          this.store.dispatch(new AddLicense(license));
-          this.navigateToDashboard();
-        },
-        error: (err) => {
-          if (err.error?.url) {
-            window.open(err.error?.url, '_blank');
-          }
-        },
+        error: () => {},
       });
   }
 
@@ -219,16 +211,11 @@ export class NftVerificationComponent implements OnInit {
 
   private getPrimaryColor() {
     this.owner$
-      .pipe(map((owner) => owner.primary_color))
+      .pipe(
+        map((owner) => owner.primary_color),
+        takeUntilDestroyed(this.#destroyed)
+      )
       .subscribe((res) => (this.primaryColor = res));
-  }
-
-  private navigateToDashboard() {
-    const dashLink = RouterPaths.DASHBOARD.replace(
-      ':owner_name',
-      this.verifService.ownerName
-    );
-    this.router.navigate([`/${dashLink}`]);
   }
 
   private openSolProviderSelector() {
@@ -264,18 +251,26 @@ export class NftVerificationComponent implements OnInit {
               this.signMessageMobile();
               return of(null);
             case MobileSolanaStates.GET_LICENSE:
-              return this.store
-                .select(selectMobileSolanaWalletAddress)
-                .pipe(map((wallet) => ({ wallet, signature: data.data })));
+              return this.store.select(selectMobileSolanaWalletAddress).pipe(
+                take(1),
+                map((wallet) => ({ wallet, signature: data.data }))
+              );
             default:
               return of(null);
           }
         }),
-        filter(Boolean)
+        filter(Boolean),
+        switchMap(({ wallet, signature }) => {
+          this.setBtnText(NftVerificationBtnStates.LICENSE_GETTING);
+          return this.verifService.getLicense(wallet, signature);
+        }),
+        finalize(() => {
+          this.setBtnText(NftVerificationBtnStates.INITIAL);
+          this.loading$.next(false);
+        })
       )
-      .subscribe((data) => {
-        this.setBtnText(NftVerificationBtnStates.LICENSE_GETTING);
-        this.verifService.getLicense(data.wallet, data.signature);
+      .subscribe({
+        error: () => {},
       });
   }
 }

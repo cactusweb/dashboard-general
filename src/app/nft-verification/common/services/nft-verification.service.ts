@@ -9,6 +9,9 @@ import { SeoService } from '@csd-services/seo.service';
 import { CsdSnackbarService } from '@csd-modules/snackbar/services/snackbar.service';
 import { CsdSnackbarLevels } from '@csd-modules/snackbar/interfaces/snackbar-item.models';
 import { LicenseDTO } from '@csd-models/license.models';
+import { AddLicense } from '@csd-store/licenses/licenses.actions';
+import { Store } from '@ngrx/store';
+import { State } from '@csd-store/state';
 
 @Injectable()
 export class NftVerificationService {
@@ -19,7 +22,8 @@ export class NftVerificationService {
     private router: Router,
     private seo: SeoService,
     private snackbar: CsdSnackbarService,
-    private http: HttpService
+    private http: HttpService,
+    private store: Store<State>
   ) {}
 
   getLicense(wallet: string, signature: string) {
@@ -32,7 +36,19 @@ export class NftVerificationService {
         },
         this.ownerName
       )
-      .pipe(map((lic) => this.mapLicense(lic)));
+      .pipe(
+        map((lic) => this.mapLicense(lic)),
+        tap((lic) => {
+          this.store.dispatch(new AddLicense(lic));
+          this.navigateToDashboard();
+        }),
+        catchError((err) => {
+          if (err.error?.url) {
+            window.open(err.error?.url, '_blank');
+          }
+          return throwError(() => err);
+        })
+      );
   }
 
   private mapLicense(lic: LicenseDTO) {
@@ -42,6 +58,14 @@ export class NftVerificationService {
       created_at: lic.created_at * 1000,
       bought_at: lic.bought_at * 1000,
     } as LicenseDTO;
+  }
+
+  private navigateToDashboard() {
+    const dashLink = RouterPaths.DASHBOARD.replace(
+      ':owner_name',
+      this.ownerName
+    );
+    this.router.navigate([`/${dashLink}`]);
   }
 
   private getOwnerName() {

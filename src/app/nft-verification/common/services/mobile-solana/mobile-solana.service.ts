@@ -187,7 +187,7 @@ export class CsdMobileSolanaService {
           key!
         );
 
-        // this.redirectToVerifRoot();
+        this.redirectToVerifRoot();
 
         this.#state$.next({
           state: MobileSolanaStates.GET_LICENSE,
