@@ -151,7 +151,7 @@ export class NftVerificationComponent implements OnInit {
       .select(selectMobileSolanaConnected)
       .pipe(take(1))
       .subscribe((connected) => {
-        if (connected) {
+        if (!connected) {
           this.mobileSolanaService.connect();
         } else {
           this.signMessageMobile();
