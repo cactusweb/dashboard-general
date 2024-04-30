@@ -160,6 +160,7 @@ export class NftVerificationComponent implements OnInit {
   }
 
   private signMessageMobile() {
+    this.loading$.next(true);
     this.setBtnText(NftVerificationBtnStates.NONCE_GETTING);
     return this.store
       .select(selectMobileSolanaWalletAddress)
@@ -261,6 +262,7 @@ export class NftVerificationComponent implements OnInit {
         }),
         filter(Boolean),
         switchMap(({ wallet, signature }) => {
+          this.loading$.next(true);
           this.setBtnText(NftVerificationBtnStates.LICENSE_GETTING);
           return this.verifService.getLicense(wallet, signature);
         }),
