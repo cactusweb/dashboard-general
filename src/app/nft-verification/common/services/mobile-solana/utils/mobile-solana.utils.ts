@@ -73,7 +73,7 @@ function useMobileSolanaMethod(
   });
 
   const url = `https://phantom.app/ul/v1/${method}?${params.toString()}`;
-  window.open(url, '_self');
+  window.location.href = url;
 }
 
 export { useMobileSolanaMethod, decryptMobileSolanaResponse };
