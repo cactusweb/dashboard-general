@@ -199,10 +199,12 @@ export class CsdMobileSolanaService {
   }
 
   private checkAndSetState() {
+    const val = localStorage.getItem(MOBILE_SOLANA_STATE_KEY);
+    if (!val) {
+      return;
+    }
     try {
-      const state = JSON.parse(
-        localStorage.getItem(MOBILE_SOLANA_STATE_KEY)!
-      ) as MobileSolanaState;
+      const state = JSON.parse(val) as MobileSolanaState;
       if (!state) {
         return;
       }
