@@ -68,7 +68,11 @@ export class CsdMobileSolanaService {
   }
 
   connect() {
-    useMobileSolanaMethod(MobileSolanaMethods.CONNECT);
+    try {
+      useMobileSolanaMethod(MobileSolanaMethods.CONNECT);
+    } catch (e) {
+      this.snbar.createItem(String(e), CsdSnackbarLevels.INFO);
+    }
   }
 
   disconnect() {
