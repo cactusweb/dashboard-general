@@ -102,8 +102,7 @@ function useMobileSolanaMethod(
     )
     .subscribe((deepLinkPrefix) => {
       const url = `${deepLinkPrefix}/${method}?${params.toString()}`;
-      window.open(url, '_blank', 'noopener');
-      window.close();
+      window.location.href = url;
     });
 }
 
