@@ -21,6 +21,7 @@ import {
   BehaviorSubject,
   combineLatest,
   filter,
+  interval,
   shareReplay,
   take,
 } from 'rxjs';
@@ -66,7 +67,7 @@ export class CsdMobileSolanaService {
   }
 
   get state$() {
-    return this.#state$.asObservable().pipe(shareReplay());
+    return this.#state$.asObservable();
   }
 
   selectProvider(provider: SolanaProvidersTypes) {
@@ -179,7 +180,12 @@ export class CsdMobileSolanaService {
       })
     );
     this.redirectToVerifRoot();
-    this.#state$.next({ state: MobileSolanaStates.SIGN_MESSAGE, data: '' });
+
+    setTimeout(
+      () =>
+        this.#state$.next({ state: MobileSolanaStates.SIGN_MESSAGE, data: '' }),
+      10
+    );
   }
 
   private handleDisconnect() {
@@ -203,10 +209,14 @@ export class CsdMobileSolanaService {
 
         this.redirectToVerifRoot();
 
-        this.#state$.next({
-          state: MobileSolanaStates.GET_LICENSE,
-          data: data.signature,
-        });
+        setTimeout(
+          () =>
+            this.#state$.next({
+              state: MobileSolanaStates.GET_LICENSE,
+              data: data.signature,
+            }),
+          10
+        );
       });
   }
 

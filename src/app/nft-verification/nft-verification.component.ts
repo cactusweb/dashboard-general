@@ -247,6 +247,8 @@ export class NftVerificationComponent implements OnInit {
               this.signMessageMobile();
               return of(null);
             case MobileSolanaStates.GET_LICENSE:
+              this.loading$.next(true);
+              this.setBtnText(NftVerificationBtnStates.LICENSE_GETTING);
               return this.store.select(selectMobileSolanaWalletAddress).pipe(
                 take(1),
                 map((wallet) => ({ wallet, signature: data.data }))
@@ -257,8 +259,6 @@ export class NftVerificationComponent implements OnInit {
         }),
         filter(Boolean),
         switchMap(({ wallet, signature }) => {
-          this.loading$.next(true);
-          this.setBtnText(NftVerificationBtnStates.LICENSE_GETTING);
           return this.verifService.getLicense(wallet, signature);
         }),
         finalize(() => {
