@@ -120,6 +120,7 @@ export class NftVerificationComponent implements OnInit {
         next: (selected) => {
           if (!selected) {
             this.loading$.next(false);
+            return;
           }
           this.isMobile ? this.processMobile() : this.processPC();
         },
