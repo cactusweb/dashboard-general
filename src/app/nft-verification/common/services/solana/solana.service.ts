@@ -7,7 +7,7 @@ import {
   SolanaProvidersTypes,
   SolanaProvider,
   SolanaProvidersWindowNames,
-} from './models/solana.models';
+} from './solana.models';
 
 @Injectable()
 export class CsdSolanaService {

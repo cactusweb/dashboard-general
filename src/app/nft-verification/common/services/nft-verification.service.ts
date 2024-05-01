@@ -3,11 +3,17 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpService } from '@csd-services/http/http.service';
 import { NftVerificationStatusDTO } from '../models/nft-verification.models';
 import { NftVerificationRequests } from '../consts/nft-verification.requests';
-import { catchError, shareReplay, tap, throwError } from 'rxjs';
+import { catchError, map, shareReplay, take, tap, throwError } from 'rxjs';
 import { RouterPaths } from '@csd-consts/router-paths.conts';
 import { SeoService } from '@csd-services/seo.service';
 import { CsdSnackbarService } from '@csd-modules/snackbar/services/snackbar.service';
 import { CsdSnackbarLevels } from '@csd-modules/snackbar/interfaces/snackbar-item.models';
+import { LicenseDTO } from '@csd-models/license.models';
+import { AddLicense } from '@csd-store/licenses/licenses.actions';
+import { Store } from '@ngrx/store';
+import { State } from '@csd-store/state';
+import { selectIsAuthed } from '@csd-store/auth/auth.selectors';
+import { AuthService } from '@csd-services/auth.service';
 
 @Injectable()
 export class NftVerificationService {
@@ -17,8 +23,68 @@ export class NftVerificationService {
   constructor(
     private router: Router,
     private seo: SeoService,
-    private snackbar: CsdSnackbarService
+    private snackbar: CsdSnackbarService,
+    private http: HttpService,
+    private store: Store<State>,
+    private authService: AuthService
   ) {}
+
+  checkAuth() {
+    return this.store.select(selectIsAuthed).pipe(
+      take(1),
+      tap((authed) => {
+        if (authed) {
+          return;
+        }
+        const msg = 'Redirecting to auth...';
+        this.snackbar.createItem(msg, CsdSnackbarLevels.INFO);
+        this.authService.auth();
+        throw new Error(msg);
+      })
+    );
+  }
+
+  getLicense(wallet: string, signature: string) {
+    return this.http
+      .request<LicenseDTO>(
+        NftVerificationRequests.GET_LICENSE,
+        {
+          wallet,
+          signature,
+        },
+        this.ownerName
+      )
+      .pipe(
+        map((lic) => this.mapLicense(lic)),
+        tap((lic) => {
+          this.store.dispatch(new AddLicense(lic));
+          this.navigateToDashboard();
+        }),
+        catchError((err) => {
+          if (err.error?.url) {
+            window.open(err.error?.url, '_blank');
+          }
+          return throwError(() => err);
+        })
+      );
+  }
+
+  private mapLicense(lic: LicenseDTO) {
+    return {
+      ...lic,
+      expires_in: lic.expires_in ? lic.expires_in * 1000 : lic.expires_in,
+      created_at: lic.created_at * 1000,
+      bought_at: lic.bought_at * 1000,
+    } as LicenseDTO;
+  }
+
+  private navigateToDashboard() {
+    const dashLink = RouterPaths.DASHBOARD.replace(
+      ':owner_name',
+      this.ownerName
+    );
+    this.router.navigate([`/${dashLink}`]);
+  }
 
   private getOwnerName() {
     return (

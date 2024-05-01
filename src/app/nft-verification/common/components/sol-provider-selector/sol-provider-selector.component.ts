@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
-import { SolanaProvidersTypes } from '../../services/models/solana.models';
+import { SolanaProvidersTypes } from '../../services/solana/solana.models';
 import {
   MAT_DIALOG_DATA,
   MatDialogModule,
   MatDialogRef,
 } from '@angular/material/dialog';
-import { CsdSolanaService } from '../../services/solana.service';
+import { CsdSolanaService } from '../../services/solana/solana.service';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({

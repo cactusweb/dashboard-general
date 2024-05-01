@@ -1,3 +1,8 @@
 import { State } from './state';
 
-export const STATE_KEYS: (keyof State)[] = ['auth', 'user', 'licenses'];
+export const STATE_KEYS: (keyof State)[] = [
+  'auth',
+  'user',
+  'licenses',
+  'mobileSolana',
+];
