@@ -179,13 +179,8 @@ export class CsdMobileSolanaService {
         encryptionPublicKey,
       })
     );
-    this.redirectToVerifRoot();
 
-    setTimeout(
-      () =>
-        this.#state$.next({ state: MobileSolanaStates.SIGN_MESSAGE, data: '' }),
-      10
-    );
+    this.#state$.next({ state: MobileSolanaStates.SIGN_MESSAGE, data: '' });
   }
 
   private handleDisconnect() {
@@ -207,16 +202,10 @@ export class CsdMobileSolanaService {
           key!
         );
 
-        this.redirectToVerifRoot();
-
-        setTimeout(
-          () =>
-            this.#state$.next({
-              state: MobileSolanaStates.GET_LICENSE,
-              data: data.signature,
-            }),
-          10
-        );
+        this.#state$.next({
+          state: MobileSolanaStates.GET_LICENSE,
+          data: data.signature,
+        });
       });
   }
 
