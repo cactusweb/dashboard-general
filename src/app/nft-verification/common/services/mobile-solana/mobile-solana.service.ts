@@ -21,7 +21,6 @@ import {
   BehaviorSubject,
   combineLatest,
   filter,
-  interval,
   shareReplay,
   take,
 } from 'rxjs';
@@ -67,7 +66,7 @@ export class CsdMobileSolanaService {
   }
 
   get state$() {
-    return this.#state$.asObservable();
+    return this.#state$.asObservable().pipe(shareReplay());
   }
 
   selectProvider(provider: SolanaProvidersTypes) {
@@ -100,6 +99,7 @@ export class CsdMobileSolanaService {
         session,
         message: bs58.encode(Buffer.from(nonce)),
       };
+
       useMobileSolanaMethod(
         MobileSolanaMethods.SIGN_MESSAGE,
         this.store,
@@ -179,7 +179,7 @@ export class CsdMobileSolanaService {
         encryptionPublicKey,
       })
     );
-
+    this.redirectToVerifRoot();
     this.#state$.next({ state: MobileSolanaStates.SIGN_MESSAGE, data: '' });
   }
 
@@ -201,6 +201,8 @@ export class CsdMobileSolanaService {
           response.nonce,
           key!
         );
+
+        this.redirectToVerifRoot();
 
         this.#state$.next({
           state: MobileSolanaStates.GET_LICENSE,
