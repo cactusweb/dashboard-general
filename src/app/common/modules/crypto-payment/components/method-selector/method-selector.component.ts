@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   Input,
@@ -22,7 +23,9 @@ type MethodId = string;
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CryptoMethodSelectorComponent implements ControlValueAccessor {
+export class CryptoMethodSelectorComponent
+  implements ControlValueAccessor, AfterViewInit
+{
   @Input()
   paymentOptions!: CryptoPaymentOptionDTO[];
 
@@ -30,6 +33,12 @@ export class CryptoMethodSelectorComponent implements ControlValueAccessor {
 
   onTouch!: () => void;
   onChange!: (_: MethodId) => void;
+
+  ngAfterViewInit(): void {
+    if (this.paymentOptions.length === 1) {
+      this.setValue(this.paymentOptions[0].id);
+    }
+  }
 
   writeValue(val: MethodId | null): void {
     this.val = val;
