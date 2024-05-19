@@ -18,7 +18,6 @@ import {
   of,
   switchMap,
   take,
-  tap,
 } from 'rxjs';
 import { NftVerificationService } from './common/services/nft-verification.service';
 import { CsdSolanaService } from './common/services/solana/solana.service';
