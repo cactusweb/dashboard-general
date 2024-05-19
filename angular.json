@@ -70,10 +70,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "DashboardGeneral-v3:build:production"
+              "buildTarget": "DashboardGeneral-v3:build:production"
             },
             "development": {
-              "browserTarget": "DashboardGeneral-v3:build:development"
+              "buildTarget": "DashboardGeneral-v3:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -81,7 +81,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "DashboardGeneral-v3:build"
+            "buildTarget": "DashboardGeneral-v3:build"
           }
         },
         "test": {
@@ -128,7 +128,7 @@
           "defaultConfiguration": "production"
         },
         "serve-ssr": {
-          "builder": "@nguniversal/builders:ssr-dev-server",
+          "builder": "@angular-devkit/build-angular:ssr-dev-server",
           "configurations": {
             "development": {
               "browserTarget": "DashboardGeneral-v3:build:development",
@@ -142,7 +142,7 @@
           "defaultConfiguration": "development"
         },
         "prerender": {
-          "builder": "@nguniversal/builders:prerender",
+          "builder": "@angular-devkit/build-angular:prerender",
           "options": {
             "routes": ["/"]
           },

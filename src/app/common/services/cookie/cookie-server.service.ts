@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { REQUEST, RESPONSE } from '@nguniversal/express-engine/tokens';
+import { REQUEST, RESPONSE } from '../../../../express.tokens';
 import { Request, Response } from 'express';
 import { getParsedCookies } from './cookie.helper';
 import * as dateFns from 'date-fns';
