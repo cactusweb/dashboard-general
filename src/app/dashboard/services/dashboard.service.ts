@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy, inject } from '@angular/core';
+import { DestroyRef, Injectable, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Requests } from '@csd-consts/requests.consts';
 import { RouterPaths } from '@csd-consts/router-paths.conts';
@@ -18,22 +18,22 @@ import { distinctUntilChangedJSON } from '@csd-utils/distinct-until-changed-json
 import { Store } from '@ngrx/store';
 import {
   ReplaySubject,
-  Subject,
   filter,
   map,
   shareReplay,
   switchMap,
   take,
-  takeUntil,
   tap,
 } from 'rxjs';
 import * as dateFns from 'date-fns';
 import { MatDialog } from '@angular/material/dialog';
 import { OwnerDTO } from '@csd-models/owner.models';
 import { selectIsAuthed } from '@csd-store/auth/auth.selectors';
+import { Deserializer } from 'v8';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Injectable()
-export class DashboardService implements OnDestroy {
+export class DashboardService {
   private readonly ownerName = this.getOwnerName();
 
   private readonly _license$ = new ReplaySubject<LicenseDTO>();
@@ -45,7 +45,7 @@ export class DashboardService implements OnDestroy {
     shareReplay()
   );
 
-  private readonly destroyed$ = new Subject<void>();
+  readonly #destroyRef = inject(DestroyRef);
 
   private unbinded = false;
 
@@ -61,8 +61,6 @@ export class DashboardService implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.destroyed$.next();
-    this.destroyed$.complete();
     this._license$.complete();
   }
 
@@ -140,7 +138,7 @@ export class DashboardService implements OnDestroy {
     this.store
       .select(selectLicenses)
       .pipe(
-        takeUntil(this.destroyed$),
+        takeUntilDestroyed(this.#destroyRef),
         distinctUntilChangedJSON(),
         filter((licenses) => !!licenses),
         map((licenses) =>

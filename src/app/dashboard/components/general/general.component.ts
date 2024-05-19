@@ -2,13 +2,13 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  OnDestroy,
+  DestroyRef,
   OnInit,
   inject,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DashboardService } from '@csd-dashboard/services/dashboard.service';
 import { LicenseDTO, LicenseTypes } from '@csd-models/license.models';
-import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'csd-dashboard-general',
@@ -16,11 +16,11 @@ import { Subject, takeUntil } from 'rxjs';
   styleUrls: ['./general.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GeneralComponent implements OnInit, OnDestroy {
+export class GeneralComponent implements OnInit {
   license: null | LicenseDTO = null;
-  private readonly destroyed$ = new Subject<void>();
 
   readonly LicenseTypes = LicenseTypes;
+  readonly #destroyRef = inject(DestroyRef);
 
   constructor(
     private dashService: DashboardService,
@@ -51,15 +51,10 @@ export class GeneralComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.dashService.license$
-      .pipe(takeUntil(this.destroyed$))
+      .pipe(takeUntilDestroyed(this.#destroyRef))
       .subscribe((res) => {
         this.license = res;
         this.cdr.markForCheck();
       });
-  }
-
-  ngOnDestroy(): void {
-    this.destroyed$.next();
-    this.destroyed$.complete();
   }
 }

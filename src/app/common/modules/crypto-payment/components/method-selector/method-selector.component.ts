@@ -4,6 +4,7 @@ import {
   Component,
   Input,
   forwardRef,
+  signal,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { CryptoPaymentOptionDTO } from '@csd-modules/crypto-payment/models/crypto-payment.models';
@@ -29,7 +30,7 @@ export class CryptoMethodSelectorComponent
   @Input()
   paymentOptions!: CryptoPaymentOptionDTO[];
 
-  val!: MethodId | null;
+  readonly val = signal<MethodId | null>(null);
 
   onTouch!: () => void;
   onChange!: (_: MethodId) => void;
@@ -41,7 +42,7 @@ export class CryptoMethodSelectorComponent
   }
 
   writeValue(val: MethodId | null): void {
-    this.val = val;
+    this.val.set(val);
   }
   registerOnChange(fn: (_: MethodId) => void) {
     this.onChange = fn;
@@ -51,7 +52,7 @@ export class CryptoMethodSelectorComponent
   }
 
   setValue(val: MethodId) {
-    this.val = val;
+    this.val.set(val);
     this.onChange(val);
   }
 

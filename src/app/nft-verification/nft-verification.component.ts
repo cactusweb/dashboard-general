@@ -39,7 +39,6 @@ import { SolanaProvidersTypes } from './common/services/solana/solana.models';
 import { CsdMobileSolanaService } from './common/services/mobile-solana/mobile-solana.service';
 import {
   selectMobileSolanaConnected,
-  selectMobileSolanaProvider,
   selectMobileSolanaWalletAddress,
 } from './common/store/mobile-solana.selectors';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -79,7 +78,7 @@ export class NftVerificationComponent implements OnInit {
   readonly loading$ = new BehaviorSubject(false);
   readonly btnText$ = new BehaviorSubject(NftVerificationBtnStates.INITIAL);
 
-  readonly #destroyed = inject(DestroyRef);
+  readonly #destroyRef = inject(DestroyRef);
 
   constructor(
     private http: HttpService,
@@ -197,7 +196,7 @@ export class NftVerificationComponent implements OnInit {
     this.owner$
       .pipe(
         map((owner) => owner.primary_color),
-        takeUntilDestroyed(this.#destroyed)
+        takeUntilDestroyed(this.#destroyRef)
       )
       .subscribe((res) => (this.primaryColor = res));
   }
@@ -241,7 +240,7 @@ export class NftVerificationComponent implements OnInit {
   private listenMobileSolanaState() {
     this.mobileSolanaService.state$
       .pipe(
-        takeUntilDestroyed(this.#destroyed),
+        takeUntilDestroyed(this.#destroyRef),
         switchMap((data) => {
           switch (data.state) {
             case MobileSolanaStates.SIGN_MESSAGE:

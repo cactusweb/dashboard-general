@@ -3,7 +3,7 @@
   <csd-crypto-method-option
     *ngFor="let opt of paymentOptions; trackBy: trackById"
     [option]="opt"
-    [selected]="opt.id === val"
+    [selected]="opt.id === val()"
     (click)="setValue(opt.id)"
   />
 </div>

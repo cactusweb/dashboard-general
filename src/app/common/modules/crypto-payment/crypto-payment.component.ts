@@ -5,15 +5,16 @@ import {
   HostBinding,
   Input,
   Output,
+  Signal,
 } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Requests } from '@csd-consts/requests.consts';
-import { LicenseDTO } from '@csd-models/license.models';
 import { OrderDTO } from '@csd-models/order/order.models';
 import { CsdSnackbarLevels } from '@csd-modules/snackbar/interfaces/snackbar-item.models';
 import { CsdSnackbarService } from '@csd-modules/snackbar/services/snackbar.service';
 import { HttpService } from '@csd-services/http/http.service';
-import { BehaviorSubject, finalize } from 'rxjs';
+import { BehaviorSubject, finalize, map } from 'rxjs';
 
 @Component({
   selector: 'csd-crypto-payment',
@@ -39,17 +40,18 @@ export class CsdCryptoPaymentComponent {
 
   readonly loading$ = new BehaviorSubject(false);
 
+  readonly recipientAddress = toSignal(
+    this.form.controls.typeId.valueChanges.pipe(
+      map((res) =>
+        res ? this.order.crypto.find((opt) => opt.id === res)!.recipient : null
+      )
+    )
+  ) as Signal<string | null>;
+
   constructor(
     private snackbar: CsdSnackbarService,
     private http: HttpService
   ) {}
-
-  get recipientAddress() {
-    const typeId = this.form.get('typeId')!.value;
-    return typeId
-      ? this.order.crypto.find((opt) => opt.id === typeId)!.recipient
-      : null;
-  }
 
   onSubmit() {
     this.form.markAllAsTouched();
