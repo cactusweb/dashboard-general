@@ -60,7 +60,10 @@ export class CsdCryptoPaymentComponent {
 
     const body = {
       email: '',
-      crypto: this.form.value,
+      crypto: {
+        ...this.form.value,
+        tx: this.getOnlyTx(this.form.value.tx!),
+      },
     };
 
     this.loading$.next(true);
@@ -86,5 +89,9 @@ export class CsdCryptoPaymentComponent {
         'Input the transaction hash',
         CsdSnackbarLevels.ERROR
       );
+  }
+
+  private getOnlyTx(txValue: string) {
+    return txValue.split('/').pop();
   }
 }
