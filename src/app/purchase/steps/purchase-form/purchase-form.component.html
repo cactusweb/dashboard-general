@@ -31,9 +31,8 @@
 <ng-template #purchaseText>
   <ng-container *ngVar="(priceData$ | async)! as priceData">
     Purchase
-    {{
-      priceData.price
-        | currency : priceData.currency : "symbol-narrow" : "1.0-1"
-    }}
+    <span
+      [innerHTML]="priceData.price | csdCurrency : priceData.currency"
+    ></span>
   </ng-container>
 </ng-template>

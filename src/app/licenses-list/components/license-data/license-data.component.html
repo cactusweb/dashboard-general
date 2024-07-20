@@ -13,8 +13,7 @@
     <p
       class="license__price"
       [attr.data-skeleton-load]="pending ? 'text' : null"
-    >
-      {{ paymentPrice }}
-    </p>
+      [innerHTML]="paymentPrice"
+    ></p>
   </div>
 </div>

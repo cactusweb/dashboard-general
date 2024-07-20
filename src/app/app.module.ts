@@ -25,6 +25,7 @@ import { COOKIE } from '@csd-services/cookie/cookie.consts';
 import { CookieClientService } from '@csd-services/cookie/cookie-client.service';
 import { CookieService } from '@csd-services/cookie/cookie.service';
 import { MobileSolanaEffects } from './nft-verification/common/store/mobile-solana.effects';
+import { CurrencyPipe } from '@angular/common';
 
 @NgModule({
   declarations: [AppComponent],
@@ -71,6 +72,7 @@ import { MobileSolanaEffects } from './nft-verification/common/store/mobile-sola
       provide: COOKIE,
       useClass: CookieClientService,
     },
+    CurrencyPipe,
   ],
   bootstrap: [AppComponent],
 })

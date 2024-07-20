@@ -17,6 +17,7 @@ import { PaymentCardBtnsComponent } from './components/payment-card/payment-card
 import { MatDialogModule } from '@angular/material/dialog';
 import { PaymentCryptoComponent } from './components/payment-crypto/payment-crypto.component';
 import { NftDataComponent } from './components/nft-data/nft-data.component';
+import { CsdCurrencyPipe } from 'app/common/pipes/csd-currency.pipe';
 
 const route: Route = {
   path: '',
@@ -45,6 +46,7 @@ const route: Route = {
     MatIconModule,
     MatProgressSpinnerModule,
     MatDialogModule,
+    CsdCurrencyPipe,
   ],
 })
 export class DashboardModule {}

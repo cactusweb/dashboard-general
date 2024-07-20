@@ -1,12 +1,12 @@
-import { CurrencyPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { LicenseDTO, LicenseTypes } from '@csd-models/license.models';
+import { CsdCurrencyPipe } from 'app/common/pipes/csd-currency.pipe';
 
 @Component({
   selector: 'csd-license-data',
   templateUrl: './license-data.component.html',
   styleUrls: ['./license-data.component.scss'],
-  providers: [CurrencyPipe],
+  providers: [CsdCurrencyPipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LicenseDataComponent {
@@ -18,7 +18,7 @@ export class LicenseDataComponent {
 
   readonly LicenseTypes = LicenseTypes;
 
-  constructor(private currency: CurrencyPipe) {}
+  constructor(private currency: CsdCurrencyPipe) {}
 
   get paymentPrice() {
     if (!this.license) {
@@ -33,9 +33,7 @@ export class LicenseDataComponent {
 
     const price = this.currency.transform(
       this.license.payment.price,
-      this.license.payment.currency || 'USD',
-      'symbol-narrow',
-      '1.0-1'
+      this.license.payment.currency || 'USD'
     );
 
     return `${price} / month`;
