@@ -22,12 +22,16 @@ const routes: Routes = [
       import('./auth/auth.component').then((c) => c.AuthComponent),
   },
   {
-    path: RouterPaths.LICENSES,
-    title: `Licenses ${titlePostfix}`,
+    path: RouterPaths.MEMBERSHIPS,
+    title: `Memberships ${titlePostfix}`,
     loadChildren: () =>
       import('./licenses-list/licenses-list.module').then(
         (m) => m.LicensesListModule
       ),
+  },
+  {
+    path: RouterPaths.LICENSES,
+    redirectTo: RouterPaths.MEMBERSHIPS,
   },
   {
     path: RouterPaths.DASHBOARD,

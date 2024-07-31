@@ -9,7 +9,7 @@ import { LicenseDataComponent } from './components/license-data/license-data.com
 import { LicenseEmptyComponent } from './components/license-empty/license-empty.component';
 import { BindFormComponent } from './components/bind-form/bind-form.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgVarDirective } from '@csd-directives/ngvar.directive';

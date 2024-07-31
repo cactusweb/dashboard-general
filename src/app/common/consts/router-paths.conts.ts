@@ -2,6 +2,7 @@ export enum RouterPaths {
   AUTH = 'auth',
   LOGIN = 'login',
   LICENSES = 'licenses',
+  MEMBERSHIPS = 'memberships',
   DASHBOARD = ':owner_name/dashboard',
   PURCHASE = ':owner_name/purchase',
   NFT_VERIFICATION = ':owner_name/nft-verification',
