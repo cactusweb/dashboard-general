@@ -1,0 +1,15 @@
+.description {
+  @apply tw-text-sm tw-leading-[18px] tw-text-secondary tw-font-normal;
+}
+
+.csd-button_flat {
+  @apply tw-h-11 tw-font-medium tw-max-w-md tw-w-full tw-mx-auto;
+}
+
+.title {
+  @apply tw-text-base tw-font-medium tw-leading-5;
+
+  &[data-skeleton-load] {
+    @apply tw-w-32 tw-h-5;
+  }
+}

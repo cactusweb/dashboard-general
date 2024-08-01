@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { RouterPaths } from '@csd-consts/router-paths.conts';
 import { DashboardService } from '@csd-dashboard/services/dashboard.service';
 import { UtilsService } from '@csd-services/utils.service';
 import { BehaviorSubject, finalize } from 'rxjs';
@@ -13,6 +14,8 @@ export class KeyInfoComponent {
   readonly license$ = this.dashService.license$;
   readonly loading$ = new BehaviorSubject(false);
   readonly owner$ = this.dashService.owner$;
+
+  readonly aboutLink = RouterPaths.ABOUT.replace(':owner_name', '../');
 
   constructor(
     private utilsService: UtilsService,

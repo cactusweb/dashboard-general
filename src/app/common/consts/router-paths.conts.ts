@@ -7,4 +7,5 @@ export enum RouterPaths {
   PURCHASE = ':owner_name/purchase',
   NFT_VERIFICATION = ':owner_name/nft-verification',
   NOT_FOUND = 'not-found',
+  ABOUT = ':owner_name/about',
 }

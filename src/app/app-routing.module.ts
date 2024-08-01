@@ -64,13 +64,20 @@ const routes: Routes = [
   },
 
   {
+    path: RouterPaths.ABOUT,
+    title: `About ${titlePostfix}`,
+    loadChildren: () =>
+      import('./about/about.module').then((m) => m.AboutModule),
+  },
+
+  {
     path: 'main',
-    redirectTo: RouterPaths.LICENSES,
+    redirectTo: RouterPaths.MEMBERSHIPS,
   },
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: RouterPaths.LICENSES,
+    redirectTo: RouterPaths.MEMBERSHIPS,
   },
   {
     path: '**',

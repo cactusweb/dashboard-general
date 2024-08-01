@@ -15,7 +15,7 @@ export function isAuthedGuard(): Observable<boolean> {
       map((authed) => !authed),
       tap((allowed) => {
         if (!allowed) {
-          router.navigate([RouterPaths.LICENSES]);
+          router.navigate([RouterPaths.MEMBERSHIPS]);
         }
       })
     );

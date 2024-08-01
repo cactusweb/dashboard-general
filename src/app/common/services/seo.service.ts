@@ -37,7 +37,10 @@ export class SeoService {
       });
   }
 
-  setOwnerData(owner: OwnerDTO, page: 'Dashboard' | 'Purchase' | 'NFT Verification') {
+  setOwnerData(
+    owner: OwnerDTO,
+    page: 'Dashboard' | 'Purchase' | 'NFT Verification' | 'About'
+  ) {
     this.changeTitle(owner.name + ` - ${page} | CactusDash`);
     if (owner.avatar) {
       this.changeIcon(owner.avatar);
@@ -46,6 +49,17 @@ export class SeoService {
     if (owner.primary_color) {
       this.setThemeColor(owner.primary_color);
     }
+  }
+
+  updateDescription(description: string) {
+    console.log(description);
+    if (!['.', '!'].includes(description.at(-1) || '')) {
+      description += '.';
+    }
+    description = `${description} Powered by CactusDash.`;
+    const tags = ['description', 'og:description'];
+
+    tags.forEach((t) => this.meta.updateTag({ name: t, content: description }));
   }
 
   private changeTitle(title: string) {

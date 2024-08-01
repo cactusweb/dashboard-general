@@ -27,7 +27,7 @@ export class UserDataComponent implements OnInit {
     .select(selectUser)
     .pipe(distinctUntilChangedJSON());
 
-  readonly licensesPath = '/' + RouterPaths.LICENSES;
+  readonly licensesPath = '/' + RouterPaths.MEMBERSHIPS;
 
   constructor(private store: Store<State>) {}
 

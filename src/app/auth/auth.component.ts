@@ -22,6 +22,6 @@ export class AuthComponent {
   constructor(private store: Store<State>) {}
 
   onAuth() {
-    this.store.dispatch(new Auth({ link: RouterPaths.LICENSES }));
+    this.store.dispatch(new Auth({ link: RouterPaths.MEMBERSHIPS }));
   }
 }

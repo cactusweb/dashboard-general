@@ -1,5 +1,11 @@
 <div class="card" *ngVar="license$ | async as license">
-  <div class="owner row" *ngVar="owner$ | async as owner">
+  <a
+    class="owner row"
+    [routerLink]="aboutLink"
+    aria-label="Link to project info page"
+    *ngVar="owner$ | async as owner"
+    title="Click to learn more about project"
+  >
     <div class="owner__logo" [attr.data-skeleton-load]="!owner ? '' : null">
       <img [src]="owner.avatar" alt="" *ngIf="owner" />
     </div>
@@ -9,7 +15,7 @@
     >
       {{ owner?.name }}
     </h1>
-  </div>
+  </a>
 
   <div class="general row">
     <div class="csd-tag" [attr.data-skeleton-load]="license ? null : ''">

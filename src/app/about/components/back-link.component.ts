@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterPaths } from '@csd-consts/router-paths.conts';
 
 @Component({
-  selector: 'csd-back-link',
+  selector: 'csd-about-memberships-link',
   template: ` <a [routerLink]="link" class="row link">
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -19,14 +19,10 @@ import { RouterPaths } from '@csd-consts/router-paths.conts';
         stroke-linejoin="round"
       />
     </svg>
-    All memberships
+    Memberships
   </a>`,
   styles: [
     `
-      :host {
-        @apply tw-absolute -tw-top-4 xs:-tw-top-3 tw-left-0 -tw-translate-y-full;
-      }
-
       .link {
         @apply tw-justify-start tw-gap-1 xs:tw-text-sm tw-font-medium tw-text-accent;
 
@@ -42,6 +38,6 @@ import { RouterPaths } from '@csd-consts/router-paths.conts';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BackLinkComponent {
+export class AboutMembershipsLinkComponent {
   readonly link = '/' + RouterPaths.MEMBERSHIPS;
 }

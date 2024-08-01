@@ -1,0 +1,20 @@
+:host {
+  @apply tw-flex tw-gap-4 tw-items-center;
+}
+
+.logo-wrapper {
+  @apply tw-size-14 xs:tw-size-12 tw-rounded-full tw-overflow-hidden tw-relative;
+  img {
+    @apply tw-object-cover;
+  }
+}
+
+.title {
+  @apply tw-font-medium;
+  @apply tw-text-xl tw-leading-[26px] tw-h-[26px];
+  @apply xs:tw-text-lg xs:tw-leading-[23px] xs:tw-h-[23px];
+
+  &[data-skeleton-load] {
+    @apply tw-w-36;
+  }
+}

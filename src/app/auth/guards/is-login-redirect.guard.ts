@@ -38,5 +38,5 @@ function getRedirectData(
     return JSON.parse(redirectToStringParam)[0];
   }
 
-  return { link: RouterPaths.LICENSES, queryParams: {} };
+  return { link: RouterPaths.MEMBERSHIPS, queryParams: {} };
 }

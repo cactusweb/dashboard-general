@@ -1,0 +1,25 @@
+<div class="card">
+  <div class="tw-grid tw-gap-4">
+    @if(!about || about!.banner){
+    <div class="banner-wrapper" [attr.data-skeleton-load]="about ? null : ''">
+      @if (about?.banner; as banner) {
+      <img [ngSrc]="banner" fill loading="lazy" alt="" />
+      }
+    </div>
+    }
+
+    <csd-about-owner [owner]="owner$ | async" />
+
+    @if (about) {
+    <p class="tw-text-base tw-leading-5 tw-text-secondary tw-font-normal">
+      {{ about?.description }}
+    </p>
+    }@else {
+    <div class="tw-grid tw-gap-1.5">
+      <p data-skeleton-load="text" class="tw-h-4"></p>
+      <p data-skeleton-load="text" class="tw-h-4"></p>
+      <p data-skeleton-load="text" class="tw-h-4 !tw-w-3/4"></p>
+    </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,16 @@
+:host {
+  @apply tw-grid lg:tw-grid-cols-[1fr_365px] tw-gap-4 tw-items-start tw-content-start;
+}
+
+.card_action {
+  @apply tw-grid tw-gap-10 xs:tw-gap-8;
+}
+
+csd-about-action {
+  @apply tw-block tw-relative;
+
+  &:not(:last-child)::after {
+    @apply tw-block tw-absolute tw-w-full tw-h-px tw-rounded tw-bg-[#EDEDED] -tw-bottom-5 xs:-tw-bottom-4 tw-translate-y-1/2;
+    content: "";
+  }
+}

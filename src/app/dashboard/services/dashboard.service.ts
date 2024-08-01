@@ -105,7 +105,7 @@ export class DashboardService {
       .pipe(
         tap(() => {
           this.unbinded = true;
-          this.router.navigate([RouterPaths.LICENSES]);
+          this.router.navigate([RouterPaths.MEMBERSHIPS]);
           this.store.dispatch(new DeleteLicense(this.ownerName));
           this.snackbar.createItem('License unbinded', CsdSnackbarLevels.ERROR);
         })
@@ -154,7 +154,7 @@ export class DashboardService {
           if (!lic) {
             const msg = `You don't have license of ${this.ownerName}.`;
             this.snackbar.createItem(msg, CsdSnackbarLevels.ERROR);
-            this.router.navigate([RouterPaths.LICENSES]);
+            this.router.navigate([RouterPaths.MEMBERSHIPS]);
             throw new Error(msg);
           }
         }),

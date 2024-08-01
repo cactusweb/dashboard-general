@@ -1,0 +1,11 @@
+<csd-about-memberships-link class="lg:tw-col-span-2" />
+<csd-about-general [about]="about() || null" />
+
+<div class="card card_action">
+  @for (action of about()?.actions; track $index) {
+  <csd-about-action [action]="action" />
+  } @if(!about()){
+  <csd-about-action />
+  <csd-about-action />
+  }
+</div>
