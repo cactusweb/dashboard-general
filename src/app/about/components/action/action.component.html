@@ -1,33 +1,38 @@
 <h2 class="tw-mb-1 title" [attr.data-skeleton-load]="action ? null : 'text'">
-    {{ action?.title }}
+  {{ action?.title }}
 </h2>
 
 @if (action?.description; as desc) {
-<p class="description tw-mb-4">
-  {{ desc }}
-</p>
-} @else if (!action){
-<div class="tw-grid tw-gap-2 tw-mb-4">
-  <p data-skeleton-load="text" class="tw-h-3.5"></p>
-  <p data-skeleton-load="text" class="tw-h-3.5 !tw-w-3/4"></p>
-</div>
-} 
+  <p class="description tw-mb-4">
+    {{ desc }}
+  </p>
+} @else if (!action) {
+  <div class="tw-grid tw-gap-2 tw-mb-4">
+    <p data-skeleton-load="text" class="tw-h-3.5"></p>
+    <p data-skeleton-load="text" class="tw-h-3.5 !tw-w-3/4"></p>
+  </div>
+}
 
 @if (!action) {
-<button class="csd-button_flat" color="primary" disabled>...</button>
-}@else { 
-    @if(linkTarget === '_self'){
-        <a
-        class="csd-button_flat"
-        color="primary"
-        [routerLink]="linkUrl"
-        [target]="linkTarget"
-        >
-            {{ action.button.text }}
-        </a>
-    } @else {
-        <a class="csd-button_flat" color="primary" [href]="linkUrl" target="_blank">
-            {{ action.button.text }}
-        </a>
-    }
+  <button class="csd-button_flat" color="primary" disabled>...</button>
+} @else {
+  @if (isAppLink) {
+    <a
+      class="csd-button_flat"
+      color="primary"
+      [routerLink]="url!.pathname"
+      [queryParams]="queryParams"
+    >
+      {{ action.button.text }}
+    </a>
+  } @else {
+    <a
+      class="csd-button_flat"
+      color="primary"
+      [href]="action.button.link"
+      target="_blank"
+    >
+      {{ action.button.text }}
+    </a>
+  }
 }

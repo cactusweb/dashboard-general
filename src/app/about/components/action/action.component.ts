@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { AboutActionDTO } from 'app/about/models/about.models';
 
-const APP_URL = 'https://dashboard.cactusweb.io';
+const APP_HOSTNAME = 'dashboard.cactusweb.io';
 
 @Component({
   selector: 'csd-about-action',
@@ -13,23 +13,15 @@ export class AboutActionComponent {
   @Input()
   action: AboutActionDTO | null = null;
 
-  get linkUrl() {
-    if (this.isAppLink) {
-      return this.action!.button.link.replace(APP_URL, '');
-    }
-
-    return this.action?.button.link;
+  get url() {
+    return this.action ? new URL(this.action.button.link) : null;
   }
 
-  get linkTarget() {
-    if (this.isAppLink) {
-      return '_self';
-    }
-
-    return '_blank';
+  get queryParams() {
+    return !this.url ? null : Object.fromEntries(this.url.searchParams);
   }
 
-  private get isAppLink() {
-    return this.action?.button.link.includes(APP_URL);
+  get isAppLink() {
+    return this.url?.hostname === APP_HOSTNAME;
   }
 }
