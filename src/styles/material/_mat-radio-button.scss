@@ -1,0 +1,19 @@
+mat-radio-button {
+  .mdc-label {
+    @apply tw-text-black;
+  }
+
+//   .mdc-radio__native-control {
+//     @apply -tw-left-2 -tw-top-2 #{!important};
+//   }
+
+//   .mdc-radio {
+//     @apply tw-p-1 #{!important};
+//   }
+
+  --mdc-radio-selected-icon-color: var(--primary-color) !important;
+  --mdc-radio-selected-hover-icon-color: var(--primary-color) !important;
+
+  --mdc-radio-unselected-hover-icon-color: #00000050 !important;
+  --mdc-radio-unselected-icon-color: #00000050 !important;
+}

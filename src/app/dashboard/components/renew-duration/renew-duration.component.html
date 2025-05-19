@@ -1,0 +1,85 @@
+<form class="card" (ngSubmit)="onSubmit()">
+  <div
+    *ngVar="ownerSupportLink() as supportLink"
+    class="tw-grid tw-items-center tw-grid-flow-col"
+    [ngClass]="supportLink ? 'tw-justify-between' : 'tw-justify-center'"
+  >
+    <h3>Select the renewal period</h3>
+
+    @if (supportLink) {
+      <a
+        [href]="supportLink"
+        target="_blank"
+        rel="noopener"
+        class="tw-flex tw-items-center tw-gap-1.5"
+      >
+        <mat-icon fontIcon="icon-help" />
+        <span class="tw-underline">Support</span>
+      </a>
+    }
+  </div>
+  <div class="csd-tag tw-my-6">
+    <label>
+      <mat-radio-button
+        [value]="1"
+        [formControl]="duractionControl"
+        ngDefaultControl
+        checked
+      >
+        1 month
+      </mat-radio-button>
+    </label>
+
+    <label>
+      <mat-radio-button
+        [value]="3"
+        [formControl]="duractionControl"
+        ngDefaultControl
+      >
+        3 months
+      </mat-radio-button>
+    </label>
+
+    <label>
+      <mat-radio-button
+        [value]="6"
+        [formControl]="duractionControl"
+        ngDefaultControl
+      >
+        6 months
+      </mat-radio-button>
+    </label>
+
+    <label>
+      <mat-radio-button
+        [value]="12"
+        [formControl]="duractionControl"
+        ngDefaultControl
+      >
+        1 year
+      </mat-radio-button>
+    </label>
+  </div>
+
+  <button
+    class="csd-button_flat"
+    color="primary"
+    *ngVar="loading() as loading"
+    [disabled]="loading"
+  >
+    @if (!loading) {
+      Select
+    } @else {
+      <mat-spinner [strokeWidth]="3" color="accent" [diameter]="26" />
+    }
+  </button>
+
+  <a
+    href="https://cactusweb.io/how-to-pay-with-crypto"
+    target="_blank"
+    class="row tw-mt-8 help-link"
+  >
+    <mat-icon fontIcon="icon-info" />
+    <span>How to make a payment</span>
+  </a>
+</form>

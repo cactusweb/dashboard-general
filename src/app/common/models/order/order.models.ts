@@ -7,7 +7,6 @@ export interface OrderDTO {
 
   email: string;
 
-
   Receipt: Record<string, any>;
   description: string;
 
@@ -20,6 +19,9 @@ export interface OrderDTO {
   crypto: CryptoPaymentOptionDTO[];
 
   status: OrderStatuses;
+
+  /** Длительность продления подписки в месяцах */
+  duration: number;
 
   inviter: UserDTO | null;
 }

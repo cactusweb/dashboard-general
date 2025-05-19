@@ -1,4 +1,29 @@
 <form class="card" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div
+    class="tw-grid tw-items-center tw-grid-flow-col"
+    [ngClass]="supportLink ? 'tw-justify-between' : 'tw-justify-center'"
+  >
+    <h3>
+      Payment
+      @if (order.duration > 1) {
+        •
+        <span class="tw-font-medium">{{ order.duration }} months</span>
+      }
+    </h3>
+
+    @if (supportLink) {
+      <a
+        [href]="supportLink"
+        target="_blank"
+        rel="noopener"
+        class="tw-flex tw-items-center tw-gap-1.5"
+      >
+        <mat-icon fontIcon="icon-help" />
+        <span class="tw-underline">Support</span>
+      </a>
+    }
+  </div>
+
   <div class="tw-grid tw-gap-3">
     <csd-crypto-method-selector
       [paymentOptions]="order.crypto"

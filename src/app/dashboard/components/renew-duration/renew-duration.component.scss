@@ -1,0 +1,28 @@
+.help-link {
+  @apply tw-gap-1.5 tw-text-sm tw-font-medium tw-text-black hover:tw-text-primary;
+  @apply tw-justify-center;
+  transition: 0.3s;
+
+  &:hover {
+    color: var(--primary-color);
+  }
+
+  mat-icon {
+    @apply tw-leading-[15px] tw-mt-px;
+  }
+
+  span {
+    @apply tw-underline tw-leading-[17px];
+  }
+}
+
+.csd-tag {
+  @apply tw-grid tw-p-0 tw-grid-cols-4;
+  @media screen and (max-width: 768px) {
+    @apply tw-grid-cols-1 tw-h-auto;
+  }
+}
+
+h3 {
+  @apply tw-text-center tw-text-base tw-leading-5 tw-font-semibold;
+}

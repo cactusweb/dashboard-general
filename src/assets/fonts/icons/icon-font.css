@@ -1,7 +1,8 @@
 @font-face {
   font-family: "Font Icons";
   src: url("/assets/fonts/icons/icons.eot");
-  src: url("/assets/fonts/icons/icons.eot") format("embedded-opentype"),
+  src:
+    url("/assets/fonts/icons/icons.eot") format("embedded-opentype"),
     url("/assets/fonts/icons/icons.woff") format("woff"),
     url("/assets/fonts/icons/icons.ttf") format("truetype"),
     url("/assets/fonts/icons/icons.svg") format("svg");
@@ -64,4 +65,7 @@
 }
 .icon-solflare:before {
   content: "\e810";
+}
+.icon-help:before {
+  content: "\e811";
 }

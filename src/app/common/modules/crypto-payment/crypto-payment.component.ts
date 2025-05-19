@@ -30,6 +30,8 @@ export class CsdCryptoPaymentComponent {
   @HostBinding('style.--primary-color')
   primaryColor: null | string = null;
 
+  supportLink: null | string = null;
+
   @Output()
   orderSuccess = new EventEmitter<any>();
 
@@ -43,14 +45,14 @@ export class CsdCryptoPaymentComponent {
   readonly recipientAddress = toSignal(
     this.form.controls.typeId.valueChanges.pipe(
       map((res) =>
-        res ? this.order.crypto.find((opt) => opt.id === res)!.recipient : null
-      )
-    )
+        res ? this.order.crypto.find((opt) => opt.id === res)!.recipient : null,
+      ),
+    ),
   ) as Signal<string | null>;
 
   constructor(
     private snackbar: CsdSnackbarService,
-    private http: HttpService
+    private http: HttpService,
   ) {}
 
   onSubmit() {
@@ -83,13 +85,13 @@ export class CsdCryptoPaymentComponent {
     if (this.form.get('typeId')!.invalid)
       this.snackbar.createItem(
         'Choose the payment method',
-        CsdSnackbarLevels.ERROR
+        CsdSnackbarLevels.ERROR,
       );
 
     if (this.form.get('tx')!.invalid)
       this.snackbar.createItem(
         'Input the transaction hash',
-        CsdSnackbarLevels.ERROR
+        CsdSnackbarLevels.ERROR,
       );
   }
 

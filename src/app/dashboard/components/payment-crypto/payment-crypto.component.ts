@@ -1,11 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { DashboardRequests } from '@csd-dashboard/common/consts/dashboard-requests.consts';
+import { MatDialog } from '@angular/material/dialog';
 import { DashboardService } from '@csd-dashboard/services/dashboard.service';
-import { OrderDTO } from '@csd-models/order/order.models';
-import { CsdCryptoPaymentComponent } from '@csd-modules/crypto-payment/crypto-payment.component';
-import { HttpService } from '@csd-services/http/http.service';
-import { BehaviorSubject, finalize, switchMap, take, takeUntil } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
+import { CsdDashboardRenewDurationComponent } from '../renew-duration/renew-duration.component';
 
 @Component({
   selector: 'csd-payment-crypto',
@@ -19,61 +16,16 @@ export class PaymentCryptoComponent {
 
   readonly loading$ = new BehaviorSubject(false);
 
-  private order?: OrderDTO;
-
   constructor(
-    private http: HttpService,
     private matDialog: MatDialog,
-    private dashService: DashboardService
+    private dashService: DashboardService,
   ) {}
 
   onRenew() {
-    if (this.order) {
-      this.processOrder();
-      return;
-    }
-
-    this.loading$.next(true);
-    this.dashService.ownerName$
-      .pipe(
-        take(1),
-        switchMap((ownerName) =>
-          this.http.request<OrderDTO>(DashboardRequests.RENEW, null, ownerName)
-        ),
-        finalize(() => this.loading$.next(false))
-      )
-      .subscribe({
-        next: (order) => {
-          this.order = order;
-          this.processOrder();
-        },
-        error: () => {},
-      });
-  }
-
-  private processOrder() {
-    const dialogRef = this.matDialog.open(CsdCryptoPaymentComponent, {
+    this.matDialog.open(CsdDashboardRenewDurationComponent, {
       maxWidth: '600px',
       width: '100%',
+      data: this.dashService,
     });
-
-    this.handleOpenedDialog(dialogRef);
-
-    this.dashService.license$.pipe(take(1)).subscribe((lic) => {
-      dialogRef.componentInstance.order = this.order!;
-      dialogRef.componentInstance.primaryColor =
-        lic.owner.primary_color || null;
-    });
-  }
-
-  private handleOpenedDialog(
-    dialogRef: MatDialogRef<CsdCryptoPaymentComponent>
-  ) {
-    dialogRef.componentInstance.orderSuccess
-      .pipe(takeUntil(dialogRef.beforeClosed()))
-      .subscribe(() => {
-        dialogRef.close();
-        this.dashService.handleSuccefullRenew();
-      });
   }
 }
