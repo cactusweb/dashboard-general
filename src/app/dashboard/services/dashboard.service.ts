@@ -42,7 +42,7 @@ export class DashboardService {
   readonly owner$ = this.getOwner().pipe(shareReplay());
   readonly ownerName$ = this.owner$.pipe(
     map((owner) => owner.name),
-    shareReplay()
+    shareReplay(),
   );
 
   readonly #destroyRef = inject(DestroyRef);
@@ -55,7 +55,7 @@ export class DashboardService {
     private router: Router,
     private http: HttpService,
     private seo: SeoService,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
   ) {
     this.getLicense();
   }
@@ -79,9 +79,9 @@ export class DashboardService {
 
           this.snackbar.createItem(
             'Reset successfuly',
-            CsdSnackbarLevels.SUCCESS
+            CsdSnackbarLevels.SUCCESS,
           );
-        })
+        }),
       );
   }
 
@@ -93,9 +93,9 @@ export class DashboardService {
           window.open(d.url, '_blank')?.focus();
           this.snackbar.createItem(
             'Joined to discord server',
-            CsdSnackbarLevels.SUCCESS
+            CsdSnackbarLevels.SUCCESS,
           );
-        })
+        }),
       );
   }
 
@@ -108,15 +108,15 @@ export class DashboardService {
           this.router.navigate([RouterPaths.MEMBERSHIPS]);
           this.store.dispatch(new DeleteLicense(this.ownerName));
           this.snackbar.createItem('License unbinded', CsdSnackbarLevels.ERROR);
-        })
+        }),
       );
   }
 
-  handleSuccefullRenew() {
+  handleSuccefullRenew(duration: number = 1) {
     this.license$.pipe(take(1)).subscribe((lic) => {
       const newLicData = {
         ...lic,
-        expires_in: dateFns.addMonths(lic.expires_in!, 1).getTime(),
+        expires_in: dateFns.addMonths(lic.expires_in!, duration).getTime(),
       };
 
       this.store.dispatch(new SetLicenseData(newLicData));
@@ -144,8 +144,8 @@ export class DashboardService {
         map((licenses) =>
           licenses!.find(
             (lic) =>
-              lic.owner.name.toLowerCase() === this.ownerName.toLowerCase()
-          )
+              lic.owner.name.toLowerCase() === this.ownerName.toLowerCase(),
+          ),
         ),
         tap((lic) => {
           if (this.unbinded) {
@@ -159,7 +159,7 @@ export class DashboardService {
           }
         }),
         map((d) => d as LicenseDTO),
-        distinctUntilChangedJSON()
+        distinctUntilChangedJSON(),
       )
       .subscribe({
         next: (lic) => this._license$.next(lic),
@@ -176,12 +176,12 @@ export class DashboardService {
             return this.http.request<OwnerDTO>(
               Requests.GET_OWNER,
               null,
-              this.ownerName
+              this.ownerName,
             );
           }
 
           return this._license$.pipe(map((d) => d.owner));
-        })
+        }),
       )
       .pipe(tap((owner) => this.seo.setOwnerData(owner, 'Dashboard')));
   }

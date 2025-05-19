@@ -20,7 +20,6 @@ import { CsdCryptoPaymentComponent } from '@csd-modules/crypto-payment/crypto-pa
 import {
   MAT_DIALOG_DATA,
   MatDialog,
-  MatDialogConfig,
   MatDialogModule,
   MatDialogRef,
 } from '@angular/material/dialog';
@@ -29,7 +28,7 @@ import { DashboardService } from '@csd-dashboard/services/dashboard.service';
 import { OrderDTO } from '@csd-models/order/order.models';
 import { HttpService } from '@csd-services/http/http.service';
 import { DashboardRequests } from '@csd-dashboard/common/consts/dashboard-requests.consts';
-import { AsyncPipe, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
@@ -48,7 +47,6 @@ import { toSignal } from '@angular/core/rxjs-interop';
     MatRadioModule,
     MatDialogModule,
     NgClass,
-    AsyncPipe,
   ],
 })
 export class CsdDashboardRenewDurationComponent {
@@ -74,8 +72,6 @@ export class CsdDashboardRenewDurationComponent {
         map((d) => d.owner.primary_color),
       )
       .subscribe((res) => (this.primaryColor = res));
-
-    this.duractionControl.valueChanges.subscribe((res) => console.log(res));
 
     this.ownerSupportLink = toSignal(this.getOwnerSupportLink());
   }
@@ -104,7 +100,6 @@ export class CsdDashboardRenewDurationComponent {
       )
       .subscribe({
         next: (order) => {
-          console.log(order, this.#order);
           this.#order = order;
           this.processOrder(this.#order);
         },
@@ -135,7 +130,7 @@ export class CsdDashboardRenewDurationComponent {
       .pipe(takeUntil(dialogRef.beforeClosed()))
       .subscribe(() => {
         dialogRef.close();
-        this.dashService.handleSuccefullRenew();
+        this.dashService.handleSuccefullRenew(this.#order?.duration);
         this.dialogRef.close();
       });
   }

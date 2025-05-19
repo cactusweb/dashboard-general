@@ -18,7 +18,7 @@ export class SeoService {
     private title: Title,
     @Inject(DOCUMENT) private doc: Document,
     private meta: Meta,
-    private router: Router
+    private router: Router,
   ) {}
 
   startMetaAutoChanger() {
@@ -39,7 +39,7 @@ export class SeoService {
 
   setOwnerData(
     owner: OwnerDTO,
-    page: 'Dashboard' | 'Purchase' | 'NFT Verification' | 'About'
+    page: 'Dashboard' | 'Purchase' | 'NFT Verification' | 'About',
   ) {
     this.changeTitle(owner.name + ` - ${page} | CactusDash`);
     if (owner.avatar) {
@@ -52,7 +52,6 @@ export class SeoService {
   }
 
   updateDescription(description: string) {
-    console.log(description);
     if (!['.', '!'].includes(description.at(-1) || '')) {
       description += '.';
     }
@@ -66,7 +65,7 @@ export class SeoService {
     this.title.setTitle(title);
 
     const titles: NodeListOf<HTMLLinkElement> = this.doc.head.querySelectorAll(
-      'meta[name=title], meta[property="og:title"]'
+      'meta[name=title], meta[property="og:title"]',
     );
 
     titles.forEach((t) => t.setAttribute('content', title));
@@ -74,7 +73,7 @@ export class SeoService {
 
   private changeIcon(url: string = ImagesPaths.LOGO_PNG) {
     const links: NodeListOf<HTMLLinkElement> = this.doc.head.querySelectorAll(
-      'link[rel=icon], link[rel=apple-touch-icon]'
+      'link[rel=icon], link[rel=apple-touch-icon]',
     );
 
     if (url[0] === '.') {
@@ -82,7 +81,7 @@ export class SeoService {
     }
 
     links.forEach((l) =>
-      l.setAttribute('href', `${environment.siteUrl}${url}`)
+      l.setAttribute('href', `${environment.siteUrl}${url}`),
     );
 
     this.updateSiteUrlTags();
@@ -103,7 +102,7 @@ export class SeoService {
 
   private setThemeColor(color: string) {
     const themeColorTag: HTMLLinkElement = this.doc.head.querySelector(
-      'meta[name="theme-color"]'
+      'meta[name="theme-color"]',
     )!;
     themeColorTag.setAttribute('content', color);
   }
