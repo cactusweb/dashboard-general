@@ -8,13 +8,23 @@ import {
   ConfirmDialogData,
   ConfirmDialogOptions,
 } from '@csd-dashboard/common/components/confirm-dialog/models/confirm-dialog.model';
-import { OrderEmailFormComponent } from '@csd-dashboard/common/components/order-email-form/order-email-form.component';
 import { DashboardRequests } from '@csd-dashboard/common/consts/dashboard-requests.consts';
 import { DashboardService } from '@csd-dashboard/services/dashboard.service';
 import { OrderDTO } from '@csd-models/order/order.models';
 import { HttpService } from '@csd-services/http/http.service';
 import { CsdOrderService } from '@csd-services/order.service';
-import { BehaviorSubject, finalize, map, switchMap, take, tap } from 'rxjs';
+import { UserDetailsService } from '@csd-services/user-details.service';
+import { isUserDetailsGateActive } from '@csd-utils/user-details.utils';
+import { selectUser } from '@csd-store/user/user.selectors';
+import {
+  EMPTY,
+  BehaviorSubject,
+  combineLatest,
+  finalize,
+  switchMap,
+  take,
+  tap,
+} from 'rxjs';
 import { Store } from '@ngrx/store';
 import { State } from '@csd-store/state';
 import { SetLicenseData } from '@csd-store/licenses/licenses.actions';
@@ -33,7 +43,8 @@ export class PaymentCardService {
     private matDialog: MatDialog,
     private http: HttpService,
     private orderService: CsdOrderService,
-    private store: Store<State>
+    private store: Store<State>,
+    private userDetailsService: UserDetailsService,
   ) {
     this.activateLoading$ = this._activateLoading$.asObservable();
     this.renewLoading$ = this._renewLoading$.asObservable();
@@ -41,7 +52,7 @@ export class PaymentCardService {
 
   linkCard() {
     if (this.cardLinkOrder) {
-      this.openEmailForm();
+      this.openDetailsFormAndLink();
       return;
     }
 
@@ -53,15 +64,15 @@ export class PaymentCardService {
           this.http.request<OrderDTO>(
             DashboardRequests.START_SUB,
             null,
-            ownerName
-          )
+            ownerName,
+          ),
         ),
-        finalize(() => this._activateLoading$.next(false))
+        finalize(() => this._activateLoading$.next(false)),
       )
       .subscribe({
         next: (order) => {
           this.cardLinkOrder = order;
-          this.openEmailForm();
+          this.openDetailsFormAndLink();
         },
         error: () => {},
       });
@@ -76,12 +87,12 @@ export class PaymentCardService {
           leftBtn: buildConfirmBtn(
             'Cancel',
             ConfirmDialogBtnClasses.STROKED,
-            ConfirmDialogBtnColors.WARN
+            ConfirmDialogBtnColors.WARN,
           ),
           rightBtn: buildConfirmBtn(
             'Renew now',
             ConfirmDialogBtnClasses.FLAT,
-            ConfirmDialogBtnColors.PRIMARY
+            ConfirmDialogBtnColors.PRIMARY,
           ),
           title: 'Are you sure?',
           description: `Your renewal amount will be debited from the linked card. \nContinue?`,
@@ -102,29 +113,38 @@ export class PaymentCardService {
         this.http.request(
           DashboardRequests.CANCEL_SUBSCRIPTION,
           null,
-          ownerName
-        )
+          ownerName,
+        ),
       ),
-      tap(() => this.handleSubCancellation())
+      tap(() => this.handleSubCancellation()),
     );
   }
 
-  private openEmailForm() {
-    this.dashService.license$
+  private openDetailsFormAndLink() {
+    combineLatest([this.dashService.owner$, this.store.select(selectUser)])
       .pipe(
         take(1),
-        map((lic) => lic.payment.email)
+        switchMap(([owner, user]) =>
+          this.userDetailsService
+            .openDetailsForm(
+              isUserDetailsGateActive(owner, user) ? 'full' : 'email',
+            )
+            .pipe(
+              switchMap((saved) =>
+                saved ? this.linkOrder(this.cardLinkOrder!) : EMPTY,
+              ),
+            ),
+        ),
       )
-      .subscribe((email) => {
-        this.matDialog.open(OrderEmailFormComponent, {
-          maxWidth: '450px',
-          width: '100%',
-          data: {
-            order: this.cardLinkOrder!,
-            email,
-          },
-        });
+      .subscribe({
+        error: () => {},
       });
+  }
+
+  private linkOrder(order: OrderDTO) {
+    return this.userDetailsService.retryOnUserDetailsRequired(
+      this.orderService.postOrderData({}, order),
+    );
   }
 
   private renew() {
@@ -133,10 +153,14 @@ export class PaymentCardService {
       .pipe(
         take(1),
         switchMap((ownerName) =>
-          this.http.request<OrderDTO>(DashboardRequests.RENEW, null, ownerName)
+          this.http.request<OrderDTO>(DashboardRequests.RENEW, null, ownerName),
         ),
-        switchMap((order) => this.orderService.postOrderData({}, order, false)),
-        finalize(() => this._renewLoading$.next(false))
+        switchMap((order) =>
+          this.userDetailsService.retryOnUserDetailsRequired(
+            this.orderService.postOrderData({}, order, false),
+          ),
+        ),
+        finalize(() => this._renewLoading$.next(false)),
       )
       .subscribe({
         next: () => this.dashService.handleSuccefullRenew(),

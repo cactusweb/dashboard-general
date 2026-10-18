@@ -7,7 +7,7 @@ The backend now stores user details (email, first name, last name, country) on t
 ## What Changes
 
 - Add a shared `UserDetailsFormComponent` dialog (two modes: full 4-field form with country select, email-only form) that saves via the new `PUT /user/data` partial-update endpoint and syncs the NgRx user store.
-- Add the country list source: `GET /api/v2/countries` via a new `environment.rootApiUrl` base (the endpoint sits outside the existing `/api/v2/user` base), public/auth-optional, cached.
+- Add the country list source: `GET /api/v2/user/countries` (public/auth-optional so logged-out users are not redirected; the deployed backend hosts it under the existing `/api/v2/user` base), cached.
 - Checkout (`purchase-form`):
   - Owner toggle ON + incomplete profile → full details dialog gates the purchase, then purchase proceeds without body email.
   - Owner toggle OFF → the inline email field stays, but its value is saved via `PUT /user/data` before the purchase instead of being sent in the order body (which the backend ignores).

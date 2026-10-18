@@ -2,6 +2,10 @@
   @apply tw-grid tw-justify-start;
 }
 
+.wrapper {
+  @apply tw-flex tw-items-center tw-gap-2;
+}
+
 .user {
   @apply tw-gap-4 tw-justify-start;
   &__img {
@@ -19,5 +23,19 @@
     &[data-skeleton-load] {
       @apply tw-w-36  tw-h-[22px];
     }
+  }
+}
+
+.edit-btn {
+  @apply tw-grid tw-place-items-center;
+  @apply tw-w-8 tw-h-8 tw-rounded-lg tw-text-secondary;
+  @apply tw-transition-colors;
+
+  &:hover {
+    @apply tw-bg-input tw-text-primary;
+  }
+
+  mat-icon {
+    @apply tw-text-base;
   }
 }

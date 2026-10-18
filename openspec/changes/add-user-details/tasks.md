@@ -2,15 +2,15 @@
 
 ## 1. Foundation: env, http base, models, request consts
 
-- [ ] 1.1 Add `rootApiUrl` to `src/environment/environment.ts` and `environment.prod.ts`, add the `apiBase` selector to `HttpRequestData`/`HttpService` prefix logic, and verify `ng build` passes
-- [ ] 1.2 Add `PUT_USER_DATA` (`/data`, PUT) and `GET_COUNTRIES` (root base, `optional: true`) to `src/app/common/consts/requests.consts.ts` and verify `ng build` passes
-- [ ] 1.3 Extend `UserDTO` with `email`, `first_name`, `last_name`, `country` and `OwnerDTO` with `require_user_details` (defaults tolerated when absent), and verify `ng build` passes
+- [x] 1.1 Add `rootApiUrl` to `src/environment/environment.ts` and `environment.prod.ts`, add the `apiBase` selector to `HttpRequestData`/`HttpService` prefix logic, and verify `ng build` passes
+- [x] 1.2 Add `PUT_USER_DATA` (`/data`, PUT) and `GET_COUNTRIES` (user base — the deployed backend serves `/api/v2/user/countries`, `optional: true`, response `{ countries: string[] }`) to `src/app/common/consts/requests.consts.ts` and verify `ng build` passes
+- [x] 1.3 Extend `UserDTO` with `email`, `first_name`, `last_name`, `country` and `OwnerDTO` with `require_user_details` (defaults tolerated when absent), and verify `ng build` passes
 
 ## 2. Countries source and shared details dialog
 
 - [ ] 2.1 Create root-provided `CountriesService` exposing `countries$` (`shareReplay(1)`, one `GET /countries` per session) and verify via dev-server network tab that repeated dialog opens issue a single request
 - [ ] 2.2 Create `UserDetailsFormComponent` (MatDialog) with `full` and `email` modes: Reactive Forms validation mirroring backend rules (email format; names Latin letters/spaces/hyphens/apostrophes, ≤64; country from list), country `<select>` fed by `CountriesService`, prefill from `store.select(selectUser)`, submit → `PUT /user/data` with shown fields → dispatch user-store update with the response → close. Verify against the test backend: save in both modes, reopen shows canonicalized country, backend 400 (`invalid first_name`) keeps the dialog open with the error surfaced
-- [ ] 2.3 Add the shared case-insensitive `user_details_required` matcher helper and verify `ng build` passes (consumed by groups 3–5)
+- [x] 2.3 Add the shared case-insensitive `user_details_required` matcher helper and verify `ng build` passes (consumed by groups 3–5)
 
 ## 3. Checkout purchase form
 
@@ -34,4 +34,4 @@
 ## 7. Integration checks
 
 - [ ] 7.1 Full manual matrix on the test backend — toggle ON/OFF × profile complete/incomplete × {paid purchase, free drop, crypto, card link, renewal}: no path sends `email` in an order body (network-tab filter), every gated path opens the dialog and recovers, every ungated path behaves as before. Record results in this change's notes
-- [ ] 7.2 Verify production builds pass: `ng build` and `npm run build:ssr` complete without errors
+- [x] 7.2 Verify production builds pass: `ng build` and `npm run build:ssr` complete without errors

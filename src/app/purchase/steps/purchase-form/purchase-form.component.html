@@ -4,13 +4,15 @@
   <csd-purchase-owner />
 
   <div class="fieldset">
-    <input
-      type="email"
-      class="csd-input"
-      formControlName="email"
-      placeholder="Email"
-      autocomplete="email"
-    />
+    @if (!(requireUserDetails$ | async)) {
+      <input
+        type="email"
+        class="csd-input"
+        formControlName="email"
+        placeholder="Email"
+        autocomplete="email"
+      />
+    }
 
     <button
       class="csd-button_flat"

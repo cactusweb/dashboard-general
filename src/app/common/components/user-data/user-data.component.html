@@ -1,17 +1,27 @@
-<a
-  class="user row"
-  *ngVar="user$ | async as user"
-  [routerLink]="[licensesPath]"
-  aria-label="Link to all licenses"
->
-  <div class="user__img" [attr.data-skeleton-load]="user ? null : ''">
-    <img *ngIf="user" [src]="user?.avatar" alt="Discord user avatar" />
-  </div>
-  <span
-    class="user__name"
-    [attr.data-skeleton-load]="user ? null : 'text'"
-    aria-label="Discord Username"
+<div class="wrapper">
+  <a
+    class="user row"
+    *ngVar="user$ | async as user"
+    [routerLink]="[licensesPath]"
+    aria-label="Link to all licenses"
   >
-    {{ user?.full_name }}
-  </span>
-</a>
+    <div class="user__img" [attr.data-skeleton-load]="user ? null : ''">
+      <img *ngIf="user" [src]="user?.avatar" alt="Discord user avatar" />
+    </div>
+    <span
+      class="user__name"
+      [attr.data-skeleton-load]="user ? null : 'text'"
+      aria-label="Discord Username"
+    >
+      {{ user?.full_name }}
+    </span>
+  </a>
+
+  <button
+    class="edit-btn"
+    (click)="onEdit()"
+    aria-label="Edit profile details"
+  >
+    <mat-icon fontIcon="icon-edit" />
+  </button>
+</div>

@@ -22,7 +22,7 @@ When the owner's public data indicates user details are required and any of the 
 - **THEN** the purchase proceeds without the full details form
 
 ### Requirement: user_details_required rejection recovery
-When any purchase request is rejected with a 400 response whose message is `user_details_required` (case-insensitive), the dashboard SHALL open the full details form and, after a successful details save, retry the same purchase automatically.
+When any purchase request is rejected with a 400 response whose message identifies the user-details gate — `user_details_required` (case-insensitive) or `Please fill in your profile details before purchasing` (the backend's later wording) — the dashboard SHALL open the full details form and, after a successful details save, retry the same purchase automatically.
 
 #### Scenario: Rejection during renewal
 - **WHEN** a renewal request is rejected with `user_details_required`

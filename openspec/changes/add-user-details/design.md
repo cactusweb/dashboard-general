@@ -28,7 +28,8 @@ Two infrastructure constraints shape the design:
 ## Decisions
 
 ### D1: `rootApiUrl` environment field + `HttpRequestData.apiBase` selector
-Add `rootApiUrl` to both environment files (`https://[test-]api.cactusweb.io/api/v2`). Extend `HttpRequestData` with an optional base indicator (e.g. `apiBase: 'root' | 'user'`, default `'user'`) so `HttpService` picks the prefix per request. The `GET_COUNTRIES` const sets `apiBase: 'root'` and `optional: true` (auth-optional header — the endpoint is public; without it the interceptor would redirect a logged-out user instead of fetching).
+Add `rootApiUrl` to both environment files (`https://[test-]api.cactusweb.io/api/v2`). Extend `HttpRequestData` with an optional base indicator (e.g. `apiBase: 'root' | 'user'`, default `'user'`) so `HttpService` picks the prefix per request.
+> **Update (2026-10-18):** the deployed backend serves countries at `/api/v2/user/countries` — inside the existing user base — so `GET_COUNTRIES` does not set `apiBase: 'root'`. The `rootApiUrl`/`apiBase` capability is kept (generic, build-verified) but currently has no consumer. The endpoint is public and returns `{ countries: string[] }`; `optional: true` stays so the auth interceptor does not OAuth-redirect logged-out users before the request is sent.
 *Alternative:* relative `../countries` URL — rejected: opaque, breaks if the user path segment ever changes.
 
 ### D2: One shared `UserDetailsFormComponent` dialog, two modes
@@ -44,7 +45,7 @@ Completeness = all four `UserDTO` fields non-empty. `PurchaseFormComponent` comb
 *Alternative:* hide/disable the pay button until complete — rejected: doc recommends gating at attempt; a disabled button with no visible reason frustrates users.
 
 ### D5: `user_details_required` detection — case-insensitive on `err.error.message`
-The interceptor capitalizes the message before components see it, so all rejection handlers compare `err.error?.message?.toLowerCase() === 'user_details_required'`. The snackbar toast still fires (accepted; wording is the backend's to fix). Handlers live where each call is made (`CsdOrderService` callers, crypto component): open the full dialog, and on successful save retry the identical request once.
+The interceptor capitalizes the message before components see it, so the shared matcher compares `err.error.message` lower-cased. Both wordings are accepted: the backend initially returned `user_details_required` and now returns `Please fill in your profile details before purchasing`; the snackbar toast shows that human-readable message directly. Handlers live where each call is made (`CsdOrderService` callers, crypto component): open the full dialog, and on successful save retry the identical request once.
 *Alternative:* `no-handle-error` header to suppress the toast — rejected: silences legitimate 400 toasts for all order calls, too blunt. *Alternative:* special-case in the interceptor — rejected by decision (leave interceptor untouched).
 
 ### D6: `CsdCryptoPaymentComponent` and card-link stop sending email; renewal body stays `{}`
