@@ -3,6 +3,7 @@ import { HttpRequestData } from '../services/http/http.models';
 const enum HttpRequestNames {
   GET_ME = 'GET_ME',
   GET_OWNER = 'GET_OWNER',
+  GET_COUNTRIES = 'GET_COUNTRIES',
 
   GET_LICENSES = 'GET_LICENSES',
   BIND_LICENSE = 'BIND_LICENSES',
@@ -13,6 +14,7 @@ const enum HttpRequestNames {
 
   PUT_ORDER_DATA = 'PUT_ORDER_DATA',
   PUT_FREE_ORDER_DATA = 'PUT_FREE_ORDER_DATA',
+  PUT_USER_DATA = 'PUT_USER_DATA',
 
   GET_LICENSE_BY_OWNER = 'GET_LICENSE_BY_OWNER',
 }
@@ -48,6 +50,12 @@ export const Requests: Record<HttpRequestNames, HttpRequestData> = {
     optional: true,
   },
 
+  [HttpRequestNames.GET_COUNTRIES]: {
+    url: '/countries',
+    method: 'GET',
+    optional: true,
+  },
+
   [HttpRequestNames.PUT_ORDER_DATA]: {
     url: '/order/:param',
     method: 'PUT',
@@ -55,6 +63,11 @@ export const Requests: Record<HttpRequestNames, HttpRequestData> = {
   [HttpRequestNames.PUT_FREE_ORDER_DATA]: {
     url: '/drop/:param/free',
     method: 'POST',
+  },
+
+  [HttpRequestNames.PUT_USER_DATA]: {
+    url: '/data',
+    method: 'PUT',
   },
 
   [HttpRequestNames.GET_LICENSE_BY_OWNER]: {

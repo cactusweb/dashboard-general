@@ -15,10 +15,13 @@ export class HttpService {
     body: any = '',
     urlParam: string = '',
     urlQuery: string = '',
-    handleErros: boolean = true
+    handleErros: boolean = true,
   ): Observable<Response> {
-    let reqUrl =
-      environment.apiUrl + reqParams.url.replace(':param', urlParam) + urlQuery;
+    const baseUrl =
+      reqParams.apiBase === 'root'
+        ? environment.rootApiUrl
+        : environment.apiUrl;
+    let reqUrl = baseUrl + reqParams.url.replace(':param', urlParam) + urlQuery;
 
     const headers = this.getHeaders(handleErros, reqParams.optional);
 
@@ -41,7 +44,7 @@ export class HttpService {
   private postHttp<Response>(
     url: string,
     data: Record<string, any>,
-    headers?: HttpHeaders
+    headers?: HttpHeaders,
   ) {
     return this.http.post<Response>(url, data, {
       headers,
@@ -57,7 +60,7 @@ export class HttpService {
   private putHttp<Response>(
     url: string,
     data: Record<string, any>,
-    headers?: HttpHeaders
+    headers?: HttpHeaders,
   ) {
     return this.http.put<Response>(url, data, {
       headers,
@@ -73,7 +76,7 @@ export class HttpService {
   private patchHttp<Response>(
     url: string,
     data: Record<string, any>,
-    headers?: HttpHeaders
+    headers?: HttpHeaders,
   ) {
     return this.http.patch<Response>(url, data, {
       headers,
@@ -82,7 +85,7 @@ export class HttpService {
 
   private getHeaders(
     handleErrors: boolean = false,
-    authOptional: boolean = false
+    authOptional: boolean = false,
   ) {
     const headers: Record<string, string> = {};
 

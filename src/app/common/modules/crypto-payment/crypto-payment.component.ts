@@ -14,6 +14,7 @@ import { OrderDTO } from '@csd-models/order/order.models';
 import { CsdSnackbarLevels } from '@csd-modules/snackbar/interfaces/snackbar-item.models';
 import { CsdSnackbarService } from '@csd-modules/snackbar/services/snackbar.service';
 import { HttpService } from '@csd-services/http/http.service';
+import { UserDetailsService } from '@csd-services/user-details.service';
 import { BehaviorSubject, finalize, map } from 'rxjs';
 
 @Component({
@@ -53,6 +54,7 @@ export class CsdCryptoPaymentComponent {
   constructor(
     private snackbar: CsdSnackbarService,
     private http: HttpService,
+    private userDetailsService: UserDetailsService,
   ) {}
 
   onSubmit() {
@@ -63,7 +65,6 @@ export class CsdCryptoPaymentComponent {
     }
 
     const body = {
-      email: '',
       crypto: {
         ...this.form.value,
         tx: this.getOnlyTx(this.form.value.tx!),
@@ -72,8 +73,10 @@ export class CsdCryptoPaymentComponent {
 
     this.loading$.next(true);
 
-    this.http
-      .request<any>(Requests.PUT_ORDER_DATA, body, this.order.id)
+    this.userDetailsService
+      .retryOnUserDetailsRequired(
+        this.http.request<any>(Requests.PUT_ORDER_DATA, body, this.order.id),
+      )
       .pipe(finalize(() => this.loading$.next(false)))
       .subscribe({
         next: (data) => this.orderSuccess.emit(data),

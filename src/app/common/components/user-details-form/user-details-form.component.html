@@ -1,0 +1,54 @@
+<form class="card" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <h2 class="card__title-md tw-text-center">
+    {{ isFullMode ? "Your details" : "Email" }}
+  </h2>
+
+  <fieldset class="fieldset">
+    <input
+      type="email"
+      class="csd-input"
+      placeholder="Email"
+      formControlName="email"
+      autocomplete="email"
+    />
+
+    @if (isFullMode) {
+      <input
+        type="text"
+        class="csd-input"
+        placeholder="First name"
+        formControlName="first_name"
+        autocomplete="given-name"
+      />
+      <input
+        type="text"
+        class="csd-input"
+        placeholder="Last name"
+        formControlName="last_name"
+        autocomplete="family-name"
+      />
+      <select class="csd-input" formControlName="country">
+        <option value="" disabled hidden>Country</option>
+        @for (country of countries$ | async; track country) {
+          <option [value]="country">{{ country }}</option>
+        }
+      </select>
+    }
+
+    @if (error$ | async; as error) {
+      <p class="fieldset__error">{{ error }}</p>
+    }
+
+    <button
+      class="csd-button_flat"
+      color="primary"
+      [disabled]="loading$ | async"
+    >
+      @if (loading$ | async) {
+        <mat-spinner [strokeWidth]="3" color="accent" [diameter]="26" />
+      } @else {
+        Save
+      }
+    </button>
+  </fieldset>
+</form>
